@@ -1,0 +1,104 @@
+/**
+ * @brief Styles for window.
+ *
+ * The following removes default margin and padding 
+ * Also making sure th ebody takes up the full width of the page so there aren't weird scroll bars
+ *
+ * @desc window
+ */
+*{
+    margin: 0;
+    padding: 0;
+}
+html, body{
+    height: 100%;
+    width: 100%;
+}
+body{
+    background-color: rgb(20, 20, 21);
+    display: flex; justify-content: center; align-items: center;
+}
+
+
+/**
+ * @brief Styles for title.
+ *
+ * This CSS defines the title of the sort
+ *
+ * @id title
+ */
+#title{
+    position: absolute;
+    top: 2em;
+    font-size: 2em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    left: 50%; /* Move the element 50% from the left of its parent */
+    transform: translate(-50%, -50%); /* Center the element precisely */
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.9) 50%);
+    -webkit-background-clip: text; /* For some older browsers like Safari */
+    color: transparent;
+}
+
+
+/**
+ * @brief Styles for bar container.
+ *
+ * This CSS defines the container for all the data bars
+ * It's purpose is to evently space out the bars
+ *
+ * @id container
+ */
+#container{
+    padding: 20px;
+    display: flex; align-items: end;
+    gap: 10px;
+}
+
+
+
+/**
+ * @brief Styles for a bar element.
+ *
+ * This CSS defines the styling for a bar element, which is used to represent data visually.
+ * The bar is given a height, width, color, as well as text to represent its value
+ *
+ * @class bar
+ */
+.bar{
+    position: relative;
+    width: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    animation: grow 0.5s ease-in forwards;
+    transform-origin: bottom;
+}
+@keyframes grow {
+    0%{transform: scaleY(0);}
+    100%{transform: scaleY(1);}
+}
+/* .bar:nth-child(3){
+    background-color: yellowgreen;
+    transform: translateX(-30px);
+} */
+.barNum{
+    position: absolute;
+    top: -1.3em;
+    font-size: 0.9em;
+    width: 100%; text-align: center;
+    color: rgb(255, 255, 255);
+    font-family: 'Courier New', Courier, monospace;
+    user-select: none;
+}
+
+
+
+
+#play{
+    border: 1px solid white;
+    padding: 10px 20px; border-radius: 15px; cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the element precisely */
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

@@ -1,19 +1,26 @@
 import { insertionSort } from './sorts/insertion.js';
 import { bubbleSort } from './sorts/bubble.js';
+import { htmlInterface } from './htmlInterface/htmlInterface.js';
+const SORT_TYPE = {
+    "insert": insertionSort,
+    "bubble": bubbleSort,
+    "merge": null,
+}
+const SORT_SPEED = 150;
 
-const SORT_SPEED = 1;
-
-const BAR_WIDTH = 15;
-const BAR_MAX_HEIGH = 150;
+const BAR_WIDTH = 13;
+const BAR_GAP = 7;
+const BAR_MAX_HEIGH = 100;
 const BAR_COLOR = [255, 255, 255, 0.8];
-const BAR_COUNT = 15;
-const DATA_VARIATION = 20;
+const BAR_COUNT = 10;
+const DATA_VARIATION = 1000;
+const SPAWN_SPEED = 50;
 
 const DEFAULT_STYLES = {
     width: BAR_WIDTH,
     maxHeight: BAR_MAX_HEIGH,
     color: BAR_COLOR,
-    grow: false,
+    grow: SPAWN_SPEED != 0 ? true : false,
 }
 
 var arrayBar = [];
@@ -23,56 +30,53 @@ function populateBars()
     arrayBar.length = 0;
     for(let i = 0; i < BAR_COUNT; i++)
     {
-        arrayBar.push(Math.floor(Math.random() * DATA_VARIATION));
-        // arrayBar.push(5-i)
+        // arrayBar.push(Math.floor(Math.random() * DATA_VARIATION) + 1);
+        arrayBar.push(BAR_COUNT-i)
         // arrayBar.push(i)
     }
 };
 
-var container = document.getElementById("container");
+var container;
 var dataReady = true;
 let pause;
 export { pause };
 
+let selected_sort = SORT_TYPE["insert"];
+let sortingInProgress = false;
+
 window.addEventListener("load", ()=>{
+    container = document.getElementById("container");
+    container.style.gap = BAR_GAP+"px";
     let playBtn = document.getElementById("play");
     
-    generateBars(arrayBar, container, DEFAULT_STYLES);
+    generateBars(arrayBar, container, DEFAULT_STYLES, SPAWN_SPEED);
 
-    let sorting = true;
-    playBtn.addEventListener("click", function(){
-        // Toggle button text and style
-        if (sorting) {
-            playBtn.style.background = "white";
-            playBtn.style.color = "black";
-            playBtn.innerHTML = "Stop";
+    document.getElementById('sort_selection')
+    .addEventListener('click', (e) => {
+        //get the 'data-sort' attribute of the element clicked
+        //plug its value into the mapping of the sort funcitons and call that function
+        selected_sort = SORT_TYPE[e.target.getAttribute('data-sort')];
 
-            container = document.getElementById("container");
-            container.innerHTML = '';
-
-            console.log(container);
-
-            DEFAULT_STYLES.grow = false;
-            generateBars(arrayBar, container, DEFAULT_STYLES);
-
-            // const SORT_TYPE = {
-            //     insert: insertionSort(arrayBar, SORT_SPEED),
-            //     bubble: bubbleSort(arrayBar, SORT_SPEED)
-            // }
-
-
-            if(dataReady) bubbleSort(arrayBar, SORT_SPEED);
-        } else {
-            pause = !sorting;
-            playBtn.innerHTML = "Restart";
-            playBtn.style.background = "transparent";
-            playBtn.style.color = "white";
-            container.innerHTML = '';
+        if(sortingInProgress)
+        {
+            htmlInterface.message(
+                {
+                    title: "Sorting Algorithms",
+                    message: "Can't sort, a sorting algorithm is already in progress"
+                }
+            )
         }
-        sorting = !sorting;
+        else
+        {
+            console.log("Sorting Begun")
 
-        // bubbleSort(arrayBar, SORT_SPEED);
-    });
+            sortingInProgress = true;
+            selected_sort(arrayBar, SORT_SPEED, () => {
+                sortingInProgress = false; // Reset the flag when sorting is complete.
+                console.log("Sorting Finished")
+            });
+        }
+    })
 
     // titleEffect("Insertion Sort");
 });

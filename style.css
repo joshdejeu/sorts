@@ -91,7 +91,7 @@ body{
 
 
 
-
+/* Sort Selectors */
 #play{
     border: 1px solid white;
     padding: 10px 20px; border-radius: 15px; cursor: pointer;
@@ -101,4 +101,91 @@ body{
     transform: translate(-50%, -50%); /* Center the element precisely */
     color: white;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+#sort_selection
+{
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+.sort
+{
+    user-select: none;
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 10px;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.sort:hover
+{
+    cursor: pointer;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+
+
+/* notification */
+#notification_container
+{
+    cursor: pointer;
+    user-select: none;
+    width: 35vw;
+    min-width: 300px;
+    position: fixed;
+    top: 1em;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+@keyframes spawn {
+    0%{transform: scaleY(0);}
+    100%{transform: scaleY(1);}
+}
+.notification
+{
+    animation: spawn 0.2s forwards;
+    transform-origin: top;
+    width: 100%;
+    font-size: 0.7em;
+    border-radius: 10px;
+    padding: 7px 8px;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+}
+.notification_image_container
+{
+    height: 10%; width: 100%;
+    display: flex; align-items: center;
+    gap: 0.6em;
+}
+.notification_image{
+    width: 18px;
+    border-radius: 5px;
+}
+.notification_title{
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 1.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.notification_message{
+    padding: 10px 0;
+    font-size: 1.3em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.notification_time{
+    position: absolute;
+    right: 1em;
+    color: rgba(0, 0, 0, 0.6);
 }

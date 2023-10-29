@@ -1,14 +1,13 @@
 import { htmlInterface } from "../htmlInterface/htmlInterface.js";
 import { pause } from "../script.js";
 
-export function insertionSort(arrayToSort, time) {
+export function insertionSort(arrayToSort, time, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
-    console.log("Sorting begun", arrayToSort)
-
-    // console.log("Original Array", arrayToSort);
 
     let i = 1;
+    let sortedCount = 0; // Initialize a counter for sorted elements
+
     function step() {
         if(pause)return;
         if (i < arrayToSort.length) {
@@ -31,17 +30,19 @@ export function insertionSort(arrayToSort, time) {
                     else{innerStep();}
                 } else {
                     arrayToSort[j + 1] = key;
-                    // console.log("A iteration:", arrayToSort);
                     htmlInterface.highlightElement(children[j+1], "rgba(255, 255, 255, 0.8)"); // Highlight the element in 
                     
                     i++;
-                    
-                    if(time!=0){setTimeout(step, time);} // Call step function after
+                    sortedCount++; // Increment the counter for sorted elements
+
+                    if(time!=0){setTimeout(step, time);} // if no time delay chosen then no timeout
                     else{step();}
-                    if (i === arrayToSort.length) {
-                        Array.from(children).forEach(child => {
-                            htmlInterface.highlightElement(child, "rgb(100,200,120)")
-                        });
+                    if (sortedCount === arrayToSort.length - 1) {
+                        // Sorting is complete, call the onCompleteCallback
+                        onCompleteCallback();
+                    //     Array.from(children).forEach(child => {
+                    //         htmlInterface.highlightElement(child, "rgb(100,200,120)")
+                    //     });
                     }
                 }
             }
@@ -49,20 +50,5 @@ export function insertionSort(arrayToSort, time) {
             innerStep();
         }
     }
-
     step();
-
 }
-
-// function swapElements(element1, element2) {
-//     if (element1.parentNode === element2.parentNode) {
-//         const parent = element1.parentNode;
-//         const nextSibling = element1.nextSibling === element2 ? element1 : element2;
-//         parent.insertBefore(element1, nextSibling);
-//     } else {
-//         console.error("Elements have different parents, cannot swap.");
-//     }
-// }
-// function highlightElement(element, color) {
-//     element.style.background = color;
-// }

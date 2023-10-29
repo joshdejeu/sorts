@@ -2,28 +2,29 @@ import { htmlInterface } from "../htmlInterface/htmlInterface.js";
 
 
 export function bubbleSort(arrayToSort, time) {
+    var container = document.getElementById("container");
+    var children = container.children;
     let sortedCount = 0;
     let pos = 0;
-    while(sortedCount < arrayToSort.length)
-    {
-        //if pos is in unsorted region
-        //AND right is less than left
-        //AND indexPosition isn't at 0 (meaning its been shifted all the way)
+
+
+    function sort(){
+        if(sortedCount >= arrayToSort.length)return;//base case
+        // htmlIn3terface.highlightElement(children[pos + 1], "rgba(255, 255, 255, 0.8)");
         if(pos != -1 && arrayToSort[pos+1] < arrayToSort[pos])
         {
-            htmlInterface.highlightElement(arrayToSort[pos], "rgba(217, 70, 70, 0.8)");
-            htmlInterface.highlightElement(arrayToSort[pos+1], "rgb(100,200,120)");
-
-
-            htmlInterface.swapElements(arrayToSort[j + 1], arrayToSort[j]);
-
+            htmlInterface.swapElements(children[pos + 1], children[pos]);
             [arrayToSort[pos], arrayToSort[pos + 1]] = [arrayToSort[pos + 1], arrayToSort[pos]];
+            
+            
+            htmlInterface.highlightElement(children[pos], "rgba(217, 70, 70, 0.8)");
+            htmlInterface.highlightElement(children[pos + 1], "rgba(255, 255, 255, 0.8)");
             pos--;
         }else{
             sortedCount++;
             pos = sortedCount;
         }
-        disp.innerHTML = arrayToSort;
+        setTimeout(sort, time);
     }
-
+    sort();
 }

@@ -6,21 +6,21 @@ const SORT_TYPE = {
     "bubble": bubbleSort,
     "merge": null,
 }
-const SORT_SPEED = 150;
-
-const BAR_WIDTH = 13;
-const BAR_GAP = 7;
+const SORT_SPEED = 1;
+const BAR_WIDTH = 10;
+const BAR_GAP = 10;
 const BAR_MAX_HEIGH = 100;
 const BAR_COLOR = [255, 255, 255, 0.8];
-const BAR_COUNT = 10;
-const DATA_VARIATION = 1000;
+const BAR_COUNT = 55;
+const DATA_VARIATION = 20;
 const SPAWN_SPEED = 50;
 
 const DEFAULT_STYLES = {
     width: BAR_WIDTH,
     maxHeight: BAR_MAX_HEIGH,
     color: BAR_COLOR,
-    grow: SPAWN_SPEED != 0 ? true : false,
+    // grow: SPAWN_SPEED != 0 ? true : false,
+    grow: false,
 }
 
 var arrayBar = [];
@@ -30,8 +30,8 @@ function populateBars()
     arrayBar.length = 0;
     for(let i = 0; i < BAR_COUNT; i++)
     {
-        // arrayBar.push(Math.floor(Math.random() * DATA_VARIATION) + 1);
-        arrayBar.push(BAR_COUNT-i)
+        arrayBar.push(Math.floor(Math.random() * DATA_VARIATION) + 1);
+        // arrayBar.push(BAR_COUNT-i)
         // arrayBar.push(i)
     }
 };
@@ -39,7 +39,9 @@ function populateBars()
 var container;
 var dataReady = true;
 let pause;
+
 export { pause };
+export { SORT_SPEED }
 
 let selected_sort = SORT_TYPE["insert"];
 let sortingInProgress = false;
@@ -49,10 +51,12 @@ window.addEventListener("load", ()=>{
     container.style.gap = BAR_GAP+"px";
     let playBtn = document.getElementById("play");
     
-    generateBars(arrayBar, container, DEFAULT_STYLES, SPAWN_SPEED);
-
+    generateBars(arrayBar, container, DEFAULT_STYLES, false);
+    
     document.getElementById('sort_selection')
     .addEventListener('click', (e) => {
+        htmlInterface.playSound(1.0);
+
         //get the 'data-sort' attribute of the element clicked
         //plug its value into the mapping of the sort funcitons and call that function
         selected_sort = SORT_TYPE[e.target.getAttribute('data-sort')];
@@ -61,7 +65,7 @@ window.addEventListener("load", ()=>{
         {
             htmlInterface.message(
                 {
-                    title: "Sorting Algorithms",
+                    title: "Sorting Algorithm",
                     message: "Can't sort, a sorting algorithm is already in progress"
                 }
             )
@@ -69,9 +73,10 @@ window.addEventListener("load", ()=>{
         else
         {
             console.log("Sorting Begun")
-
+            let sound = 'sound.mp3';
+            
             sortingInProgress = true;
-            selected_sort(arrayBar, SORT_SPEED, () => {
+            selected_sort(arrayBar, SORT_SPEED, Math.max(...arrayBar), sound, () => {
                 sortingInProgress = false; // Reset the flag when sorting is complete.
                 console.log("Sorting Finished")
             });

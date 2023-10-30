@@ -1,3 +1,4 @@
+const context = new AudioContext();
 
 export class htmlInterface {
     static highlightElement(element, color) {
@@ -14,16 +15,55 @@ export class htmlInterface {
         }
     }
 
-    static sound(positionOfElement) {
-        const audioContext = new AudioContext();
-        const audioElement = new Audio('./htmlInterface/sound.mp3');
-        audioElement.volume = 0.1;
-        // const audioSource =lay(); audioContext.createMediaElementSource(audioElement);
-        // const pitchShifter = new AudioWorkletNode(audioContext, 'pitch-shifter-processor');
-        // pitchShifter.port.postMessage({ pitch: positionOfElement }); // Send pitch information
+    static async playSound(valOfElementMoved, upperBoundBarVal, sound) {
 
-        // audioSource.connect(pitchShifter).connect(audioContext.destination);
-        audioElement.play();
+        function mapValueToRange(value, n) {
+            const oldRangeMin = 1;
+            const oldRangeMax = n;
+            const newRangeMin = 0.6;
+            const newRangeMax = 2.0;
+            
+            // Apply the linear mapping formula
+            const mappedValue = newRangeMin + (value - oldRangeMin) * (newRangeMax - newRangeMin) / (oldRangeMax - oldRangeMin);
+            
+            // Ensure that the result is within the new range limits
+            if (mappedValue < newRangeMin) {
+                return newRangeMin;
+            } else if (mappedValue > newRangeMax) {
+                return newRangeMax;
+            } else {
+                return mappedValue;
+            }
+        }
+
+        
+
+        function loadSample(url) {
+        return fetch(url)
+            .then(response => response.arrayBuffer())
+            .then(buffer => context.decodeAudioData(buffer));
+        }
+
+        function playSample(sample, rate, volume = 0.1) {
+            const source = context.createBufferSource();
+            source.buffer = sample;
+            const gainNode = context.createGain();
+            source.connect(gainNode); // Connect source to the GainNode
+            gainNode.connect(context.destination); // Connect GainNode to the audio destination
+            source.playbackRate.value = rate;
+
+            // Set the volume (gain)
+            gainNode.gain.value = Math.max(0, Math.min(1, volume));;
+            
+            source.start(0);
+        }
+
+        loadSample('./htmlInterface/'+sound)
+        .then(sample => playSample(sample, mapValueToRange(valOfElementMoved, upperBoundBarVal)));
+
+
+
+        
     }
 
     static message(data)
@@ -61,6 +101,6 @@ export class htmlInterface {
 
         setTimeout(() => {
             noti.remove();
-        }, 1000);
+        }, 1500);
     }
 }   

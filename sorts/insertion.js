@@ -1,7 +1,8 @@
 import { htmlInterface } from "../htmlInterface/htmlInterface.js";
 import { pause } from "../script.js";
+import { SORT_SPEED } from '../script.js';
 
-export function insertionSort(arrayToSort, time, onCompleteCallback) {
+export function insertionSort(arrayToSort, time, upperBoundBarVal, sound, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -23,8 +24,11 @@ export function insertionSort(arrayToSort, time, onCompleteCallback) {
                 if (j >= 0 && arrayToSort[j] > key) {
                     arrayToSort[j + 1] = arrayToSort[j];
                     htmlInterface.swapElements(children[j + 1], children[j]);
-                    htmlInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)"); // Highlight the element in red
-                    htmlInterface.sound(j+1);
+                    if(SORT_SPEED!=0)
+                    {
+                        htmlInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)"); // Highlight the element in red
+                        htmlInterface.playSound(arrayToSort[j + 1], upperBoundBarVal, sound);
+                    }
                     j--;
                     if(time!=0){setTimeout(innerStep, time);} // Call innerStep function after 500ms
                     else{innerStep();}

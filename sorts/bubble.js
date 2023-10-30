@@ -1,7 +1,7 @@
 import { htmlInterface } from "../htmlInterface/htmlInterface.js";
 
 
-export function bubbleSort(arrayToSort, time) {
+export function bubbleSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
     let sortedCount = 0;

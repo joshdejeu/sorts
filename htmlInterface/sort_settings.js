@@ -1,13 +1,13 @@
-import { SortSettings } from "./classes/sortSettings";
+// import { SortSettings } from "./classes/sortSettings.js";
 
-let settingsOpener = document.getElementById('sort_settings');
+let settingsOpener = document.getElementById('sort_controls');
 let toggleOpenSettings = false
 
 settingsOpener.addEventListener('click', ()=>
 {
     if(toggleOpenSettings)
     {
-        SortSettings.openSettings();
+        // SortSettings.openSettings();
     }
     toggleOpenSettings = !toggleOpenSettings;
 });

@@ -11,13 +11,13 @@ const SORT_TYPE = {
     "bubble": bubbleSort,
     "merge": null,
 }
-const SORT_SPEED = 10;
+const SORT_SPEED = 150;
 const BAR_WIDTH = 15;
 const BAR_GAP = 10;
 const BAR_MAX_HEIGH = 150;
 const BAR_COLOR = [255, 255, 255, 0.8];
-const BAR_COUNT = 45;
-const DATA_VARIATION = 100;
+const BAR_COUNT = 5;
+const DATA_VARIATION = 5;
 const SPAWN_SPEED = 50;
 const BAR_UPPER_VALUE_LIMIT = DATA_VARIATION;
 
@@ -36,8 +36,8 @@ function populateBars()
     arrayBar.length = 0;
     for(let i = 0; i < BAR_COUNT; i++)
     {
-        arrayBar.push(Math.floor(Math.random() * DATA_VARIATION) + 1);
-        // arrayBar.push(BAR_COUNT-i)
+        // arrayBar.push(Math.floor(Math.random() * DATA_VARIATION) + 1);
+        arrayBar.push(BAR_COUNT-i)
         // arrayBar.push(i)
     }
 };

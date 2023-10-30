@@ -14,6 +14,6 @@ export class SortSettings {
 
 
     static openSettings(){
-
+        console.log("Opening Settings")
     }
 }

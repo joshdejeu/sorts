@@ -67,6 +67,9 @@ window.addEventListener("load", ()=>{
     .addEventListener('click', (e) => {
         let htmlSoundSelected = e.target.getAttribute('data-sound');
         sound = `${htmlSoundSelected}.mp3`;
+        const selectedAudio = new Audio('./htmlInterface/sounds/'+sound);
+        selectedAudio.volume = 0.6;
+        selectedAudio.play()
         for (let i = 0; i < document.getElementsByClassName('sound').length; i++) {
             document.getElementsByClassName('sound')[i].className='sound';
         }

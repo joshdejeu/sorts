@@ -68,13 +68,13 @@ export class htmlInterface {
         function loadSample(url) {
         return fetch(url)
             .then(response => response.arrayBuffer())
-            //.then(buffer => context.decodeAudioData(buffer));
+            .then(buffer => context.decodeAudioData(buffer));
             
-            .then(buffer => 
+            /*.then(buffer => 
                 context.decodeAudioData((buffer) => { 
                     resolve(buffer); 
                 }, (e) => { reject(e); });
-            );
+            );*/
             
             
             

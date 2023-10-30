@@ -2,18 +2,19 @@ import { insertionSort } from './sorts/insertion.js';
 import { bubbleSort } from './sorts/bubble.js';
 import { htmlInterface } from './htmlInterface/htmlInterface.js';
 const SORT_TYPE = {
-    "insert": insertionSort,
+    "insertion": insertionSort,
     "bubble": bubbleSort,
     "merge": null,
 }
-const SORT_SPEED = 1;
-const BAR_WIDTH = 10;
+const SORT_SPEED = 10;
+const BAR_WIDTH = 15;
 const BAR_GAP = 10;
-const BAR_MAX_HEIGH = 100;
+const BAR_MAX_HEIGH = 150;
 const BAR_COLOR = [255, 255, 255, 0.8];
-const BAR_COUNT = 55;
-const DATA_VARIATION = 20;
+const BAR_COUNT = 45;
+const DATA_VARIATION = 100;
 const SPAWN_SPEED = 50;
+const BAR_UPPER_VALUE_LIMIT = DATA_VARIATION;
 
 const DEFAULT_STYLES = {
     width: BAR_WIDTH,
@@ -39,6 +40,7 @@ function populateBars()
 var container;
 var dataReady = true;
 let pause;
+let stopScramble = false;
 
 export { pause };
 export { SORT_SPEED }
@@ -47,6 +49,8 @@ let selected_sort = SORT_TYPE["insert"];
 let sortingInProgress = false;
 
 window.addEventListener("load", ()=>{
+    titleEffect();
+
     container = document.getElementById("container");
     container.style.gap = BAR_GAP+"px";
     let playBtn = document.getElementById("play");
@@ -55,11 +59,10 @@ window.addEventListener("load", ()=>{
     
     document.getElementById('sort_selection')
     .addEventListener('click', (e) => {
-        htmlInterface.playSound(1.0);
+        let htmlSortSelected = e.target.getAttribute('data-sort')
+        selected_sort = SORT_TYPE[htmlSortSelected];
+        stopScramble = true;
 
-        //get the 'data-sort' attribute of the element clicked
-        //plug its value into the mapping of the sort funcitons and call that function
-        selected_sort = SORT_TYPE[e.target.getAttribute('data-sort')];
 
         if(sortingInProgress)
         {
@@ -73,18 +76,20 @@ window.addEventListener("load", ()=>{
         else
         {
             console.log("Sorting Begun")
-            let sound = 'sound.mp3';
-            
+            let sound = 'dream.mp3';
             sortingInProgress = true;
-            selected_sort(arrayBar, SORT_SPEED, Math.max(...arrayBar), sound, () => {
+            selected_sort(arrayBar, SORT_SPEED, BAR_UPPER_VALUE_LIMIT, sound, () => {
                 sortingInProgress = false; // Reset the flag when sorting is complete.
                 console.log("Sorting Finished")
+                stopScramble = false;
+                document.querySelector('body').append(titleEl);
+                titleEffect();
             });
         }
     })
 
-    // titleEffect("Insertion Sort");
 });
+
 
 
 
@@ -96,7 +101,7 @@ function generateBars(bars, container, styles, spawnTime = 0)
 
     function processNextBar() {
         if (index < bars.length) {
-            generateHtmlBar(bars[index], container, styles);
+            htmlInterface.generateHtmlBar(bars[index], container, styles, BAR_UPPER_VALUE_LIMIT);
             index++;
             if(spawnTime != 0){setTimeout(processNextBar, spawnTime);} // Set the delay (in milliseconds) between iterations
             else{processNextBar();}
@@ -108,43 +113,33 @@ function generateBars(bars, container, styles, spawnTime = 0)
 } 
 
 
-function generateHtmlBar(barVal, container, styles)
+
+
+
+let titleEl;
+import { TextScramble } from './htmlInterface/textScramble.js'
+function titleEffect()
 {
-    let bar = document.createElement('div');
-    bar.className = 'bar';
-    if(styles.grow){bar.style.animation = "grow 0.5s ease-in forwards"}
-    else{bar.style.animation = "grow 0.0s ease-in forwards";}
-    bar.style.color = `rgba(${styles.color[0]}, ${styles.color[1]}, ${styles.color[2]}, ${styles.color[3]})`;
-    bar.style.width = styles.width+"px";
-    let greatestBarValue = Math.max(...arrayBar)
-    bar.style.height = `${styles.maxHeight * (barVal/greatestBarValue)}px`;
+    const phrases = [
+        'Wake up, Neo',
+        'select a sort...',
+    ]
 
-
-
-    let barNum = document.createElement('p1');
-    barNum.className = 'barNum';
-    barNum.innerHTML = barVal;
-
-
-    bar.append(barNum);
-    container.append(bar);
-}
-
-
-function titleEffect(str)
-{
-    str = str.toLowerCase();
-    let title = document.getElementById('title');
-    title.innerHTML = "";
-    for (let i = 0; i < str.length; i++) {
-        if(str[i] != " ")
-        {
-            title.innerHTML += String.fromCharCode(Math.floor(Math.random() * (90 - 65 + 1)) + 65);
-        }else
-        {
-            title.innerHTML += " ";
+    const el = document.getElementById("title")
+    const fx = new TextScramble(el)
+    let counter = 0
+    const next = () => {
+        if(stopScramble){
+            clearTimeout(next); console.log(stopScramble);
+            titleEl = el;
+            el.remove();
         }
+        fx.setText(phrases[counter]).then(() => {
+            setTimeout(next, 800)
+      })
+      counter = (counter + 1) % phrases.length
     }
+    next();
 }
 
 

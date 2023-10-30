@@ -15,13 +15,40 @@ export class htmlInterface {
         }
     }
 
-    static async playSound(valOfElementMoved, upperBoundBarVal, sound) {
+    //creates individual html elements and styles width/height/color
+    static generateHtmlBar(barVal, container, styles, barUpperLimit)
+    {
+        let bar = document.createElement('div');
+        bar.className = 'bar';
+        if(styles.grow){bar.style.animation = "grow 0.5s ease-in forwards"}
+        else{bar.style.animation = "grow 0.0s ease-in forwards";}
+        bar.style.color = `rgba(${styles.color[0]}, ${styles.color[1]}, ${styles.color[2]}, ${styles.color[3]})`;
+        bar.style.width = styles.width+"px";
+        bar.style.height = `${styles.maxHeight * (barVal/barUpperLimit)}px`;
+    
+        let barNum = document.createElement('p1');
+        barNum.className = 'barNum';
+        barNum.innerHTML = barVal;
+    
+    
+        bar.append(barNum);
+        container.append(bar);
+    }
 
+
+
+
+
+
+
+
+    static async playSound(valOfElementMoved, upperBoundBarVal, sound) {
+        //give a range 1 to n, map its values to a range with lower volume (newRangeMin) and upper volume (newRangeMax)
         function mapValueToRange(value, n) {
             const oldRangeMin = 1;
             const oldRangeMax = n;
-            const newRangeMin = 0.6;
-            const newRangeMax = 2.0;
+            const newRangeMin = 0.3;
+            const newRangeMax = 1.5;
             
             // Apply the linear mapping formula
             const mappedValue = newRangeMin + (value - oldRangeMin) * (newRangeMax - newRangeMin) / (oldRangeMax - oldRangeMin);
@@ -44,32 +71,70 @@ export class htmlInterface {
             .then(buffer => context.decodeAudioData(buffer));
         }
 
-        function playSample(sample, rate, volume = 0.1) {
+
+        function playSample(sample, pitchMappedToRangeOfVolume, volume) {
             const source = context.createBufferSource();
             source.buffer = sample;
             const gainNode = context.createGain();
             source.connect(gainNode); // Connect source to the GainNode
             gainNode.connect(context.destination); // Connect GainNode to the audio destination
-            source.playbackRate.value = rate;
+            
+            //pitch
+            let pitch = calculateFrequencyForKey(mapValueToMiddlePianoKey(Number(valOfElementMoved), upperBoundBarVal)-49);
+            source.playbackRate.value = pitch/12
+            // source.playbackRate.value = pitchMappedToRangeOfVolume;
 
-            // Set the volume (gain)
-            gainNode.gain.value = Math.max(0, Math.min(1, volume));;
+            // voume
+            gainNode.gain.value = Math.max(0, Math.min(1, volume/100));;
             
             source.start(0);
         }
 
-        loadSample('./htmlInterface/'+sound)
-        .then(sample => playSample(sample, mapValueToRange(valOfElementMoved, upperBoundBarVal)));
+        loadSample('./htmlInterface/sounds/'+sound)
+        .then(sample => playSample(sample, mapValueToRange(valOfElementMoved, upperBoundBarVal), 15));
+
+
+        function mapValueToMiddlePianoKey(randomValue, n) {
+            const upperEndPianoKey = 50;
+            const lowerEndPianoKey = 20;
+            // Define the range of the random value (from 1 to n)
+            const randomRange = n - 1;
+          
+            // Define the range of the middle 40 piano keys (from 25 to 50)
+            const middlePianoKeysRange = upperEndPianoKey - lowerEndPianoKey;
+          
+            // Calculate the mapped value within the middle key range
+            const mappedValue = (randomValue - 1) * (middlePianoKeysRange / randomRange) + lowerEndPianoKey;
+          
+            // Ensure that the mapped value is within the middle piano key range
+            if (mappedValue < 25) {
+              return 25;
+            } else if (mappedValue > 64) {
+              return 64;
+            } else {
+              return Math.round(mappedValue); // Round to the nearest integer for piano keys
+            }
+        }
+
+        function calculateFrequencyForKey(keyNumber) {
+            // A440 is the reference frequency for key number 49
+            const A440 = 440.0;
+          
+            // Calculate the frequency using the formula
+            const frequency = A440 * Math.pow(2, (keyNumber - 49) / 12);
+          
+            return frequency;
+          }
 
 
 
-        
+
     }
 
     static message(data)
     {
-        const audioNotify = new Audio('./htmlInterface/notify.mp3');
-        audioNotify.volume = 0.05;
+        const audioNotify = new Audio('./htmlInterface/sounds/notify.mp3');
+        audioNotify.volume = 0.6;
         audioNotify.play()
 
         let noti = document.createElement('div');

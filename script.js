@@ -41,6 +41,7 @@ var container;
 var dataReady = true;
 let pause;
 let stopScramble = false;
+let sound = 'dream.mp3';
 
 export { pause };
 export { SORT_SPEED }
@@ -57,8 +58,22 @@ window.addEventListener("load", ()=>{
     
     generateBars(arrayBar, container, DEFAULT_STYLES, false);
     
+    document.getElementById('sound_selection')
+    .addEventListener('click', (e) => {
+        let htmlSoundSelected = e.target.getAttribute('data-sound');
+        sound = `${htmlSoundSelected}.mp3`;
+        for (let i = 0; i < document.getElementsByClassName('sound').length; i++) {
+            document.getElementsByClassName('sound')[i].className='sound';
+        }
+        e.target.className = 'sound active';
+    });
+
     document.getElementById('sort_selection')
     .addEventListener('click', (e) => {
+        for (let i = 0; i < document.getElementsByClassName('sort').length; i++) {
+            document.getElementsByClassName('sort')[i].className='sort';
+        }
+        e.target.className = 'sort active'
         let htmlSortSelected = e.target.getAttribute('data-sort')
         selected_sort = SORT_TYPE[htmlSortSelected];
         stopScramble = true;
@@ -76,7 +91,6 @@ window.addEventListener("load", ()=>{
         else
         {
             console.log("Sorting Begun")
-            let sound = 'dream.mp3';
             sortingInProgress = true;
             selected_sort(arrayBar, SORT_SPEED, BAR_UPPER_VALUE_LIMIT, sound, () => {
                 sortingInProgress = false; // Reset the flag when sorting is complete.

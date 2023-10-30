@@ -1,6 +1,11 @@
 import { insertionSort } from './sorts/insertion.js';
 import { bubbleSort } from './sorts/bubble.js';
 import { htmlInterface } from './htmlInterface/htmlInterface.js';
+import { SortSettings } from './htmlInterface/classes/sortSettings.js';
+
+// let defaultSettings = new SortSettings();
+// console.log(defaultSettings.SORT_SPEED)
+
 const SORT_TYPE = {
     "insertion": insertionSort,
     "bubble": bubbleSort,
@@ -144,7 +149,7 @@ function titleEffect()
     let counter = 0
     const next = () => {
         if(stopScramble){
-            clearTimeout(next); console.log(stopScramble);
+            clearTimeout(next);
             titleEl = el;
             el.remove();
         }

@@ -254,3 +254,39 @@ body{
 
 }
 i{pointer-events: none;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#sort_controls
+{
+    position: absolute;
+    top: 1em; left: 1em;
+    height: 30px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+}
+#sort_controls>span{
+    height: 5%;
+    width: 100%;
+    background-color: white;
+}

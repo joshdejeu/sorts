@@ -46,6 +46,22 @@ body{
     transition: color 0.2s ease;
     /* #1def24 */
 }
+@media only screen and (max-width: 1200px) {
+    #title{
+        font-size: 1.5em;
+    }
+}
+@media only screen and (max-width: 900px) {
+    #title{
+        width: 70vw;
+        text-align: center;
+    }  
+}
+@media only screen and (max-width: 600px) {
+    #title{
+        font-size: 1em;
+    }   
+}
 
 /**
  * @brief Styles for bar container.

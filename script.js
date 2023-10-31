@@ -1,5 +1,7 @@
 import { insertionSort } from './sorts/insertion.js';
 import { bubbleSort } from './sorts/bubble.js';
+import { mergeSort } from './sorts/merge.js';
+
 import { htmlInterface } from './htmlInterface/htmlInterface.js';
 import { SortSettings } from './htmlInterface/classes/sortSettings.js';
 
@@ -12,7 +14,7 @@ const IN_ORDER = false;
 const SORT_TYPE = {
     "insertion": insertionSort,
     "bubble": bubbleSort,
-    "merge": null,
+    "merge": mergeSort,
 }
 const SORT_SPEED = 20;
 const BAR_WIDTH = 15;
@@ -109,8 +111,8 @@ window.addEventListener("load", ()=>{
                 sortingInProgress = false; // Reset the flag when sorting is complete.
                 console.log("Sorting Finished")
                 stopScramble = false;
-                document.querySelector('body').append(titleEl);
-                setTimeout(titleEffect,1000);
+                // document.querySelector('body').append(titleEl);
+                // setTimeout(titleEffect,1000);
             });
         }
     })
@@ -151,7 +153,7 @@ function titleEffect()
         'Wake up, Neo...',
         'Select a Sort',
         'The Matrix Has You...',
-        'Select a Sound Effect (bottom left)',
+        'Sound Effect (bottom left)',
         'Follow The White Rabbit.',
         'Or Follow Me On LinkedIn',
         'Knock, Knock, Neo.',
@@ -166,8 +168,8 @@ function titleEffect()
         {
             phrases = [
                 'Select a Sort',
-                'Select a Sound Effect (bottom left)',
-                'Adjust Sort Settings (top left)',
+                'Sound Effect (bottom left)',
+                'Sort Settings (top left)',
             ]
             counter = 0;
         }

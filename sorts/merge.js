@@ -1,6 +1,7 @@
 import { htmlInterface } from "../htmlInterface/htmlInterface.js";
+import { sound } from '../script.js'
 
-export function mergeSort(arrayToSort, time, upperBoundBarVal, sound, onCompleteCallback) {
+export function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
     let limit = 0;

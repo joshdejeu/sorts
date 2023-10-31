@@ -1,6 +1,7 @@
 import { htmlInterface } from "../htmlInterface/htmlInterface.js";
+import { sound } from '../script.js'
 
-export function insertionSort(arrayToSort, time, upperBoundBarVal, sound, onCompleteCallback) {
+export function insertionSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -15,9 +16,6 @@ export function insertionSort(arrayToSort, time, upperBoundBarVal, sound, onComp
 
             async function innerStep() {
                 // Base case: Sorting is complete, call the onCompleteCallback
-                if (sortedCount === arrayToSort.length - 1) {
-                    onCompleteCallback();
-                }
 
                 // If 'j' is within array bounds and the element is greater than the 'key'
                 if (j >= 0 && arrayToSort[j] > key) {
@@ -55,7 +53,10 @@ export function insertionSort(arrayToSort, time, upperBoundBarVal, sound, onComp
             }
 
             // Start the inner sorting process
-            innerStep();
+             innerStep();
+        }
+        else if (sortedCount == arrayToSort.length - 1) {
+            onCompleteCallback(); // Call the onCompleteCallback
         }
     }
 

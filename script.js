@@ -16,7 +16,7 @@ const SORT_TYPE = {
     "bubble": bubbleSort,
     "merge": mergeSort,
 }
-const SORT_SPEED = 20;
+const SORT_SPEED = 150;
 const BAR_WIDTH = 15;
 const BAR_GAP = 10;
 const BAR_MAX_HEIGH = 150;
@@ -50,10 +50,12 @@ var container;
 var dataReady = true;
 let pause;
 let stopScramble = false;
-let sound = 'dream.mp3';
+let barsHaveBeenGenerated = true;
+let sound = 'dream.mp3'; //variable to change sound while sorting is live
 
 export { pause };
 export { SORT_SPEED }
+export { sound }
 
 let selected_sort = SORT_TYPE["insert"];
 let sortingInProgress = false;
@@ -63,7 +65,6 @@ window.addEventListener("load", ()=>{
 
     container = document.getElementById("container");
     container.style.gap = BAR_GAP+"px";
-    let playBtn = document.getElementById("play");
     
     generateBars(arrayBar, container, DEFAULT_STYLES, false);
     
@@ -71,9 +72,13 @@ window.addEventListener("load", ()=>{
         sortElement.addEventListener('click', (e) => {
             let htmlSoundSelected = e.target.getAttribute('data-sound');
             sound = `${htmlSoundSelected}.mp3`;
-            const selectedAudio = new Audio('./htmlInterface/sounds/'+sound);
-            selectedAudio.volume = 0.6;
-            selectedAudio.play()
+            //only play the sound sample if a sort is not live
+            if(!sortingInProgress)
+            {
+                const selectedAudio = new Audio('./htmlInterface/sounds/'+sound);
+                selectedAudio.volume = 0.6;
+                selectedAudio.play()
+            }
             for (let i = 0; i < document.getElementsByClassName('sound').length; i++) {
                 document.getElementsByClassName('sound')[i].className='sound';
             }
@@ -104,13 +109,22 @@ window.addEventListener("load", ()=>{
             e.target.className = 'sort active';
             let htmlSortSelected = e.target.getAttribute('data-sort')
             selected_sort = SORT_TYPE[htmlSortSelected];
+            
+            //generate new bars if they don't already exist
+            if(!barsHaveBeenGenerated)
+            {
+                container.innerHTML = "";
+                generateBars(arrayBar, container, DEFAULT_STYLES, false);
+            }
+
 
             console.log("Sorting Begun")
             sortingInProgress = true;
-            selected_sort(arrayBar, SORT_SPEED, BAR_UPPER_VALUE_LIMIT, sound, () => {
+            selected_sort(arrayBar, SORT_SPEED, BAR_UPPER_VALUE_LIMIT, () => {
                 sortingInProgress = false; // Reset the flag when sorting is complete.
                 console.log("Sorting Finished")
                 stopScramble = false;
+                barsHaveBeenGenerated = false;
                 // document.querySelector('body').append(titleEl);
                 // setTimeout(titleEffect,1000);
             });
@@ -121,7 +135,7 @@ window.addEventListener("load", ()=>{
 
 
 
-
+//move this somewhere else
 function generateBars(bars, container, styles, spawnTime = 0)
 {
     populateBars();
@@ -144,7 +158,7 @@ function generateBars(bars, container, styles, spawnTime = 0)
 
 
 
-
+//move this somewhere else too
 let titleEl = document.getElementById('text');
 import { TextScramble } from './htmlInterface/textScramble.js'
 function titleEffect()

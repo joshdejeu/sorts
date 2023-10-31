@@ -16,7 +16,7 @@ const SORT_TYPE = {
     "bubble": bubbleSort,
     "merge": mergeSort,
 }
-const SORT_SPEED = 150;
+const SORT_SPEED = 100;
 const BAR_WIDTH = 15;
 const BAR_GAP = 10;
 const BAR_MAX_HEIGH = 150;

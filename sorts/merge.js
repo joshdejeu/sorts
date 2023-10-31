@@ -1,12 +1,14 @@
 import { htmlInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
-export function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
+export async function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
     let limit = 0;
+    console.log('original',arrayToSort)
+    await sort(arrayToSort, 0, arrayToSort.length - 1);
     console.log(arrayToSort)
-    sort(arrayToSort, 0, arrayToSort.length - 1);
+    onCompleteCallback();
 
     //@pre first <= mid <= last
     //@post array[first...last] is sorted
@@ -14,17 +16,15 @@ export function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallbac
     {
         if(first < last)
         {
-            let mid = (first + last) / 2; // get midpoint of array
-            sort(array, first, mid); // sort 1st array
-            sort(array, mid + 1, last); // sort 2nd array
-            merge(array, first, mid, last); // merge both arrays
+            let mid = Math.floor((first + last) / 2); // get midpoint of array
+            await sort(array, first, mid); // sort 1st array
+            await sort(array, mid + 1, last); // sort 2nd array
+            await merge(array, first, mid, last); // merge both arrays
         }
     }
 
-     function merge(array, first, mid, last)
+    async function merge(array, first, mid, last)
     {
-        if(limit > 15){return;}
-        limit++;
         let tempArray = new Array(arrayToSort.length); // Create an empty array
     
         let first1 = first;     //start of array1
@@ -40,10 +40,12 @@ export function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallbac
             if(array[first1] <= array[first2])
             {
                 tempArray[index] = array[first1];
+                await highlightAndSwap(index, first1);
                 first1++;
             }
             else{
                 tempArray[index] = array[first2];
+                await highlightAndSwap(index, first1);
                 first2++; 
             }
             index++;
@@ -53,6 +55,7 @@ export function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallbac
         while(first1 <= last1)
         {
             tempArray[index] = array[first1];
+            await highlightAndSwap(index, first1);
             first1++;
             index++;
         }
@@ -60,15 +63,21 @@ export function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallbac
         while(first2 <= last2)
         {
             tempArray[index] = array[first2];
+            await highlightAndSwap(index, first2);
             first2++;
             index++;
         }
+    }
 
-        //sorting complete, copy tempArray to array
-        for (let i = first; i <= last; i++) {
-            arrayToSort[i] = tempArray[i];
-// htmlInterface.swapElements(arrayToSort[i + 1], arrayToSort[i], time);
-        }
-        console.log(arrayToSort)
+    //highlight HTML element and swap it on the DOM
+    async function highlightAndSwap(index1, index2)
+    {
+        htmlInterface.playSound(arrayToSort[index2], upperBoundBarVal, sound);
+        htmlInterface.highlightElement(children[index2], "rgba(217, 70, 70, 0.8)");
+        htmlInterface.highlightElement(children[index1], "rgba(255, 255, 255, 0.8)");
+        await htmlInterface.swapElements(children[index1], children[index2], time); // Swap corresponding HTML elements
+        htmlInterface.highlightElement(children[index2], "rgba(255, 255, 255, 0.8)");
+        // htmlInterface.highlightElement(children[index1], "rgba(217, 70, 70, 0.8)");
+    
     }
 }

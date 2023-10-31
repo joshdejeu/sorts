@@ -3,7 +3,9 @@
 A Sorting Algorithm Visualization website, where you can interactively explore and visualize various sorting algorithms.
 
 <p align="center">
-  <img src="screenshots/screenshot1.png" alt="Sorting Algorithm Home Page" style="width: 90%">
+  <a href="https://sorts.pages.dev/">
+    <img src="screenshots/screenshot1.png" alt="Sorting Algorithm Home Page" style="width: 90%; border: 1px solid rgb(150,150,150);">
+  </a>
 </p>
 
 

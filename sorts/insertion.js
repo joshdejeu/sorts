@@ -1,6 +1,4 @@
 import { htmlInterface } from "../htmlInterface/htmlInterface.js";
-import { pause } from "../script.js";
-import { SORT_SPEED } from '../script.js';
 
 export function insertionSort(arrayToSort, time, upperBoundBarVal, sound, onCompleteCallback) {
     var container = document.getElementById("container");
@@ -10,49 +8,57 @@ export function insertionSort(arrayToSort, time, upperBoundBarVal, sound, onComp
     let sortedCount = 0; // Initialize a counter for sorted elements
 
     function step() {
-        if(pause)return;
+        // If 'i' is within the array bounds
         if (i < arrayToSort.length) {
             let key = arrayToSort[i];
             let j = i - 1;
 
-            function innerStep() {
-                if(pause){
-                    clearTimeout(innerStep);
-                    clearTimeout(step);    
-                    return;
+            async function innerStep() {
+                // Base case: Sorting is complete, call the onCompleteCallback
+                if (sortedCount === arrayToSort.length - 1) {
+                    onCompleteCallback();
                 }
-                if (j >= 0 && arrayToSort[j] > key) {
-                    arrayToSort[j + 1] = arrayToSort[j];
-                    htmlInterface.swapElements(children[j + 1], children[j]);
-                    if(SORT_SPEED!=0)
-                    {
-                        htmlInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)"); // Highlight the element in red
-                        htmlInterface.playSound(arrayToSort[j + 1], upperBoundBarVal, sound);
-                    }
-                    j--;
-                    if(time!=0){setTimeout(innerStep, time);} // Call innerStep function after 500ms
-                    else{innerStep();}
-                } else {
-                    arrayToSort[j + 1] = key;
-                    htmlInterface.highlightElement(children[j+1], "rgba(255, 255, 255, 0.8)"); // Highlight the element in 
-                    
-                    i++;
-                    sortedCount++; // Increment the counter for sorted elements
 
-                    if(time!=0){setTimeout(step, time);} // if no time delay chosen then no timeout
-                    else{step();}
-                    if (sortedCount === arrayToSort.length - 1) {
-                        // Sorting is complete, call the onCompleteCallback
-                        onCompleteCallback();
-                    //     Array.from(children).forEach(child => {
-                    //         htmlInterface.highlightElement(child, "rgb(100,200,120)")
-                    //     });
+                // If 'j' is within array bounds and the element is greater than the 'key'
+                if (j >= 0 && arrayToSort[j] > key) {
+                    // Shift elements and perform related operations
+                    arrayToSort[j + 1] = arrayToSort[j];
+                    htmlInterface.playSound(arrayToSort[j + 1], upperBoundBarVal, sound);
+
+                    // Highlight the element being moved in red
+                    htmlInterface.highlightElement(children[j + 1], "rgba(217, 70, 70, 0.8)");
+
+                    // Swap elements and apply time delay
+                    await htmlInterface.swapElements(children[j + 1], children[j], time);
+
+                    // Move to the previous element
+                    j--;
+                    innerStep();
+                } else {
+                    // Set the 'key' in its sorted position
+                    arrayToSort[j + 1] = key;
+
+                    // Reset the highlighting for the newly sorted element
+                    htmlInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)");
+
+                    // Move to the next 'i' and increment the sorted elements counter
+                    i++;
+                    sortedCount++;
+
+                    // Continue the sorting process with or without a time delay
+                    if (time != 0) {
+                        step();
+                    } else {
+                        step();
                     }
                 }
             }
 
+            // Start the inner sorting process
             innerStep();
         }
     }
+
+    // Start the sorting process
     step();
 }

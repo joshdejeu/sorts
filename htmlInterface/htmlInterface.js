@@ -1,18 +1,40 @@
+import { SORT_SPEED } from '../script.js';
+
+
 const context = new AudioContext();
 
 export class htmlInterface {
     static highlightElement(element, color) {
+        if(SORT_SPEED == 0){return;}
         element.style.backgroundColor = color;
     }
 
-    static swapElements(element1, element2) {
-        if (element1.parentNode === element2.parentNode) {
-            const parent = element1.parentNode;
-            const nextSibling = element1.nextSibling === element2 ? element1 : element2;
-            parent.insertBefore(element1, nextSibling);
-        } else {
-            console.error("Elements have different parents, cannot swap.");
-        }
+    //@pre element1 must first in order on the DOM above element2
+    static swapElements(element1, element2, milliseconds) {
+        return new Promise((resolve) => {
+            if (element1.parentNode === element2.parentNode) {
+                const parent = element1.parentNode;
+                const nextSibling = element1.nextSibling === element2 ? element1 : element2;
+                parent.insertBefore(element1, nextSibling);
+            } else {
+                console.error("Elements have different parents, cannot swap.");
+            }
+        
+            // Use a flag to track if the Promise has already resolved
+            let resolved = false;
+        
+            // Resolve the Promise after a minimum of `milliseconds`
+            setTimeout(() => {
+                if (!resolved) {
+                    resolved = true;
+                    resolve();
+                }
+            }, milliseconds);
+        
+            // Additional logic to resolve the Promise when needed
+            // For example, you can call resolve() when some condition is met
+            // For instance, when animations or other asynchronous tasks are complete.
+        });
     }
 
     //creates individual html elements and styles width/height/color
@@ -43,6 +65,7 @@ export class htmlInterface {
 
 
     static async playSound(valOfElementMoved, upperBoundBarVal, sound) {
+        if(SORT_SPEED == 0){return;}
         //give a range 1 to n, map its values to a range with lower volume (newRangeMin) and upper volume (newRangeMax)
         function mapValueToRange(value, n) {
             const oldRangeMin = 1;

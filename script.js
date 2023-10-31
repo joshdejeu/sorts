@@ -19,7 +19,7 @@ const BAR_WIDTH = 15;
 const BAR_GAP = 10;
 const BAR_MAX_HEIGH = 150;
 const BAR_COLOR = [255, 255, 255, 0.8];
-const BAR_COUNT = 25;
+const BAR_COUNT = 15;
 const DATA_VARIATION = BAR_COUNT;
 const SPAWN_SPEED = 50;
 const BAR_UPPER_VALUE_LIMIT = DATA_VARIATION;
@@ -65,18 +65,20 @@ window.addEventListener("load", ()=>{
     
     generateBars(arrayBar, container, DEFAULT_STYLES, false);
     
-    document.getElementById('sound_selection')
-    .addEventListener('click', (e) => {
-        let htmlSoundSelected = e.target.getAttribute('data-sound');
-        sound = `${htmlSoundSelected}.mp3`;
-        const selectedAudio = new Audio('./htmlInterface/sounds/'+sound);
-        selectedAudio.volume = 0.6;
-        selectedAudio.play()
-        for (let i = 0; i < document.getElementsByClassName('sound').length; i++) {
-            document.getElementsByClassName('sound')[i].className='sound';
-        }
-        e.target.className = 'sound active';
+    document.querySelectorAll('.sort').forEach(element => {
+        element.addEventListener('click', (e) => {
+            let htmlSoundSelected = e.target.getAttribute('data-sound');
+            sound = `${htmlSoundSelected}.mp3`;
+            const selectedAudio = new Audio('./htmlInterface/sounds/'+sound);
+            selectedAudio.volume = 0.6;
+            selectedAudio.play()
+            for (let i = 0; i < document.getElementsByClassName('sound').length; i++) {
+                document.getElementsByClassName('sound')[i].className='sound';
+            }
+            e.target.className = 'sound active';
+        });
     });
+    
 
     document.getElementById('sort_selection')
     .addEventListener('click', (e) => {

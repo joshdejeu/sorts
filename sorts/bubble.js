@@ -1,11 +1,10 @@
-import { htmlInterface } from "../htmlInterface/htmlInterface.js";
+import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
 export async function bubbleSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
 
-    console.log("Original Array", arrayToSort);
     let i = arrayToSort.length - 1;
     let sortedCount = 0;
 
@@ -25,16 +24,16 @@ export async function bubbleSort(arrayToSort, time, upperBoundBarVal, onComplete
                         [arrayToSort[j], arrayToSort[j + 1]] = [arrayToSort[j + 1], arrayToSort[j]];
 
                         // Highlight elements during the swap
-                        htmlInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)");
-                        htmlInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)");
+                        HTMLInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)");
+                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)");
 
                         // Play sound and swap elements
-                        htmlInterface.playSound(arrayToSort[j], upperBoundBarVal, sound);
-                        await htmlInterface.swapElements(children[j + 1], children[j], time);
+                        HTMLInterface.playSound(arrayToSort[j], upperBoundBarVal, sound);
+                        await HTMLInterface.swapElements(children[j + 1], children[j], time);
 
                         // Reset highlighting
-                        htmlInterface.highlightElement(children[j], "rgba(255, 255, 255, 0.8)");
-                        htmlInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)");
+                        HTMLInterface.highlightElement(children[j], "rgba(255, 255, 255, 0.8)");
+                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)");
 
                         // Continue the inner sort
                         j++;

@@ -2,7 +2,7 @@ import { insertionSort } from './sorts/insertion.js';
 import { bubbleSort } from './sorts/bubble.js';
 import { mergeSort } from './sorts/merge.js';
 
-import { htmlInterface } from './htmlInterface/htmlInterface.js';
+import { HTMLInterface } from './htmlInterface/htmlInterface.js';
 import { SortSettings } from './htmlInterface/classes/sortSettings.js';
 
 // let defaultSettings = new SortSettings();
@@ -16,12 +16,12 @@ const SORT_TYPE = {
     "bubble": bubbleSort,
     "merge": mergeSort,
 }
-const SORT_SPEED = 100;
-const BAR_WIDTH = 15;
-const BAR_GAP = 10;
+const SORT_SPEED = 10;
+const BAR_WIDTH = 10;
+const BAR_GAP = 7;
 const BAR_MAX_HEIGH = 150;
 const BAR_COLOR = [255, 255, 255, 0.8];
-const BAR_COUNT = 15;
+const BAR_COUNT = 50;
 const DATA_VARIATION = BAR_COUNT;
 const SPAWN_SPEED = 50;
 const BAR_UPPER_VALUE_LIMIT = DATA_VARIATION;
@@ -51,7 +51,7 @@ var dataReady = true;
 let pause;
 let stopScramble = false;
 let barsHaveBeenGenerated = true;
-let sound = 'dream.mp3'; //variable to change sound while sorting is live
+let sound = 'dream'; //variable to change sound while sorting is live
 
 export { pause };
 export { SORT_SPEED }
@@ -61,6 +61,7 @@ let selected_sort = SORT_TYPE["insert"];
 let sortingInProgress = false;
 
 window.addEventListener("load", ()=>{
+    HTMLInterface.listenForVolumeChange();
     setTimeout(titleEffect,1000);
 
     container = document.getElementById("container");
@@ -71,11 +72,11 @@ window.addEventListener("load", ()=>{
     document.querySelectorAll('.sound').forEach(sortElement => {
         sortElement.addEventListener('click', (e) => {
             let htmlSoundSelected = e.target.getAttribute('data-sound');
-            sound = `${htmlSoundSelected}.mp3`;
+            sound = htmlSoundSelected;
             //only play the sound sample if a sort is not live
-            if(!sortingInProgress)
+            if(!sortingInProgress && !(htmlSoundSelected == false || htmlSoundSelected == 'false'))
             {
-                const selectedAudio = new Audio('./htmlInterface/sounds/'+sound);
+                const selectedAudio = new Audio(`./htmlInterface/sounds/${sound}.mp3`);
                 selectedAudio.volume = 0.6;
                 selectedAudio.play()
             }
@@ -94,7 +95,7 @@ window.addEventListener("load", ()=>{
 
         if(sortingInProgress)
         {
-            htmlInterface.message(
+            HTMLInterface.message(
                 {
                     title: "Sorting Algorithm",
                     message: "Can't sort, a sorting algorithm is already in progress"
@@ -144,7 +145,7 @@ function generateBars(bars, container, styles, spawnTime = 0)
 
     function processNextBar() {
         if (index < bars.length) {
-            htmlInterface.generateHtmlBar(bars[index], container, styles, BAR_UPPER_VALUE_LIMIT);
+            HTMLInterface.generateHtmlBar(bars[index], container, styles, BAR_UPPER_VALUE_LIMIT);
             index++;
             if(spawnTime != 0){setTimeout(processNextBar, spawnTime);} // Set the delay (in milliseconds) between iterations
             else{processNextBar();}

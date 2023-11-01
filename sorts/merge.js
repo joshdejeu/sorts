@@ -1,4 +1,4 @@
-import { htmlInterface } from "../htmlInterface/htmlInterface.js";
+import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
 export async function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
@@ -72,11 +72,11 @@ export async function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteC
     //highlight HTML element and swap it on the DOM
     async function highlightAndSwap(index1, index2)
     {
-        htmlInterface.playSound(arrayToSort[index2], upperBoundBarVal, sound);
-        htmlInterface.highlightElement(children[index2], "rgba(217, 70, 70, 0.8)");
-        htmlInterface.highlightElement(children[index1], "rgba(255, 255, 255, 0.8)");
-        await htmlInterface.swapElements(children[index1], children[index2], time); // Swap corresponding HTML elements
-        htmlInterface.highlightElement(children[index2], "rgba(255, 255, 255, 0.8)");
+        HTMLInterface.playSound(arrayToSort[index2], upperBoundBarVal, sound);
+        HTMLInterface.highlightElement(children[index2], "rgba(217, 70, 70, 0.8)");
+        HTMLInterface.highlightElement(children[index1], "rgba(255, 255, 255, 0.8)");
+        await HTMLInterface.swapElements(children[index1], children[index2], time); // Swap corresponding HTML elements
+        HTMLInterface.highlightElement(children[index2], "rgba(255, 255, 255, 0.8)");
         // htmlInterface.highlightElement(children[index1], "rgba(217, 70, 70, 0.8)");
     
     }

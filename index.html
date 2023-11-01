@@ -29,6 +29,12 @@
     </div>
 
     <div id="sound_selection">
+        <div class="sound" data-sound="false">
+            <i class="fa-solid fa-volume-xmark"></i>
+        </div>
+        <div class="sound" data-sound="error">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
         <div class="sound" data-sound="guitar">
             <i class="fa-solid fa-guitar"></i>
         </div>
@@ -44,6 +50,16 @@
         <div class="sound" data-sound="pluh">
             <i class="fa-brands fa-soundcloud"></i>
         </div>
+
+        <div id="volume_hover">
+            <div id="volume">
+                <div class="slider"></div>
+                <div id="slider_holder">
+                    <div class="color-indicator"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
     
     <script type="module" src="./script.js"></script>

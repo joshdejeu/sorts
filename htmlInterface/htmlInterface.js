@@ -5,6 +5,18 @@ let soundVolume = "25.0";
 export { soundVolume };
 export class HTMLInterface {
 
+    static openSettings(e)
+    {
+        e.style.display = 'block;'
+    }
+
+    static closeSettings(e)
+    {
+        e.style.display = 'none';
+    }
+
+
+
     static highlightElement(element, color) {
         if (SORT_SPEED == 0) { return; }
         element.style.backgroundColor = color;

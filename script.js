@@ -19,7 +19,7 @@ const SORT_TYPE = {
     "merge": theMergeSort,
     "selection": selectionSort,
 }
-const SORT_SPEED = 350;
+const SORT_SPEED = 150;
 const BAR_WIDTH = 10;
 const BAR_GAP = 7;
 const BAR_MAX_HEIGH = 150;
@@ -54,7 +54,6 @@ var dataReady = true;
 let pause;
 let stopScramble = false;
 let barsHaveBeenGenerated = true;
-let sound = 'dream'; //variable to change sound while sorting is live
 
 export { pause };
 export { SORT_SPEED }
@@ -63,7 +62,29 @@ export { sound }
 let selected_sort = SORT_TYPE["insert"];
 let sortingInProgress = false;
 
+const soundCookie = getCookie('soundCookie');
+let sound = soundCookie; //variable to change sound while sorting is live
+
+let openSettings = true;
 window.addEventListener("load", ()=>{
+    //click controls to open settings
+    let settingsElement = document.getElementById('settings');
+    document.getElementById('sort_controls').addEventListener('click', ()=>{
+            openSettings ? HTMLInterface.openSettings(settingsElement) : HTMLInterface.closeSettings(settingsElement);    
+            openSettings=!openSettings;
+        }
+    )
+
+
+
+    try {
+        highlightSound(document.getElementById(sound));
+    } catch (error) {
+        console.log(error)
+        sound = clearAllCookies();
+        highlightSound(document.getElementById(sound));
+    }
+
     HTMLInterface.listenForVolumeChange();
     setTimeout(titleEffect,1000);
 
@@ -76,6 +97,8 @@ window.addEventListener("load", ()=>{
         sortElement.addEventListener('click', (e) => {
             let htmlSoundSelected = e.target.getAttribute('data-sound');
             sound = htmlSoundSelected;
+            setCookie('soundCookie', sound, 30);
+
             //only play the sound sample if a sort is not live
             if(!sortingInProgress && !(htmlSoundSelected == false || htmlSoundSelected == 'false'))
             {
@@ -83,12 +106,17 @@ window.addEventListener("load", ()=>{
                 selectedAudio.volume = soundVolume / 150;
                 selectedAudio.play()
             }
-            for (let i = 0; i < document.getElementsByClassName('sound').length; i++) {
-                document.getElementsByClassName('sound')[i].className='sound';
-            }
-            e.target.className = 'sound active';
+            highlightSound(e.target);
         });
     });
+    function highlightSound(e)
+    {
+        if(e === null)throw new TypeError("Sound cookie was null."); 
+        for (let i = 0; i < document.getElementsByClassName('sound').length; i++) {
+            document.getElementsByClassName('sound')[i].className='sound';
+        }
+        e.className = 'sound active';
+    }
     
 
     document.getElementById('sort_selection')
@@ -134,9 +162,39 @@ window.addEventListener("load", ()=>{
             });
         }
     })
-
 });
 
+
+// Set a cookie with a name, value, and optional parameters
+function setCookie(name, value, daysToExpire) {
+    const date = new Date();
+    date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000)); // Calculate expiration date
+    const expires = `expires=${date.toUTCString()}`;
+    document.cookie = `${name}=${value}; ${expires}; path=/`;
+}
+
+// Get the value of a cookie by its name
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.trim().split('=');
+        if (cookieName === name) {
+            return cookieValue;
+        }
+    }
+    return 'dream'; // Cookie not found
+}
+
+function clearAllCookies() {
+    const cookies = document.cookie.split(';');
+
+    for (let cookie of cookies) {
+        const [name, _] = cookie.split('=');
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+    setCookie('soundCookie', 'dream', 30); //set default sound
+    return 'dream';//get new default cookie
+}
 
 
 //move this somewhere else

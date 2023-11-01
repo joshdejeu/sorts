@@ -2,6 +2,7 @@ import { SORT_SPEED } from '../script.js';
 const context = new AudioContext();
 
 let soundVolume = "25.0";
+export { soundVolume };
 export class HTMLInterface {
 
     static highlightElement(element, color) {
@@ -10,7 +11,7 @@ export class HTMLInterface {
     }
 
     //@pre element1 must first in order on the DOM above element2
-    static swapElements(element1, element2, milliseconds) {
+    static async swapElements(element1, element2, milliseconds) {
         return new Promise((resolve) => {
             if (element1.parentNode === element2.parentNode) {
                 const parent = element1.parentNode;
@@ -199,11 +200,13 @@ export class HTMLInterface {
 
     //listen for mouseDown, mouseDrag, mouseUp events to update sound volume
     static listenForVolumeChange() {
+
         let volSlider = document.getElementById('volume');
         let indicator = volSlider.querySelector('.color-indicator');
         let volHover = document.getElementById('volume_hover');
 
         let isDragging = false;
+        let eagleHasLanded = false;
         let initialY, initialTop, initialPositionOnScale;
     
         volSlider.addEventListener('mousedown', (e) => {
@@ -211,7 +214,7 @@ export class HTMLInterface {
         });
 
         volSlider.addEventListener('mousedown', (e) => {
-            isDragging = true;
+            isDragging = eagleHasLanded = true;
             initialY = e.clientY;
             initialTop = volSlider.getBoundingClientRect().top;
             volSlider.style.cursor = 'pointer';
@@ -219,6 +222,8 @@ export class HTMLInterface {
             const clampedPosition = Math.min(100, Math.max(0, positionOnScale));
             indicator.style.height = `${(100-clampedPosition).toFixed(2)}%`;
             soundVolume = (100-clampedPosition).toFixed(2);
+            audioTest.volume = soundVolume / 150;
+            audioTest.play()
         });
     
         document.addEventListener('mousemove', (e) => {
@@ -231,6 +236,7 @@ export class HTMLInterface {
                 indicator.style.height = `${100 - clampedPosition}%`;
                 soundVolume = (100-clampedPosition).toFixed(2);
                 volHover.style.display = 'block';
+
             }
         });
     
@@ -238,6 +244,13 @@ export class HTMLInterface {
             isDragging = false;
             volSlider.style.cursor = 'pointer';
             volHover.style.display = 'none';
+            if(eagleHasLanded)
+            {
+                audioTest.volume = soundVolume / 150;
+                audioTest.play()
+                eagleHasLanded = false
+            }
         });
     }
 }   
+const audioTest = new Audio(`./htmlInterface/sounds/soundTest.mp3`);

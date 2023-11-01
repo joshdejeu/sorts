@@ -1,83 +1,72 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
-export async function mergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
+export async function theMergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
     let limit = 0;
-    console.log('original',arrayToSort)
-    await sort(arrayToSort, 0, arrayToSort.length - 1);
+    console.log('original', arrayToSort)
+    await mergeSort(arrayToSort, 0, arrayToSort.length - 1);
     console.log(arrayToSort)
     onCompleteCallback();
 
     //@pre first <= mid <= last
     //@post array[first...last] is sorted
-    async function sort(array, first, last)
-    {
-        if(first < last)
-        {
-            let mid = Math.floor((first + last) / 2); // get midpoint of array
-            await sort(array, first, mid); // sort 1st array
-            await sort(array, mid + 1, last); // sort 2nd array
-            await merge(array, first, mid, last); // merge both arrays
+    // Function to call mergeSort recursively and visualize the process
+    async function mergeSort(array, start, end) {
+        if (start >= end) {
+            return [array[start]];
         }
+
+        const middle = Math.floor((start + end) / 2);
+        const left = await mergeSort(array, start, middle);
+        const right = await mergeSort(array, middle + 1, end);
+
+        return await merge(left, right, start, middle, end);
     }
 
-    async function merge(array, first, mid, last)
-    {
-        let tempArray = new Array(arrayToSort.length); // Create an empty array
-    
-        let first1 = first;     //start of array1
-        let last1 = mid;        //end of array2
-        let first2 = mid + 1;   //start of array2
-        let last2 = last;       //end of array2
+    // Function to merge two sorted arrays with visualization
+    async function merge(left, right, start, middle, end) {
+        const merged = [];
+        let leftIndex = 0;
+        let rightIndex = 0;
 
-        //while both arrays are not empty
-        //sort items to tempArray
-        let index = first1;
-        while((first1 <= last1) && (first2 <= last2))
-        {
-            if(array[first1] <= array[first2])
-            {
-                tempArray[index] = array[first1];
-                await highlightAndSwap(index, first1);
-                first1++;
+        while (leftIndex < left.length && rightIndex < right.length) {
+            if (left[leftIndex] < right[rightIndex]) {
+                merged.push(left[leftIndex]);
+                await highlightAndSwap(start + leftIndex, start + left.length + rightIndex);
+                leftIndex++;
+            } else {
+                merged.push(right[rightIndex]);
+                await highlightAndSwap(start + left.length + rightIndex, start + leftIndex);
+                rightIndex++;
             }
-            else{
-                tempArray[index] = array[first2];
-                await highlightAndSwap(index, first1);
-                first2++; 
-            }
-            index++;
         }
 
-        //finish 1st array if required
-        while(first1 <= last1)
-        {
-            tempArray[index] = array[first1];
-            await highlightAndSwap(index, first1);
-            first1++;
-            index++;
+        while (leftIndex < left.length) {
+            merged.push(left[leftIndex]);
+            leftIndex++;
         }
-        //finish 2nd array if required
-        while(first2 <= last2)
-        {
-            tempArray[index] = array[first2];
-            await highlightAndSwap(index, first2);
-            first2++;
-            index++;
+
+        while (rightIndex < right.length) {
+            merged.push(right[rightIndex]);
+            rightIndex++;
         }
+
+     
+
+        return merged;
     }
+
 
     //highlight HTML element and swap it on the DOM
-    async function highlightAndSwap(index1, index2)
-    {
+    async function highlightAndSwap(index1, index2) {
         HTMLInterface.playSound(arrayToSort[index2], upperBoundBarVal, sound);
         HTMLInterface.highlightElement(children[index2], "rgba(217, 70, 70, 0.8)");
         HTMLInterface.highlightElement(children[index1], "rgba(255, 255, 255, 0.8)");
         await HTMLInterface.swapElements(children[index1], children[index2], time); // Swap corresponding HTML elements
         HTMLInterface.highlightElement(children[index2], "rgba(255, 255, 255, 0.8)");
         // htmlInterface.highlightElement(children[index1], "rgba(217, 70, 70, 0.8)");
-    
+
     }
 }

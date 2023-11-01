@@ -1,9 +1,11 @@
 import { insertionSort } from './sorts/insertion.js';
 import { bubbleSort } from './sorts/bubble.js';
-import { mergeSort } from './sorts/merge.js';
+import { theMergeSort } from './sorts/merge.js';
+import { selectionSort } from './sorts/selection.js';
 
 import { HTMLInterface } from './htmlInterface/htmlInterface.js';
 import { SortSettings } from './htmlInterface/classes/sortSettings.js';
+import { soundVolume } from '../htmlInterface/htmlInterface.js';
 
 // let defaultSettings = new SortSettings();
 // console.log(defaultSettings.SORT_SPEED)
@@ -14,15 +16,16 @@ const IN_ORDER = false;
 const SORT_TYPE = {
     "insertion": insertionSort,
     "bubble": bubbleSort,
-    "merge": mergeSort,
+    "merge": theMergeSort,
+    "selection": selectionSort,
 }
-const SORT_SPEED = 10;
+const SORT_SPEED = 350;
 const BAR_WIDTH = 10;
 const BAR_GAP = 7;
 const BAR_MAX_HEIGH = 150;
 const BAR_COLOR = [255, 255, 255, 0.8];
-const BAR_COUNT = 50;
-const DATA_VARIATION = BAR_COUNT;
+const BAR_COUNT = 10;
+const DATA_VARIATION = BAR_COUNT*2;
 const SPAWN_SPEED = 50;
 const BAR_UPPER_VALUE_LIMIT = DATA_VARIATION;
 
@@ -77,7 +80,7 @@ window.addEventListener("load", ()=>{
             if(!sortingInProgress && !(htmlSoundSelected == false || htmlSoundSelected == 'false'))
             {
                 const selectedAudio = new Audio(`./htmlInterface/sounds/${sound}.mp3`);
-                selectedAudio.volume = 0.6;
+                selectedAudio.volume = soundVolume / 150;
                 selectedAudio.play()
             }
             for (let i = 0; i < document.getElementsByClassName('sound').length; i++) {

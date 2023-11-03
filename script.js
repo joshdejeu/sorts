@@ -23,7 +23,7 @@ const SORT_SPEED = 15; //timeout between each iteration (0 is none)
 const BAR_WIDTH = 10; //width in px
 const BAR_GAP = 7; //gap between bars in px
 const BAR_MAX_HEIGH = 150; //max height in px
-const BAR_COLOR = [255, 255, 255, 0.8]; //background in rgba
+const BAR_COLOR = "255, 255, 255, 1"; //background in rgba
 const DATA_VARIATION = (BAR_COUNT * 2); //highest value a bar can be (lowest is default 0)
 const BAR_GROWTH_SPEED = 0; //time for bar to grow from 0 to x height
 const BAR_SPAWN_DELAY = 0; //time between each bar appearing
@@ -71,7 +71,7 @@ window.addEventListener("load", ()=>{
         SORT_SPEED: urlParams.get('sort-speed'),
         BAR_WIDTH: urlParams.get('width'),
         BAR_GAP: urlParams.get('gap'),
-        BAR_MAX_HEIGH: urlParams.get('height'),
+        BAR_MAX_HEIGHT: urlParams.get('height'),
         BAR_COLOR: urlParams.get('color'),
         BAR_COUNT: urlParams.get('count'),
         DATA_VARIATION: urlParams.get('variation'),
@@ -86,10 +86,10 @@ window.addEventListener("load", ()=>{
         const value = urlBarSettings[setting];
         if(setting == "reset" && value){
             return;}
-        console.log(setting, value)
         if(value!=null && value!="")
         {ds[setting] = value;}
     }
+    console.log(ds.BAR_COLOR)
 
     const DEFAULT_STYLES = {
         width: ds.BAR_WIDTH,

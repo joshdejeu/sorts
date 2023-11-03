@@ -6,8 +6,36 @@ export class HTMLInterface {
 
     static openSettings(e)
     {
-        console.log('opening',e)
+        const urlParams = new URLSearchParams(window.location.search);
+        let urlBarSettings = 
+        {
+            sortSpeed: urlParams.get('sort-speed'),
+            width: urlParams.get('width'),
+            gap: urlParams.get('gap'),
+            height: urlParams.get('height'),
+            color: urlParams.get('color'),
+            count: urlParams.get('count'),
+            variation: urlParams.get('variation'),
+            growSpeed: urlParams.get('grow-speed'),
+            spawnDelay: urlParams.get('spawn-delay'),
+            order: urlParams.get('order'),
+            RESET: urlParams.get('reset')
+        }   
+        const form = document.querySelector('#settings form');
+        const inputElements = form.querySelectorAll('input');
+        inputElements.forEach((input) => {
+            if(urlBarSettings[input.name] != null && urlBarSettings[input.name] != "")
+            {
+                console.log(input.value = urlBarSettings[input.name]);
+            }
+            else{
+                console.log('null or empty')
+            }
+        });
+        
         e.style.display = 'flex'
+
+
     }
 
     static closeSettings(e)
@@ -56,9 +84,9 @@ export class HTMLInterface {
         bar.className = 'bar';
         if (styles.grow) { bar.style.animation = "grow 0.5s ease-in forwards" }
         else { bar.style.animation = "grow 0.0s ease-in forwards"; }
-        bar.style.color = `rgba(${styles.color[0]}, ${styles.color[1]}, ${styles.color[2]}, ${styles.color[3]})`;
         bar.style.width = styles.width + "px";
         bar.style.height = `${styles.maxHeight * (barVal / barUpperLimit)}px`;
+        bar.style.background = `rgba(${styles.color})`;
 
         let barNum = document.createElement('p1');
         barNum.className = 'barNum';

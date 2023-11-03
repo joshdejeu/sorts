@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
-export async function theMergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
+export async function theMergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback, SORT_SPEED) {
     var container = document.getElementById("container");
     var children = container.children;
     let limit = 0;
@@ -61,11 +61,11 @@ export async function theMergeSort(arrayToSort, time, upperBoundBarVal, onComple
 
     //highlight HTML element and swap it on the DOM
     async function highlightAndSwap(index1, index2) {
-        HTMLInterface.playSound(arrayToSort[index2], upperBoundBarVal, sound);
-        HTMLInterface.highlightElement(children[index2], "rgba(217, 70, 70, 0.8)");
-        HTMLInterface.highlightElement(children[index1], "rgba(255, 255, 255, 0.8)");
+        HTMLInterface.playSound(arrayToSort[index2], upperBoundBarVal, sound, SORT_SPEED);
+        HTMLInterface.highlightElement(children[index2], "rgba(217, 70, 70, 0.8)", SORT_SPEED);
+        HTMLInterface.highlightElement(children[index1], "rgba(255, 255, 255, 0.8)", SORT_SPEED);
         await HTMLInterface.swapElements(children[index1], children[index2], time); // Swap corresponding HTML elements
-        HTMLInterface.highlightElement(children[index2], "rgba(255, 255, 255, 0.8)");
+        HTMLInterface.highlightElement(children[index2], "rgba(255, 255, 255, 0.8)", SORT_SPEED);
         // htmlInterface.highlightElement(children[index1], "rgba(217, 70, 70, 0.8)");
 
     }

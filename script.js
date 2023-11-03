@@ -11,8 +11,6 @@ import { titleEffect } from '../htmlInterface/textScramble.js'
 // let defaultSettings = new SortSettings();
 // console.log(defaultSettings.SORT_SPEED)
 
-//TRUE for bars to decent in order (worst case), FALSE for random values
-const IN_ORDER = false;
 
 const SORT_TYPE = {
     "insertion": insertionSort,
@@ -20,26 +18,34 @@ const SORT_TYPE = {
     "merge": theMergeSort,
     "selection": selectionSort,
 }
-const SORT_SPEED = 15;
-const BAR_WIDTH = 10;
-const BAR_GAP = 7;
-const BAR_MAX_HEIGH = 150;
-const BAR_COLOR = [255, 255, 255, 0.8];
-const BAR_COUNT = 20;
-const DATA_VARIATION = BAR_COUNT*2;
-const SPAWN_SPEED = 50;
-const BAR_SPAWNN_TIME = 15;
-const BAR_UPPER_VALUE_LIMIT = DATA_VARIATION;
+const BAR_COUNT = 20; //number of bars
+const SORT_SPEED = 15; //timeout between each iteration (0 is none)
+const BAR_WIDTH = 10; //width in px
+const BAR_GAP = 7; //gap between bars in px
+const BAR_MAX_HEIGH = 150; //max height in px
+const BAR_COLOR = [255, 255, 255, 0.8]; //background in rgba
+const DATA_VARIATION = (BAR_COUNT * 2); //highest value a bar can be (lowest is default 0)
+const BAR_GROWTH_SPEED = 0; //time for bar to grow from 0 to x height
+const BAR_SPAWN_DELAY = 0; //time between each bar appearing
+const IN_ORDER = false;//bars will be in deceneding order if TRUE
 
-const DEFAULT_STYLES = {
-    width: BAR_WIDTH,
-    maxHeight: BAR_MAX_HEIGH,
-    color: BAR_COLOR,
-    // grow: SPAWN_SPEED != 0 ? true : false,
-    grow: false,
+//default settings
+let ds = 
+{
+    SORT_SPEED: SORT_SPEED,
+    BAR_WIDTH: BAR_WIDTH,
+    BAR_GAP: BAR_GAP,
+    BAR_MAX_HEIGH: BAR_MAX_HEIGH,
+    BAR_COLOR: BAR_COLOR,
+    BAR_COUNT: BAR_COUNT,
+    DATA_VARIATION: DATA_VARIATION,
+    BAR_GROWTH_SPEED: BAR_GROWTH_SPEED,
+    BAR_SPAWN_DELAY: BAR_SPAWN_DELAY,
+    IN_ORDER: IN_ORDER,
 }
 
-var arrayBar = [];
+
+
 window.sharedArray = {
     data: []
 };
@@ -49,7 +55,6 @@ let pause;
 let barsHaveBeenGenerated = true;
 
 export { pause };
-export { SORT_SPEED }
 export { sound }
 
 let selected_sort = SORT_TYPE["insert"];
@@ -60,9 +65,45 @@ let sound = soundCookie; //variable to change sound while sorting is live
 
 let openSettings = true;
 window.addEventListener("load", ()=>{
+    const urlParams = new URLSearchParams(window.location.search);
+    let urlBarSettings = 
+    {
+        SORT_SPEED: urlParams.get('sort-speed'),
+        BAR_WIDTH: urlParams.get('width'),
+        BAR_GAP: urlParams.get('gap'),
+        BAR_MAX_HEIGH: urlParams.get('height'),
+        BAR_COLOR: urlParams.get('color'),
+        BAR_COUNT: urlParams.get('count'),
+        DATA_VARIATION: urlParams.get('variation'),
+        BAR_GROWTH_SPEED: urlParams.get('grow-speed'),
+        BAR_SPAWN_DELAY: urlParams.get('spawn-delay'),
+        IN_ORDER: urlParams.get('order'),
+        RESET: urlParams.get('reset')
+    }
+    
+    //if URL setting exists, place it in the settings 
+    for (const setting in urlBarSettings) {
+        const value = urlBarSettings[setting];
+        if(setting == "reset" && value){
+            return;}
+        console.log(setting, value)
+        if(value!=null && value!="")
+        {ds[setting] = value;}
+    }
+
+    const DEFAULT_STYLES = {
+        width: ds.BAR_WIDTH,
+        maxHeight: ds.BAR_MAX_HEIGH,
+        color: ds.BAR_COLOR,
+        grow: ds.BAR_GROWTH_SPEED != 0 ? true : false,
+    }
+
+
+
     //click controls to open settings
     let settingsElement = document.getElementById('settings');
     document.getElementById('sort_controls').addEventListener('click', ()=>{
+            // console.log('open')
             openSettings ? HTMLInterface.openSettings(settingsElement) : HTMLInterface.closeSettings(settingsElement);    
             openSettings =! openSettings;
         }
@@ -83,7 +124,7 @@ window.addEventListener("load", ()=>{
     container = document.getElementById("container");
     container.style.gap = BAR_GAP+"px";
     
-    HTMLInterface.generateBars(sharedArray.data, container, DEFAULT_STYLES, BAR_SPAWNN_TIME, BAR_COUNT, IN_ORDER, DATA_VARIATION);
+    HTMLInterface.generateBars(sharedArray.data, container, DEFAULT_STYLES, ds.BAR_SPAWN_DELAY, ds.BAR_COUNT, ds.IN_ORDER, ds.DATA_VARIATION);
     
     document.querySelectorAll('.sound').forEach(sortElement => {
         sortElement.addEventListener('click', (e) => {
@@ -137,17 +178,17 @@ window.addEventListener("load", ()=>{
             if(!barsHaveBeenGenerated)
             {
                 container.innerHTML = "";
-                HTMLInterface.generateBars(sharedArray.data, container, DEFAULT_STYLES, false, BAR_SPAWNN_TIME, BAR_COUNT, IN_ORDER, DATA_VARIATION);
+                HTMLInterface.generateBars(sharedArray.data, container, DEFAULT_STYLES, ds.BAR_SPAWN_DELAY, ds.BAR_COUNT, ds.IN_ORDER, ds.DATA_VARIATION);
             }
 
 
             console.log("Sorting Begun")
             sortingInProgress = true;
-            selected_sort(sharedArray.data, SORT_SPEED, BAR_UPPER_VALUE_LIMIT, () => {
+            selected_sort(sharedArray.data, ds.SORT_SPEED, DATA_VARIATION, () => {
                 sortingInProgress = false; // Reset the flag when sorting is complete.
                 console.log("Sorting Finished")
                 barsHaveBeenGenerated = false;
-            });
+            }, SORT_SPEED);
         }
     })
 });

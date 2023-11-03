@@ -12,16 +12,42 @@
 <body>
 
     <div id="settings">
-        <label for="bar-count">Bar Count</label>
-        <input type="text" name="bar-count" id="">
+        <form action="">
+            <label for="reset">Reset Settings</label>
+            <input type="checkbox" name="reset" id="">
 
-        <label for="bar-count">Bar Value Variation</label>
-        <input type="text" name="bar-count" id="">
+            <label for="count">Bar Count</label>
+            <input type="number" name="count" id="" value="20">
+            
+            <label for="sort-speed">Iteration Delay (ms)</label>
+            <input type="number" name="sort-speed" id="" value="15">
+    
+            <label for="grow-speed">Bar Growth Speed (ms)</label>
+            <input type="number" name="grow-speed" id="" value="0">
+            
+            <label for="spawn-delay">Spawn Delay (ms)</label>
+            <input type="number" name="spawn-delay" id="" value="0">
 
-        <label for="bar-count">Bar Count</label>
-        <input type="text" name="bar-count" id="">
+            <label for="variation">Data Variation</label>
+            <input type="number" name="variation" id="" value="40">
+            
+            <label for="order">Bars in Decending Order</label>
+            <input type="checkbox" name="order" id="">
+    
+            <label for="width">Bar Width (px)</label>
+            <input type="number" name="width" id="" value="10">
+    
+            <label for="gap">Bar Gap (px)</label>
+            <input type="number" name="gap" id="" value="10">
 
-
+            <label for="height">Bar Height (px)</label>
+            <input type="number" name="height" id="" value="150">
+            
+            <label for="color">Bar Color rgba(R, G, B, A)</label>
+            <input type="text" name="color" id="" value="rgba(21, 255, 0, 1)">
+            
+            <input type="submit" value="submit">
+        </form>
     </div>
 
     <div id="notification_container"></div>

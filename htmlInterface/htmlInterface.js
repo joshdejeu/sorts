@@ -1,4 +1,3 @@
-import { SORT_SPEED } from '../script.js';
 const context = new AudioContext();
 
 let soundVolume = "25.0";
@@ -7,7 +6,8 @@ export class HTMLInterface {
 
     static openSettings(e)
     {
-        e.style.display = 'flex;'
+        console.log('opening',e)
+        e.style.display = 'flex'
     }
 
     static closeSettings(e)
@@ -17,7 +17,7 @@ export class HTMLInterface {
 
 
 
-    static highlightElement(element, color) {
+    static highlightElement(element, color, SORT_SPEED) {
         if (SORT_SPEED == 0) { return; }
         element.style.backgroundColor = color;
     }
@@ -76,7 +76,7 @@ export class HTMLInterface {
 
 
 
-    static async playSound(valOfElementMoved, upperBoundBarVal, sound) {
+    static async playSound(valOfElementMoved, upperBoundBarVal, sound, SORT_SPEED) {
         if (SORT_SPEED == 0 || (sound == false || sound == 'false')) { return; }
         //give a range 1 to n, map its values to a range with lower volume (newRangeMin) and upper volume (newRangeMax)
         function mapValueToRange(value, n) {
@@ -271,7 +271,6 @@ export class HTMLInterface {
     //populate random values into bars
     static populateBars(BAR_COUNT, IN_ORDER, DATA_VARIATION)
     {
-        console.log(IN_ORDER)
         window.sharedArray.data.length = 0;
         for(let i = 0; i < BAR_COUNT; i++)
         {
@@ -284,7 +283,6 @@ export class HTMLInterface {
     {
         HTMLInterface.populateBars(BAR_COUNT, IN_ORDER, DATA_VARIATION);
         let index = 0;
-        console.log(window.sharedArray.data)
         function processNextBar() {
             if (index < bars.length) {
                 HTMLInterface.generateHtmlBar(bars[index], container, styles, DATA_VARIATION);

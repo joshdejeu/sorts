@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
-export async function selectionSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
+export async function selectionSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback, SORT_SPEED) {
     var container = document.getElementById("container");
     var children = container.children;
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,46 +8,73 @@
     <title>Sorting Algorithms</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./settings.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
 
     <div id="settings">
         <form action="">
-            <label for="reset">Reset Settings</label>
-            <input type="checkbox" name="reset" id="">
+            <div class="setting_section">
+                <label for="reset">Reset Settings</label>
+                <input type="checkbox" name="reset" id="">
+            </div>
 
-            <label for="count">Bar Count</label>
-            <input type="number" name="count" id="" value="20">
-            
-            <label for="sort-speed">Iteration Delay (ms)</label>
-            <input type="number" name="sort-speed" id="" value="15">
-    
-            <label for="grow-speed">Bar Growth Speed (ms)</label>
-            <input type="number" name="grow-speed" id="" value="0">
-            
-            <label for="spawn-delay">Spawn Delay (ms)</label>
-            <input type="number" name="spawn-delay" id="" value="0">
+            <div class="setting_section">
+                <label for="count">Bar Count</label>
+                <input type="number" name="count" id="" value="20">
+            </div>
 
-            <label for="variation">Data Variation</label>
-            <input type="number" name="variation" id="" value="40">
-            
-            <label for="order">Bars in Decending Order (worst case)</label>
-            <input type="checkbox" name="order" id="">
-    
-            <label for="width">Bar Width (px)</label>
-            <input type="number" name="width" id="" value="10">
-    
-            <label for="gap">Bar Gap (px)</label>
-            <input type="number" name="gap" id="" value="10">
+            <div class="setting_section">
+                <label for="sort-speed">Iteration Delay (ms)</label>
+                <input type="number" name="sort-speed" id="" value="15">
+            </div>
 
-            <label for="height">Bar Height (px)</label>
-            <input type="number" name="height" id="" value="150">
-            
-            <label for="color">Bar Color R, G, B, A</label>
-            <input type="text" name="color" id="" value="255, 255, 255, 0.8">
-            
-            <input type="submit" value="submit">
+            <div class="setting_section">
+                <label for="grow-speed">Bar Growth Speed (ms)</label>
+                <input type="number" name="grow-speed" id="" value="0">
+            </div>
+
+            <div class="setting_section">
+                <label for="spawn-delay">Spawn Delay (ms)</label>
+                <input type="number" name="spawn-delay" id="" value="0">
+            </div>
+
+            <div class="setting_section">
+                <label for="variation">Data Variation</label>
+                <input type="number" name="variation" id="" value="40">
+            </div>
+
+            <div class="setting_section">
+                <label for="order">Bars in Descending Order (worst case)</label>
+                <input type="checkbox" name="order" id="">
+            </div>
+
+            <div class="setting_section">
+                <label for="width">Bar Width (px)</label>
+                <input type="number" name="width" id="" value="10">
+            </div>
+
+            <div class="setting_section">
+                <label for="gap">Bar Gap (px)</label>
+                <input type="number" name="gap" id="" value="10">
+            </div>
+
+            <div class="setting_section">
+                <label for="height">Bar Height (px)</label>
+                <input type="number" name="height" id="" value="150">
+            </div>
+
+            <div class="setting_section">
+                <label for="color">Bar Color R, G, B, A</label>
+                <input type="text" name="color" id="" value="217, 217, 217, 1">
+            </div>
+
+            <div class="setting_section" id="setting_submit">
+                <input type="submit" value="submit">
+            </div>
         </form>
     </div>
 
@@ -61,7 +89,7 @@
         <span></span>
         <span></span>
     </div>
-    
+
 
     <div id="sort_selection">
         <div class="sort" data-sort="insertion">Insert</div>
@@ -103,8 +131,9 @@
         </div>
 
     </div>
-    
+
     <script type="module" src="./script.js"></script>
     <script src="./htmlInterface/sort_settings.js"></script>
 </body>
+
 </html>

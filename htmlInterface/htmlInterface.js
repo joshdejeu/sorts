@@ -278,7 +278,7 @@ export class HTMLInterface {
                 volSlider.style.cursor = 'grabbing';
                 indicator.style.height = `${100 - clampedPosition}%`;
                 soundVolume = (100-clampedPosition).toFixed(2);
-                vol.innerHTML = `${(100-clampedPosition).toFixed(2)}%`;
+                vol.innerHTML = `${(100-clampedPosition).toFixed(0)}%`;
                 volHover.style.display = 'block';
 
             }

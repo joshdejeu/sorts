@@ -4,15 +4,92 @@
     top: calc(10% - 1.5em); 
     left: calc(10% - 1.5em); 
     width: 80vw; height: 80vh;
-    background-color: white;
     z-index: 9999;
     padding: 1.5em;
     display: none;
     flex-direction: column;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    border: 2px solid white;
+    box-shadow: 0px 0px 200px 125px rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0px 0px 200px 125px rgba(0,0,0,0.8);
+    -moz-box-shadow: 0px 0px 200px 125px rgba(0,0,0,0.8);
 }
 #settings>form
 {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;  
+    justify-content: flex-start;
+    align-items: center;  
+    gap: 10px 5px;
+}
 
+.setting_section
+{
+    flex: calc(33% - 20px);
+    width: fit-content;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: start; 
+    gap: 1px;
+}
+
+.setting_section>label
+{
+    font-size: 0.9em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.setting_section>input[type=number],
+.setting_section>input[type=text]
+{
+    outline: none;
+    border: 3px solid rgb(211, 211, 211);
+    border-radius:7px;
+    padding: 10px;
+    background-color: rgb(211, 211, 211);
+}
+
+.setting_section>input[type=number]:focus,
+.setting_section>input[type=text]:focus
+{
+    outline: none;
+    border: 3px solid rgb(0, 81, 255);
+    border-radius:7px;
+    padding: 10px;
+    background-color: rgb(199, 195, 255);
+}
+
+.setting_section>input[type=checkbox]
+{
+    background-color: red;
+}
+
+#setting_submit
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center; align-items: center;
+}
+
+#setting_submit>input
+{
+    padding: 10px 15px;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    font-size: 1.2em;
+    text-transform: capitalize;
+    border-radius: 5px;
+}
+
+#sort_controls
+{
+    z-index: 9999;
 }

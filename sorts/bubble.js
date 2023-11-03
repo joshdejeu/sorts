@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
-export async function bubbleSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback, SORT_SPEED) {
+export async function bubbleSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -24,16 +24,16 @@ export async function bubbleSort(arrayToSort, time, upperBoundBarVal, onComplete
                         [arrayToSort[j], arrayToSort[j + 1]] = [arrayToSort[j + 1], arrayToSort[j]];
 
                         // Highlight elements during the swap
-                        HTMLInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)", SORT_SPEED);
-                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", SORT_SPEED);
+                        HTMLInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)", time);
+                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", time);
 
                         // Play sound and swap elements
-                        HTMLInterface.playSound(arrayToSort[j], upperBoundBarVal, sound, SORT_SPEED);
+                        HTMLInterface.playSound(arrayToSort[j], upperBoundBarVal, sound, time);
                         await HTMLInterface.swapElements(children[j + 1], children[j], time);
 
                         // Reset highlighting
-                        HTMLInterface.highlightElement(children[j], "rgba(255, 255, 255, 0.8)", SORT_SPEED);
-                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", SORT_SPEED);
+                        HTMLInterface.highlightElement(children[j], "rgba(255, 255, 255, 0.8)", time);
+                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", time);
 
                         // Continue the inner sort
                         j++;

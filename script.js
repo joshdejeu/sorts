@@ -1,7 +1,7 @@
 import { insertionSort } from './sorts/insertion.js';
 import { bubbleSort } from './sorts/bubble.js';
-import { theMergeSort } from './sorts/merge.js';
 import { selectionSort } from './sorts/selection.js';
+import { theMergeSort } from './sorts/merge.js';
 
 import { HTMLInterface } from './htmlInterface/htmlInterface.js';
 import { SortSettings } from './htmlInterface/classes/sortSettings.js';
@@ -15,19 +15,20 @@ import { titleEffect } from '../htmlInterface/textScramble.js'
 const SORT_TYPE = {
     "insertion": insertionSort,
     "bubble": bubbleSort,
-    "merge": theMergeSort,
     "selection": selectionSort,
+    "merge": theMergeSort,
 }
+//resest setting values
 const BAR_COUNT = 20; //number of bars
 const SORT_SPEED = 15; //timeout between each iteration (0 is none)
 const BAR_WIDTH = 10; //width in px
 const BAR_GAP = 7; //gap between bars in px
-const BAR_MAX_HEIGH = 150; //max height in px
-const BAR_COLOR = "255, 255, 255, 1"; //background in rgba
+const BAR_MAX_HEIGHT = 150; //max height in px
+const BAR_COLOR = "217, 217, 217, 1"; //background in rgba
 const DATA_VARIATION = (BAR_COUNT * 2); //highest value a bar can be (lowest is default 0)
 const BAR_GROWTH_SPEED = 0; //time for bar to grow from 0 to x height
 const BAR_SPAWN_DELAY = 0; //time between each bar appearing
-const IN_ORDER = false;//bars will be in deceneding order if TRUE
+const IN_ORDER = "off";//bars will be in deceneding order if "on"
 
 //default settings
 let ds = 
@@ -35,7 +36,7 @@ let ds =
     SORT_SPEED: SORT_SPEED,
     BAR_WIDTH: BAR_WIDTH,
     BAR_GAP: BAR_GAP,
-    BAR_MAX_HEIGH: BAR_MAX_HEIGH,
+    BAR_MAX_HEIGHT: BAR_MAX_HEIGHT,
     BAR_COLOR: BAR_COLOR,
     BAR_COUNT: BAR_COUNT,
     DATA_VARIATION: DATA_VARIATION,
@@ -68,6 +69,7 @@ window.addEventListener("load", ()=>{
     const urlParams = new URLSearchParams(window.location.search);
     let urlBarSettings = 
     {
+        RESET: urlParams.get('reset'),
         SORT_SPEED: urlParams.get('sort-speed'),
         BAR_WIDTH: urlParams.get('width'),
         BAR_GAP: urlParams.get('gap'),
@@ -78,22 +80,22 @@ window.addEventListener("load", ()=>{
         BAR_GROWTH_SPEED: urlParams.get('grow-speed'),
         BAR_SPAWN_DELAY: urlParams.get('spawn-delay'),
         IN_ORDER: urlParams.get('order'),
-        RESET: urlParams.get('reset')
     }
     
     //if URL setting exists, place it in the settings 
     for (const setting in urlBarSettings) {
         const value = urlBarSettings[setting];
-        if(setting == "reset" && value){
-            return;}
+        if(setting.toLowerCase() == "reset" && value== "on"){
+            window.location.href = window.origin
+            break;}
         if(value!=null && value!="")
         {ds[setting] = value;}
     }
-    console.log(ds.BAR_COLOR)
+    console.log(ds)
 
     const DEFAULT_STYLES = {
         width: ds.BAR_WIDTH,
-        maxHeight: ds.BAR_MAX_HEIGH,
+        maxHeight: ds.BAR_MAX_HEIGHT,
         color: ds.BAR_COLOR,
         grow: ds.BAR_GROWTH_SPEED != 0 ? true : false,
     }
@@ -122,7 +124,7 @@ window.addEventListener("load", ()=>{
     setTimeout(titleEffect(el), 1000);
 
     container = document.getElementById("container");
-    container.style.gap = BAR_GAP+"px";
+    container.style.gap = ds.BAR_GAP+"px";
     
     HTMLInterface.generateBars(sharedArray.data, container, DEFAULT_STYLES, ds.BAR_SPAWN_DELAY, ds.BAR_COUNT, ds.IN_ORDER, ds.DATA_VARIATION);
     
@@ -184,11 +186,11 @@ window.addEventListener("load", ()=>{
 
             console.log("Sorting Begun")
             sortingInProgress = true;
-            selected_sort(sharedArray.data, ds.SORT_SPEED, DATA_VARIATION, () => {
+            selected_sort(sharedArray.data, ds.SORT_SPEED, ds.DATA_VARIATION, () => {
                 sortingInProgress = false; // Reset the flag when sorting is complete.
                 console.log("Sorting Finished")
                 barsHaveBeenGenerated = false;
-            }, SORT_SPEED);
+            });
         }
     })
 });

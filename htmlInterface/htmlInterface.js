@@ -19,7 +19,6 @@ export class HTMLInterface {
             growSpeed: urlParams.get('grow-speed'),
             spawnDelay: urlParams.get('spawn-delay'),
             order: urlParams.get('order'),
-            RESET: urlParams.get('reset')
         }   
         const form = document.querySelector('#settings form');
         const inputElements = form.querySelectorAll('input');
@@ -65,13 +64,18 @@ export class HTMLInterface {
             let resolved = false;
 
             // Resolve the Promise after a minimum of `milliseconds`
-            setTimeout(() => {
-                if (!resolved) {
-                    resolved = true;
-                    resolve();
-                }
-            }, milliseconds);
+            if(milliseconds != "0" || milliseconds != 0)
+            {
+                setTimeout(() => {
+                    if (!resolved) {
+                        resolved = true;
+                        resolve();
+                    }
+                }, milliseconds);
+            }else{
 
+                resolve();
+            }
             // Additional logic to resolve the Promise when needed
             // For example, you can call resolve() when some condition is met
             // For instance, when animations or other asynchronous tasks are complete.
@@ -307,7 +311,7 @@ export class HTMLInterface {
         window.sharedArray.data.length = 0;
         for(let i = 0; i < BAR_COUNT; i++)
         {
-            if(IN_ORDER){window.sharedArray.data.push(BAR_COUNT-i)}
+            if(IN_ORDER=="on"){window.sharedArray.data.push(BAR_COUNT-i)}
             else{window.sharedArray.data.push(Math.floor(Math.random() * DATA_VARIATION) + 1);}
         }
     };

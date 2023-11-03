@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
-export async function selectionSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback, SORT_SPEED) {
+export async function selectionSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -22,11 +22,11 @@ export async function selectionSort(arrayToSort, time, upperBoundBarVal, onCompl
 
     async function sortLoop(sortedCount, start, newMin)
     {
+        console.log(arrayToSort[newMin])
+
         if(sortedCount < arrayToSort.length)
         {
             newMin = getMin(start, newMin);
-            console.log(arrayToSort[newMin])
-
             // [arrayToSort[sortedCount], arrayToSort[m]] = [arrayToSort[m], arrayToSort[sortedCount]];
             let tmp = arrayToSort[sortedCount];
             arrayToSort[sortedCount] = arrayToSort[newMin];

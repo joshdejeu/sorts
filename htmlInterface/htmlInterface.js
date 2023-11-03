@@ -249,8 +249,11 @@ export class HTMLInterface {
         let eagleHasLanded = false;
         let initialY, initialTop, initialPositionOnScale;
     
+        let vol = document.createElement('div')
+        vol.id = 'vol_level';
+        
         volSlider.addEventListener('mousedown', (e) => {
-
+            volSlider.append(vol)
         });
 
         volSlider.addEventListener('mousedown', (e) => {
@@ -275,12 +278,14 @@ export class HTMLInterface {
                 volSlider.style.cursor = 'grabbing';
                 indicator.style.height = `${100 - clampedPosition}%`;
                 soundVolume = (100-clampedPosition).toFixed(2);
+                vol.innerHTML = `${(100-clampedPosition).toFixed(2)}%`;
                 volHover.style.display = 'block';
 
             }
         });
     
         document.addEventListener('mouseup', () => {
+            vol.remove();
             isDragging = false;
             volSlider.style.cursor = 'pointer';
             volHover.style.display = 'none';

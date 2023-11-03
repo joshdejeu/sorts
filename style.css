@@ -351,3 +351,18 @@ i{pointer-events: none;}
     width: 100%;
     background-color: white;
 }
+
+
+
+#vol_level
+{
+    background-color: white;
+    position: absolute;
+    left: 110%;
+    padding: 5px;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.85em;
+}

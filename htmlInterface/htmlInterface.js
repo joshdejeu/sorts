@@ -7,7 +7,7 @@ export class HTMLInterface {
 
     static openSettings(e)
     {
-        e.style.display = 'block;'
+        e.style.display = 'flex;'
     }
 
     static closeSettings(e)
@@ -264,5 +264,75 @@ export class HTMLInterface {
             }
         });
     }
+
+
+
+
+    //populate random values into bars
+    static populateBars(BAR_COUNT, IN_ORDER, DATA_VARIATION)
+    {
+        console.log(IN_ORDER)
+        window.sharedArray.data.length = 0;
+        for(let i = 0; i < BAR_COUNT; i++)
+        {
+            if(IN_ORDER){window.sharedArray.data.push(BAR_COUNT-i)}
+            else{window.sharedArray.data.push(Math.floor(Math.random() * DATA_VARIATION) + 1);}
+        }
+    };
+
+    static generateBars(bars, container, styles, spawnTime, BAR_COUNT, IN_ORDER, DATA_VARIATION)
+    {
+        HTMLInterface.populateBars(BAR_COUNT, IN_ORDER, DATA_VARIATION);
+        let index = 0;
+        console.log(window.sharedArray.data)
+        function processNextBar() {
+            if (index < bars.length) {
+                HTMLInterface.generateHtmlBar(bars[index], container, styles, DATA_VARIATION);
+                index++;
+                if(spawnTime != 0){setTimeout(processNextBar, spawnTime);} // Set the delay (in milliseconds) between iterations
+                else{processNextBar();}
+            }
+        }
+    
+        processNextBar(); // Start the processing
+    } 
+
+
+
+
+
+
+
+    // Set a cookie with a name, value, and optional parameters
+    static setCookie(name, value, daysToExpire) {
+        const date = new Date();
+        date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000)); // Calculate expiration date
+        const expires = `expires=${date.toUTCString()}`;
+        document.cookie = `${name}=${value}; ${expires}; path=/`;
+    }
+
+    // Get the value of a cookie by its name
+    static getCookie(name) {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const [cookieName, cookieValue] = cookie.trim().split('=');
+            if (cookieName === name) {
+                return cookieValue;
+            }
+        }
+        return 'dream'; // Cookie not found
+    }
+
+    static clearAllCookies() {
+        const cookies = document.cookie.split(';');
+
+        for (let cookie of cookies) {
+            const [name, _] = cookie.split('=');
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        }
+        setCookie('soundCookie', 'dream', 30); //set default sound
+        return 'dream';//get new default cookie
+    }
+
 }   
 const audioTest = new Audio(`./htmlInterface/sounds/soundTest.mp3`);

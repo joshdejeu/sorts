@@ -1,0 +1,11 @@
+#settings
+{
+    position: fixed;
+    top: 10%; left: 10%;
+    width: 80vw; height: 80vh;
+    background-color: white;
+    z-index: 9999;
+    padding: 1.5em;
+    display: none;
+    flex-direction: column;
+}

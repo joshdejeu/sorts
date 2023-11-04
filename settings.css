@@ -4,12 +4,12 @@
     top: calc(10% - 1.5em); 
     left: calc(10% - 1.5em); 
     width: 80vw; height: 80vh;
-    z-index: 9999;
+    z-index: 9998;
     padding: 1.5em;
     display: none;
     flex-direction: column;
     color: white;
-    background-color: black;
+    background-color: rgb(54, 54, 54);
     border-radius: 5px;
     border: 2px solid white;
     box-shadow: 0px 0px 200px 125px rgba(0,0,0,0.8);
@@ -46,7 +46,7 @@
 .setting_section>input[type=text]
 {
     outline: none;
-    border: 3px solid rgb(211, 211, 211);
+    border: 3px solid rgb(0, 0, 0);
     border-radius:7px;
     padding: 10px;
     background-color: rgb(211, 211, 211);
@@ -56,10 +56,10 @@
 .setting_section>input[type=text]:focus
 {
     outline: none;
-    border: 3px solid rgb(0, 81, 255);
+    border: 3px solid rgb(0, 115, 255);
     border-radius:7px;
     padding: 10px;
-    background-color: rgb(199, 195, 255);
+    background-color: rgb(195, 230, 255);
 }
 
 .setting_section>input[type=checkbox]
@@ -72,14 +72,15 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 20px 0;
+    padding: 3em 0;
+    font-size: 0.8em;
     display: flex;
     justify-content: center; align-items: center;
 }
 
 #setting_submit>input
 {
-    padding: 10px 15px;
+    padding: 0.5em 2em;
     outline: none;
     cursor: pointer;
     border: none;
@@ -89,7 +90,22 @@
     border-radius: 5px;
 }
 
+
 #sort_controls
 {
+    position: absolute;
+    top: 1em; left: 1em;
+    height: 20px;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
     z-index: 9999;
 }
+#sort_controls>span{
+    height: 5%;
+    width: 100%;
+    background-color: white;
+}
+

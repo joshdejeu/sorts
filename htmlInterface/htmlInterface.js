@@ -83,6 +83,12 @@ export class HTMLInterface {
     }
 
     //creates individual html elements and styles width/height/color
+    
+
+    
+    
+    
+    
     static generateHtmlBar(barVal, container, styles, barUpperLimit) {
         let bar = document.createElement('div');
         bar.className = 'bar';
@@ -255,10 +261,6 @@ export class HTMLInterface {
     
         let vol = document.createElement('div')
         vol.id = 'vol_level';
-        
-        volSlider.addEventListener('mousedown', (e) => {
-            volSlider.append(vol)
-        });
 
         volSlider.addEventListener('mousedown', (e) => {
             isDragging = eagleHasLanded = true;
@@ -269,12 +271,13 @@ export class HTMLInterface {
             const clampedPosition = Math.min(100, Math.max(0, positionOnScale));
             indicator.style.height = `${(100-clampedPosition).toFixed(2)}%`;
             soundVolume = (100-clampedPosition).toFixed(2);
-            audioTest.volume = soundVolume / 150;
-            audioTest.play()
+            vol.innerHTML = (100-clampedPosition).toFixed(0)+"%"
+            volSlider.append(vol);
         });
     
         document.addEventListener('mousemove', (e) => {
             if (isDragging) {
+                e.preventDefault();// prevents highlighting page elements and stopping mousemove evenet
                 initialY = e.clientY;
                 initialTop = volSlider.getBoundingClientRect().top;
                 let positionOnScale = ((initialY - initialTop) / volSlider.clientHeight) * 100;

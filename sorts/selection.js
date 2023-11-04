@@ -4,42 +4,36 @@ import { sound } from '../script.js'
 export async function selectionSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
+    console.log(arrayToSort)
 
-
-    function getMin(start, min)
-    {
-        if(start < arrayToSort.length)
-        {
-            //check each for min
-            if(arrayToSort[min] > arrayToSort[start])
-            {
-                min = start;                
+    //count of sorted items, start index, min val index
+    async function sortLoop(start) {
+        if (start < arrayToSort.length) {
+            let newMin = start;
+            let tmpStart = start;
+            while (tmpStart < arrayToSort.length) {
+                if (arrayToSort[tmpStart] < arrayToSort[newMin]) {
+                    newMin = tmpStart;
+                }
+                tmpStart++;
             }
-            getMin(start + 1, min);
-        }
-        return min;
-    }
-
-    async function sortLoop(sortedCount, start, newMin)
-    {
-        console.log(arrayToSort[newMin])
-
-        if(sortedCount < arrayToSort.length)
-        {
-            newMin = getMin(start, newMin);
-            // [arrayToSort[sortedCount], arrayToSort[m]] = [arrayToSort[m], arrayToSort[sortedCount]];
-            let tmp = arrayToSort[sortedCount];
-            arrayToSort[sortedCount] = arrayToSort[newMin];
+    
+            console.log("min", newMin, start);
+    
+            let tmp = arrayToSort[start];
+            arrayToSort[start] = arrayToSort[newMin];
             arrayToSort[newMin] = tmp;
-
-            await HTMLInterface.swapElements(children[sortedCount], children[newMin], time);
-
-            await sortLoop(sortedCount + 1, start + 1, newMin);
+    
+            HTMLInterface.playSound(arrayToSort[start], upperBoundBarVal, sound, time);
+            await HTMLInterface.swapElements(children[newMin], children[start], 555);
+    
+            await sortLoop(start + 1);
         }
     }
-    await sortLoop(0, 0, 0);
+    
+    await sortLoop(0);
 
-
+   
     console.log(arrayToSort)
     onCompleteCallback();
 

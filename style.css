@@ -37,7 +37,7 @@ body{
     text-transform: uppercase;
     position: absolute;
     top: 2em;
-    font-size: 2em;
+    font-size: 1em;
     font-family: 'Courier New', Courier, monospace;
     left: 50%; /* Move the element 50% from the left of its parent */
     transform: translate(-50%, -50%); /* Center the element precisely */
@@ -47,9 +47,6 @@ body{
     /* #1def24 */
 }
 @media only screen and (max-width: 1200px) {
-    #title{
-        font-size: 1.5em;
-    }
 }
 @media only screen and (max-width: 900px) {
     #title{
@@ -59,7 +56,7 @@ body{
 }
 @media only screen and (max-width: 600px) {
     #title{
-        font-size: 1em;
+        font-size: 0.9em;
     }   
 }
 
@@ -333,24 +330,6 @@ i{pointer-events: none;}
 
 
 
-
-
-#sort_controls
-{
-    position: absolute;
-    top: 1em; left: 1em;
-    height: 30px;
-    width: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    cursor: pointer;
-}
-#sort_controls>span{
-    height: 5%;
-    width: 100%;
-    background-color: white;
-}
 
 
 

@@ -5,28 +5,35 @@ export async function selectionSort(arrayToSort, time, upperBoundBarVal, onCompl
     var container = document.getElementById("container");
     var children = container.children;
     console.log(arrayToSort)
+    
 
     //count of sorted items, start index, min val index
     async function sortLoop(start) {
         if (start < arrayToSort.length) {
-            let newMin = start;
-            let tmpStart = start;
-            while (tmpStart < arrayToSort.length) {
-                if (arrayToSort[tmpStart] < arrayToSort[newMin]) {
-                    newMin = tmpStart;
-                }
-                tmpStart++;
+
+            // while (tmpStart < arrayToSort.length) {
+            //     if (arrayToSort[tmpStart] < arrayToSort[newMin]) {
+            //         newMin = tmpStart;
+            //     }
+            //     tmpStart++;
+            // }
+    
+
+        let newMin = start;
+        for (let tmpStart = start + 1; tmpStart < arrayToSort.length; tmpStart++) {
+            if (arrayToSort[tmpStart] < arrayToSort[newMin]) {
+                newMin = tmpStart;
             }
-    
-            console.log("min", newMin, start);
-    
+        }
+
+
             let tmp = arrayToSort[start];
             arrayToSort[start] = arrayToSort[newMin];
             arrayToSort[newMin] = tmp;
     
             HTMLInterface.playSound(arrayToSort[start], upperBoundBarVal, sound, time);
-            await HTMLInterface.swapElements(children[newMin], children[start], 555);
-    
+            await HTMLInterface.swapElements(children[newMin], children[start], time);
+
             await sortLoop(start + 1);
         }
     }

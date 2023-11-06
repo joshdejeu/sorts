@@ -52,6 +52,26 @@ export class HTMLInterface {
     //@pre element1 must first in order on the DOM above element2
     static async swapElements(element1, element2, milliseconds) {
         return new Promise((resolve) => {
+            if (element1 === element2) {
+                // Elements are the same
+                console.log(0)
+                return;
+            }
+
+            const parent = element1.parentElement;
+            const children = Array.from(parent.children);
+            const elementIndex = children.indexOf(element1);
+            const targetIndex = children.indexOf(element2);
+            if (elementIndex < targetIndex) {
+                // Element is before the target
+                console.log(-1)
+              } else {
+                // Element is after the target
+                console.log(1)
+              }
+
+
+
             if (element1.parentNode === element2.parentNode) {
                 const parent = element1.parentNode;
                 const nextSibling = element1.nextSibling === element2 ? element1 : element2;
@@ -250,10 +270,13 @@ export class HTMLInterface {
 
     //listen for mouseDown, mouseDrag, mouseUp events to update sound volume
     static listenForVolumeChange() {
-
+        soundVolume = this.getCookie('volumeCookie');
+        if(soundVolume===null){soundVolume = 25;}
+        
         let volSlider = document.getElementById('volume');
         let indicator = volSlider.querySelector('.color-indicator');
         let volHover = document.getElementById('volume_hover');
+        indicator.style.height = `${soundVolume}%`;
 
         let isDragging = false;
         let eagleHasLanded = false;
@@ -287,7 +310,6 @@ export class HTMLInterface {
                 soundVolume = (100-clampedPosition).toFixed(2);
                 vol.innerHTML = `${(100-clampedPosition).toFixed(0)}%`;
                 volHover.style.display = 'block';
-
             }
         });
     
@@ -302,6 +324,7 @@ export class HTMLInterface {
                 audioTest.play()
                 eagleHasLanded = false
             }
+            this.setCookie('volumeCookie', soundVolume, 30); //set volume cookie
         });
     }
 

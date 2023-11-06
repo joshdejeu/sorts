@@ -19,7 +19,7 @@ const SORT_TYPE = {
     "merge": theMergeSort,
 }
 //resest setting values
-const BAR_COUNT = 10; //number of bars
+const BAR_COUNT = 20; //number of bars
 const SORT_SPEED = 330; //timeout between each iteration (0 is none)
 const BAR_WIDTH = 10; //width in px
 const BAR_GAP = 7; //gap between bars in px
@@ -28,7 +28,7 @@ const BAR_COLOR = "217, 217, 217, 1"; //background in rgba
 const DATA_VARIATION = BAR_COUNT ; //highest value a bar can be (lowest is default 0)
 const BAR_GROWTH_SPEED = 0; //time for bar to grow from 0 to x height
 const BAR_SPAWN_DELAY = 0; //time between each bar appearing
-const IN_ORDER = "on";//bars will be in deceneding order if "on"
+const IN_ORDER = "off";//bars will be in deceneding order if "on"
 
 //default settings
 let ds = 

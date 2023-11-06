@@ -345,3 +345,25 @@ i{pointer-events: none;}
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 0.85em;
 }
+
+
+
+#github
+{
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+    border-radius: 50%;
+    height: 50px; width: 50px;
+    overflow: hidden;
+}
+#github>a
+{
+    cursor: pointer;
+    color: white;
+    height: 100%; width: 100%;;
+    display: flex;
+    justify-content: center; align-items: center;
+    font-size: 1.5em;
+    text-decoration: none;
+}

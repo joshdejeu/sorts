@@ -55,7 +55,7 @@ export class HTMLInterface {
             if (element1 === element2) {
                 // Elements are the same
                 console.log(0)
-                return;
+                // return;
             }
 
             const parent = element1.parentElement;

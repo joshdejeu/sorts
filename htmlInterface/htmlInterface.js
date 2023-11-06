@@ -170,7 +170,7 @@ export class HTMLInterface {
         }
 
 
-        function playSample(sample, pitchMappedToRangeOfVolume, volume) {
+        function playSample(sample, pitchMappedToRangeOfVolume) {
             const source = context.createBufferSource();
             source.buffer = sample;
             const gainNode = context.createGain();
@@ -184,13 +184,13 @@ export class HTMLInterface {
             // source.playbackRate.value = pitchMappedToRangeOfVolume;
 
             // voume
-            gainNode.gain.value = Math.max(0, Math.min(1, volume / 100));;
+            gainNode.gain.value = Math.max(0, Math.min(1, parseFloat(soundVolume) / 100));;
 
             source.start(0);
         }
 
         loadSample(`./htmlInterface/sounds/${sound}.mp3`)
-            .then(sample => playSample(sample, mapValueToRange(valOfElementMoved, upperBoundBarVal), soundVolume / 3));//Sound Volume here
+            .then(sample => playSample(sample, mapValueToRange(valOfElementMoved, upperBoundBarVal)));
 
 
         function mapValueToMiddlePianoKey(randomValue, n) {

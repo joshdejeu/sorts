@@ -4,59 +4,49 @@ import { sound } from '../script.js'
 export async function theMergeSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
-    let limit = 0;
-    console.log('original', arrayToSort)
-    await mergeSort(arrayToSort, 0, arrayToSort.length - 1);
+    console.log(arrayToSort)
+    arrayToSort = await mergeSort(arrayToSort);
     console.log(arrayToSort)
     onCompleteCallback();
 
-    //@pre first <= mid <= last
-    //@post array[first...last] is sorted
-    // Function to call mergeSort recursively and visualize the process
-    async function mergeSort(array, start, end) {
-        if (start >= end) {
-            return [array[start]];
+
+    async function mergeSort(array) {
+        const half = array.length / 2
+
+        if (array.length < 2) {
+            return array
         }
 
-        const middle = Math.floor((start + end) / 2);
-        const left = await mergeSort(array, start, middle);
-        const right = await mergeSort(array, middle + 1, end);
-
-        return await merge(left, right, start, middle, end);
+        const left = array.splice(0, half)
+        return await merge(await mergeSort(left), await mergeSort(array))
     }
 
-    // Function to merge two sorted arrays with visualization
-    async function merge(left, right, start, middle, end) {
-        const merged = [];
-        let leftIndex = 0;
-        let rightIndex = 0;
+    async function merge(left, right) {
+        let arr = []
 
-        while (leftIndex < left.length && rightIndex < right.length) {
-            if (left[leftIndex] < right[rightIndex]) {
-                merged.push(left[leftIndex]);
-                await highlightAndSwap(start + leftIndex, start + left.length + rightIndex);
-                leftIndex++;
+        while (left.length && right.length) {
+            if (left[0] < right[0]) {
+                let leftI = left.shift();
+                let arrI = arr.length;
+                // await swap(children[leftI], children[arrI])
+                await swap(children[arrI], children[leftI])
+
+                arr.push(leftI)
             } else {
-                merged.push(right[rightIndex]);
-                await highlightAndSwap(start + left.length + rightIndex, start + leftIndex);
-                rightIndex++;
+                let rightI = right.shift();
+                let arrI = arr.length;
+                // await swap(children[rightI], children[arrI])
+                await swap(children[arrI], children[rightI])
+                
+                arr.push(rightI)
+
             }
         }
 
-        while (leftIndex < left.length) {
-            merged.push(left[leftIndex]);
-            leftIndex++;
-        }
-
-        while (rightIndex < right.length) {
-            merged.push(right[rightIndex]);
-            rightIndex++;
-        }
-
-     
-
-        return merged;
+        return [...arr, ...left, ...right]
     }
+
+
 
 
     //highlight HTML element and swap it on the DOM
@@ -69,4 +59,34 @@ export async function theMergeSort(arrayToSort, time, upperBoundBarVal, onComple
         // htmlInterface.highlightElement(children[index1], "rgba(217, 70, 70, 0.8)");
 
     }
+}
+
+
+async function swap(e1, e2, time) {
+    return new Promise((resolve) => {
+        const element1 = e1;
+        const element2 = e2;
+
+        if (element1 && element2) {
+            const parent = element1.parentNode;
+            const temp = document.createElement('div'); // Create a temporary element
+            parent.insertBefore(temp, element2);
+            parent.insertBefore(element2, element1);
+            parent.insertBefore(element1, temp);
+            parent.removeChild(temp);
+        }
+        let resolved = false;
+        // Resolve the Promise after a minimum of `milliseconds`
+        if (time != "0" || time != 0) {
+            setTimeout(() => {
+                if (!resolved) {
+                    resolved = true;
+                    resolve();
+                }
+            }, time);
+        } else {
+
+            resolve();
+        }
+    });
 }

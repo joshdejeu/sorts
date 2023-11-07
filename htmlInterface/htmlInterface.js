@@ -64,10 +64,10 @@ export class HTMLInterface {
             const targetIndex = children.indexOf(element2);
             if (elementIndex < targetIndex) {
                 // Element is before the target
-                console.log(-1)
+                // console.log(-1)
               } else {
                 // Element is after the target
-                console.log(1)
+                // console.log(1)
               }
 
 

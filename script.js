@@ -20,7 +20,7 @@ const SORT_TYPE = {
 }
 //resest setting values
 const BAR_COUNT = 20; //number of bars
-const SORT_SPEED = 15; //timeout between each iteration (0 is none)
+const SORT_SPEED = 100; //timeout between each iteration (0 is none)
 const BAR_WIDTH = 10; //width in px
 const BAR_GAP = 7; //gap between bars in px
 const BAR_MAX_HEIGHT = 150; //max height in px

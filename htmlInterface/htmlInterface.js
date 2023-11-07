@@ -54,7 +54,7 @@ export class HTMLInterface {
         return new Promise((resolve) => {
             if (element1 === element2) {
                 // Elements are the same
-                console.log(0)
+                // console.log(0)
                 // return;
             }
 

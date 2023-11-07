@@ -65,7 +65,7 @@ export function titleEffect(el)
         'The Matrix Has You...',
         'Sound Effect (bottom left)',
         'Follow The White Rabbit.',
-        'Or Follow Me On LinkedIn',
+        'Or Follow Me On GitHub',
         'Knock, Knock, Neo.',
     ]
 

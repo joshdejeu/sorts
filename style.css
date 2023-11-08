@@ -47,19 +47,7 @@ body{
     transition: color 0.2s ease;
     /* #1def24 */
 }
-@media only screen and (max-width: 1200px) {
-}
-@media only screen and (max-width: 900px) {
-    #title{
-        width: 70vw;
-        text-align: center;
-    }  
-}
-@media only screen and (max-width: 600px) {
-    #title{
-        font-size: 0.9em;
-    }   
-}
+
 
 /**
  * @brief Styles for bar container.
@@ -322,7 +310,7 @@ i{pointer-events: none;}
     display: block !important;
 }
 #volume_hover{
-    display: none;
+    display: block;
     position: absolute;
     left: 99%;
     padding-left: 1em;
@@ -330,7 +318,7 @@ i{pointer-events: none;}
     width: 1.8em;
 }
 #volume{
-    width: 100%; height: calc(100% - 1.5em);
+    width: 100%; height: 100%;
     background-color: white; color: black;
     border-radius: 2em;
     display: flex; justify-content: center; align-items: center;
@@ -410,3 +398,58 @@ i{pointer-events: none;}
     text-decoration: none;
 }
 
+@media only screen and (max-width: 1200px) {
+}
+@media only screen and (max-width: 900px) {
+    #title{
+        width: 70vw;
+        text-align: center;
+    }
+
+
+}
+@media only screen and (max-width: 600px) {
+    #title{
+        font-size: 0.9em;
+    }  
+    #sound_selection{
+        width: 100vw;
+        height: fit-content;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        bottom: 5em;
+    }
+    #volume_hover{
+        display: block;
+        position: absolute;
+        padding-left: 0em;
+        left: 0;
+        bottom: 5em;
+        height: 10em;
+        width: 1em;
+    }
+    .slider
+    {
+        width: 60%; height: 100%;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    #slider_holder{
+        position: absolute;
+        width: 60%; height: 100%;
+        border-radius: 2em;
+        overflow: hidden;
+        pointer-events: none;
+        display: flex;
+        justify-content: center; align-items: end;
+    } 
+    .setting_section
+    {
+        flex: none;
+        padding: 5px;
+    }
+    .setting_section > input{
+        width: 75px !important;
+    };
+}

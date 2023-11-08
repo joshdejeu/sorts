@@ -12,6 +12,9 @@ import { titleEffect } from '../htmlInterface/textScramble.js'
 // console.log(defaultSettings.SORT_SPEED)
 
 
+import { audioFile } from './htmlInterface/audioSetup.js';
+
+
 const SORT_TYPE = {
     "insertion": insertionSort,
     "bubble": bubbleSort,
@@ -68,7 +71,10 @@ const soundCookie = HTMLInterface.getCookie('soundCookie');
 let sound = soundCookie; //variable to change sound while sorting is live
 
 let openSettings = true;
+
+
 window.addEventListener("load", ()=>{
+
     const urlParams = new URLSearchParams(window.location.search);
     let urlBarSettings = 
     {
@@ -152,8 +158,11 @@ window.addEventListener("load", ()=>{
             if(!sortingInProgress && !(htmlSoundSelected == false || htmlSoundSelected == 'false'))
             {
                 const selectedAudio = new Audio(`./htmlInterface/sounds/${sound}.mp3`);
-                selectedAudio.volume = soundVolume / 150;
-                selectedAudio.play()
+                // selectedAudio.volume = soundVolume / 150;
+                // selectedAudio.play();
+
+                audioFile[sound].volume = soundVolume / 150;
+                audioFile[sound].play();
             }
             highlightSound(e.target);
         });

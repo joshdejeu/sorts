@@ -1,6 +1,9 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound, sort_speed } from '../script.js'
 
+
+
+
 export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;

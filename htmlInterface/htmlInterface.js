@@ -1,5 +1,7 @@
 const context = new AudioContext();
 
+import { audioFile } from './audioSetup.js';
+
 let soundVolume = "25.0";
 export { soundVolume };
 export class HTMLInterface {
@@ -320,6 +322,7 @@ export class HTMLInterface {
             volHover.style.display = 'none';
             if(eagleHasLanded)
             {
+                const audioTest = new Audio(`./htmlInterface/sounds/soundTest.mp3`);
                 audioTest.volume = soundVolume / 150;
                 audioTest.play()
                 eagleHasLanded = false
@@ -411,4 +414,3 @@ export class HTMLInterface {
     }
 
 }   
-const audioTest = new Audio(`./htmlInterface/sounds/soundTest.mp3`);

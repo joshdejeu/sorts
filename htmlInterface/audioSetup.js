@@ -16,7 +16,7 @@ audioGuitar.src = `${baseUrl}guitar.mp3?v=2`;
 audioNotify.src = `${baseUrl}notify.mp3?v=2`;
 audioPiano.src = `${baseUrl}piano.mp3?v=2`;
 audioPluh.src = `${baseUrl}pluh.mp3?v=2`;
-audioTest.src = `${baseUrl}test.mp3?v=2`;
+audioTest.src = `${baseUrl}soundTest.mp3?v=2`;
 
 let audioFile = 
 {

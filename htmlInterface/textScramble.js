@@ -60,10 +60,11 @@ class TextScramble {
 export function titleEffect(el)
 {
     let phrases = [
-        'Wake up, Neo...',
         'Select a Sort',
+        'Wake up, Neo...',
+        'Sound Effects (bottom left)',
         'The Matrix Has You...',
-        'Sound Effect (bottom left)',
+        'Sort Settings (top left)',
         'Follow The White Rabbit.',
         'Or Follow Me On GitHub',
         'Knock, Knock, Neo.',
@@ -71,13 +72,13 @@ export function titleEffect(el)
 
     const fx = new TextScramble(el)
     let counter = 0
-    let scramToggle = true;
+    let scramToggle = false;
     const next = () => {
-        if(counter==6)
+        if(counter==7)
         {
             phrases = [
                 'Select a Sort',
-                'Sound Effect (bottom left)',
+                'Sound Effects (bottom left)',
                 'Sort Settings (top left)',
             ]
             counter = 0;
@@ -111,9 +112,9 @@ export function titleEffect(el)
 
         fx.setText(phrases[counter]).then(() => {
             if(phrases.length > 4 && scramToggle)
-            {setTimeout(next, 600);}
+            {setTimeout(next, 500);}
             else
-            {setTimeout(next, 2500);}
+            {setTimeout(next, 3000);}
             scramToggle = !scramToggle;
       })
       counter = (counter + 1) % phrases.length

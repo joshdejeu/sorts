@@ -1,9 +1,6 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound, sort_speed } from '../script.js'
 
-
-
-
 export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
@@ -22,16 +19,18 @@ export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCal
             {
                 if(tmpStart < arrayToSort.length)
                 {
-                    HTMLInterface.highlightElement(children[tmpStart], "rgba(10, 130, 220, 0.8)");
+                    HTMLInterface.highlightElement(children[tmpStart], "rgba(10, 130, 220, 0.8)");//highlight location of sort currently
                     setTimeout(()=>{}, sort_speed);
 
                     if (arrayToSort[tmpStart] < arrayToSort[newMin]) {
                         newMin = tmpStart;
                     }
+                    HTMLInterface.highlightElement(children[newMin], "rgba(10, 220, 13, 0.8)");//highlight currect smallest val
 
                     await new Promise((resolve) => setTimeout(resolve, sort_speed/4));
                     // HTMLInterface.playSound(arrayToSort[tmpStart], upperBoundBarVal, "error", sort_speed);
                     HTMLInterface.highlightElement(children[tmpStart], "rgba(255, 255, 255, 0.8)");
+                    HTMLInterface.highlightElement(children[newMin], "rgba(255, 255, 255, 0.8)");
 
                     tmpStart++;
                     await min();

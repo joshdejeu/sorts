@@ -27,6 +27,7 @@ Currently, the website supports the following sorting algorithms:
 
 - Bubble Sort
 - Insertion Sort
+- Selection Sort
 
 ## Getting Started
 

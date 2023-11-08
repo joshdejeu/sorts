@@ -314,7 +314,7 @@ i{pointer-events: none;}
     position: absolute;
     left: 99%;
     padding-left: 1em;
-    height: 100%;
+    height: calc(100% - 1.5em);
     width: 1.8em;
 }
 #volume{

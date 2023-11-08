@@ -399,7 +399,7 @@ export class HTMLInterface {
                 return cookieValue;
             }
         }
-        return 'dream'; // Cookie not found
+        return 'piano'; // Cookie not found
     }
 
     static clearAllCookies() {
@@ -409,8 +409,8 @@ export class HTMLInterface {
             const [name, _] = cookie.split('=');
             document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
         }
-        setCookie('soundCookie', 'dream', 30); //set default sound
-        return 'dream';//get new default cookie
+        setCookie('soundCookie', 'piano', 30); //set default sound
+        return 'piano';//get new default cookie
     }
 
 }   

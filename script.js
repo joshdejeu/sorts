@@ -157,7 +157,7 @@ window.addEventListener("load", ()=>{
             //only play the sound sample if a sort is not live
             if(!sortingInProgress && !(htmlSoundSelected == false || htmlSoundSelected == 'false'))
             {
-                const selectedAudio = new Audio(`./htmlInterface/sounds/${sound}.mp3`);
+                // const selectedAudio = new Audio(`./htmlInterface/sounds/${sound}.mp3`);
                 // selectedAudio.volume = soundVolume / 150;
                 // selectedAudio.play();
 

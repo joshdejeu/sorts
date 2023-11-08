@@ -45,8 +45,8 @@ export function insertionSort(arrayToSort, upperBoundBarVal, onCompleteCallback)
                     sortedCount++;
                     step();
                 }
-                HTMLInterface.highlightElement(children[i-1], "rgba(255, 255, 255, 0.8)", sort_speed);
-                HTMLInterface.highlightElement(children[i-2], "rgba(255, 255, 255, 0.8)", sort_speed);
+                HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", sort_speed);
+                // HTMLInterface.highlightElement(children[i-2], "rgba(255, 255, 255, 0.8)", sort_speed);
             
             }
 

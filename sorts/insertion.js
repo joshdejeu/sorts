@@ -13,10 +13,11 @@ export function insertionSort(arrayToSort, upperBoundBarVal, onCompleteCallback)
         if (i < arrayToSort.length) {
             let key = arrayToSort[i];
             let j = i - 1;
-
+            
             async function innerStep() {
                 // Base case: Sorting is complete, call the onCompleteCallback
-
+                
+                HTMLInterface.highlightElement(children[i], "rgba(10, 130, 220, 0.8)");//highlight location of sort currently
                 // If 'j' is within array bounds and the element is greater than the 'key'
                 if (j >= 0 && arrayToSort[j] > key) {
                     // Shift elements and perform related operations
@@ -44,7 +45,11 @@ export function insertionSort(arrayToSort, upperBoundBarVal, onCompleteCallback)
                     sortedCount++;
                     step();
                 }
+                HTMLInterface.highlightElement(children[i-1], "rgba(255, 255, 255, 0.8)", sort_speed);
+                HTMLInterface.highlightElement(children[i-2], "rgba(255, 255, 255, 0.8)", sort_speed);
+            
             }
+
 
             // Start the inner sorting process
              innerStep();

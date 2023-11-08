@@ -61,61 +61,62 @@ export function titleEffect(el)
 {
     let phrases = [
         'Select a Sort',
-        'Wake up, Neo...',
+        // 'Wake up, Neo...',
         'Sound Effects (bottom left)',
-        'The Matrix Has You...',
+        // 'The Matrix Has You...',
         'Sort Settings (top left)',
-        'Follow The White Rabbit.',
-        'Or Follow Me On GitHub',
-        'Knock, Knock, Neo.',
+        // 'Follow The White Rabbit.',
+        'Soure Code on GitHub (top right)',
+        // 'Knock, Knock, Neo.',
     ]
 
     const fx = new TextScramble(el)
     let counter = 0
     let scramToggle = false;
     const next = () => {
-        if(counter==7)
-        {
-            phrases = [
-                'Select a Sort',
-                'Sound Effects (bottom left)',
-                'Sort Settings (top left)',
-            ]
-            counter = 0;
-        }
-        if(phrases.length > 4 && scramToggle)
-        {
-            el.style.color = "#37ec3d";
-            // el.style.backgroundImage = `linear-gradient(to bottom, #2abc33, #1def24 50%)`;
-            el.style.textShadow = `
-                0 0 calc(1px) #ffffff00, 
-                0 0 calc(1.5px) #3cd24675, 
-                0 0 calc(2px) #3cd24675, 
-                0 0 calc(2.5px) #3cd24675, 
-                0 0 calc(3px) #3cd24675, 
-                0 0 calc(3.5px) #3cd24675, 
-                0 0 calc(4px) #3cd24675;`
-        }
-        else
-        {
-            el.style.color = "white";
-            // el.style.backgroundImage = 'linear-gradient(to bottom, white, white 50%)';
-            el.style.textShadow = `
-                0 0 0 #ffffff00, 
-                0 0 0 #3cd24675, 
-                0 0 0 #3cd24675, 
-                0 0 0 #3cd24675, 
-                0 0 0 #3cd24675, 
-                0 0 0 #3cd24675, 
-                0 0 0 #3cd24675;`
-        }
+        // if(counter==7)
+        // {
+        //     phrases = [
+        //         'Select a Sort',
+        //         'Sound Effects (bottom left)',
+        //         'Sort Settings (top left)',
+        //     ]
+        //     counter = 0;
+        // }
+        // if(phrases.length > 4 && scramToggle)
+        // {
+        //     el.style.color = "#37ec3d";
+        //     // el.style.backgroundImage = `linear-gradient(to bottom, #2abc33, #1def24 50%)`;
+        //     el.style.textShadow = `
+        //         0 0 calc(1px) #ffffff00, 
+        //         0 0 calc(1.5px) #3cd24675, 
+        //         0 0 calc(2px) #3cd24675, 
+        //         0 0 calc(2.5px) #3cd24675, 
+        //         0 0 calc(3px) #3cd24675, 
+        //         0 0 calc(3.5px) #3cd24675, 
+        //         0 0 calc(4px) #3cd24675;`
+        // }
+        // else
+        // {
+        //     el.style.color = "white";
+        //     // el.style.backgroundImage = 'linear-gradient(to bottom, white, white 50%)';
+        //     el.style.textShadow = `
+        //         0 0 0 #ffffff00, 
+        //         0 0 0 #3cd24675, 
+        //         0 0 0 #3cd24675, 
+        //         0 0 0 #3cd24675, 
+        //         0 0 0 #3cd24675, 
+        //         0 0 0 #3cd24675, 
+        //         0 0 0 #3cd24675;`
+        // }
 
         fx.setText(phrases[counter]).then(() => {
-            if(phrases.length > 4 && scramToggle)
-            {setTimeout(next, 500);}
-            else
-            {setTimeout(next, 3000);}
-            scramToggle = !scramToggle;
+            // if(phrases.length > 4 && scramToggle)
+            // {setTimeout(next, 500);}
+            // else
+            // {setTimeout(next, 3000);}
+            // scramToggle = !scramToggle;
+            setTimeout(next, 3000)
       })
       counter = (counter + 1) % phrases.length
     }

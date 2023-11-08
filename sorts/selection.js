@@ -43,7 +43,7 @@ export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCal
             arrayToSort[newMin] = tmp;
 
             
-            HTMLInterface.playSound(arrayToSort[start], upperBoundBarVal, sound, sort_speed);
+            HTMLInterface.playSound(arrayToSort[newMin], upperBoundBarVal, sound, sort_speed);
             HTMLInterface.highlightElement(children[start], "rgba(217, 70, 70, 0.8)");
             await swap(children[start], children[newMin], sort_speed);
             // await HTMLInterface.swapElements(children[start], children[newMin], 19999);

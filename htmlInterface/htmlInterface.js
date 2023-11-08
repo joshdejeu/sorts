@@ -186,7 +186,10 @@ export class HTMLInterface {
             // source.playbackRate.value = pitchMappedToRangeOfVolume;
 
             // voume
-            gainNode.gain.value = Math.max(0, Math.min(1, parseFloat(soundVolume).toFixed(2) / 100));;
+
+            if(soundVolume===null)soundVolume = 25;
+            const clampedGain = Math.max(0, Math.min(1, soundVolume / 100)).toFixed(2);
+            gainNode.gain.value = clampedGain;
 
             source.start(0);
         }

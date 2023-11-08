@@ -1,6 +1,6 @@
+import { selectionSort } from './sorts/selection.js';
 import { insertionSort } from './sorts/insertion.js';
 import { bubbleSort } from './sorts/bubble.js';
-import { selectionSort } from './sorts/selection.js';
 import { theMergeSort } from './sorts/merge.js';
 
 import { HTMLInterface } from './htmlInterface/htmlInterface.js';
@@ -16,9 +16,9 @@ import { audioFile } from './htmlInterface/audioSetup.js';
 
 
 const SORT_TYPE = {
+    "selection": selectionSort,
     "insertion": insertionSort,
     "bubble": bubbleSort,
-    "selection": selectionSort,
     "merge": theMergeSort,
 }
 //resest setting values

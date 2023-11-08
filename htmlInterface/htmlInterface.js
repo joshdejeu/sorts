@@ -190,7 +190,6 @@ export class HTMLInterface {
 
             if(soundVolume === null)soundVolume = 25;
             const clampedGain = Math.max(0, Math.min(1, soundVolume / 100)).toFixed(2);
-            console.log(soundVolume, clampedGain)
             gainNode.gain.value = clampedGain;
 
             source.start(0);

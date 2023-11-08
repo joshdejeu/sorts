@@ -34,7 +34,7 @@
 
             <div class="setting_section">
                 <label for="sort-speed">Iteration Delay (ms)</label>
-                <input type="number" name="sort-speed" id="" value="15">
+                <input type="number" name="sort-speed" id="" value="100">
             </div>
 
             <div class="setting_section">
@@ -49,7 +49,7 @@
 
             <div class="setting_section">
                 <label for="variation">Data Variation</label>
-                <input type="number" name="variation" id="" value="40">
+                <input type="number" name="variation" id="" value="20">
             </div>
 
             <div class="setting_section">
@@ -64,7 +64,7 @@
 
             <div class="setting_section">
                 <label for="gap">Bar Gap (px)</label>
-                <input type="number" name="gap" id="" value="10">
+                <input type="number" name="gap" id="" value="7">
             </div>
 
             <div class="setting_section">
@@ -87,7 +87,15 @@
 
     <div id="title">Sorting Algorithms</div>
 
-    <div id="container"></div>
+
+    <div>
+        <div id="container"></div>
+        <div id="sort_speed_slider">
+            <input id="slider" type="range" min="1" max="200" value="100">
+            <span id="sort_speed">100 ms</span>
+        </div>
+    </div>
+
 
     <div id="sort_controls">
         <span></span>

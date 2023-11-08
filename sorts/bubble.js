@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
-import { sound } from '../script.js'
+import { sound, sort_speed } from '../script.js'
 
-export async function bubbleSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
+export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -24,16 +24,16 @@ export async function bubbleSort(arrayToSort, time, upperBoundBarVal, onComplete
                         [arrayToSort[j], arrayToSort[j + 1]] = [arrayToSort[j + 1], arrayToSort[j]];
 
                         // Highlight elements during the swap
-                        HTMLInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)", time);
-                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", time);
+                        HTMLInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)", sort_speed);
+                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", sort_speed);
 
                         // Play sound and swap elements
-                        HTMLInterface.playSound(arrayToSort[j], upperBoundBarVal, sound, time);
-                        await HTMLInterface.swapElements(children[j + 1], children[j], time);
+                        HTMLInterface.playSound(arrayToSort[j], upperBoundBarVal, sound, sort_speed);
+                        await HTMLInterface.swapElements(children[j + 1], children[j], sort_speed);
 
                         // Reset highlighting
-                        HTMLInterface.highlightElement(children[j], "rgba(255, 255, 255, 0.8)", time);
-                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", time);
+                        HTMLInterface.highlightElement(children[j], "rgba(255, 255, 255, 0.8)", sort_speed);
+                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", sort_speed);
 
                         // Continue the inner sort
                         j++;

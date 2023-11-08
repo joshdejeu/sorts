@@ -342,21 +342,36 @@ export class HTMLInterface {
         }
     };
 
-    static generateBars(bars, container, styles, spawnTime, BAR_COUNT, IN_ORDER, DATA_VARIATION)
-    {
+    static generateBars(bars, container, styles, spawnTime, BAR_COUNT, IN_ORDER, DATA_VARIATION) {
         HTMLInterface.populateBars(BAR_COUNT, IN_ORDER, DATA_VARIATION);
-        let index = 0;
-        function processNextBar() {
-            if (index < bars.length) {
-                HTMLInterface.generateHtmlBar(bars[index], container, styles, DATA_VARIATION);
-                index++;
-                if(spawnTime != 0){setTimeout(processNextBar, spawnTime);} // Set the delay (in milliseconds) between iterations
-                else{processNextBar();}
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        async function generateBarsAsync() {
+            let index = 0;
+    
+            function processNextBar() {
+                if (index < bars.length) {
+                    HTMLInterface.generateHtmlBar(bars[index], container, styles, DATA_VARIATION);
+                    index++;
+                    if (spawnTime != 0) {
+                        setTimeout(processNextBar, spawnTime);
+                    } else {
+                        processNextBar();
+                    }
+                }
+            }
+    
+            processNextBar(); // Start the processing
+    
+            while (index < bars.length) {
+                await delay(spawnTime);
+                processNextBar();
             }
         }
+        return generateBarsAsync();
+    }
     
-        processNextBar(); // Start the processing
-    } 
 
 
 

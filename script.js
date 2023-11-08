@@ -47,6 +47,7 @@ let ds =
 
 
 
+
 window.sharedArray = {
     data: []
 };
@@ -54,9 +55,11 @@ window.sharedArray = {
 var container;
 let pause;
 let barsHaveBeenGenerated = true;
+let sort_speed = SORT_SPEED;
 
 export { pause };
-export { sound }
+export { sound };
+export{ sort_speed };
 
 let selected_sort = SORT_TYPE["insert"];
 let sortingInProgress = false;
@@ -99,6 +102,17 @@ window.addEventListener("load", ()=>{
         color: ds.BAR_COLOR,
         grow: ds.BAR_GROWTH_SPEED != 0 ? true : false,
     }
+
+
+
+    let sort_speed_slider = document.getElementById("slider");
+    let sort_speed_text = document.getElementById("sort_speed");
+    sort_speed_slider.addEventListener('input', (e)=>
+    {
+        let speed = e.target.value
+        sort_speed_text.innerHTML = speed + " ms";
+        sort_speed = parseInt(speed);
+    });
 
 
 
@@ -155,9 +169,9 @@ window.addEventListener("load", ()=>{
     
 
     document.getElementById('sort_selection')
-    .addEventListener('click', (e) => {
+    .addEventListener('click', async (e) => {
+        console.log(sortingInProgress)
         if(e.target.className != "sort"){return;};
-
         if(sortingInProgress)
         {
             HTMLInterface.message(
@@ -180,16 +194,16 @@ window.addEventListener("load", ()=>{
             if(!barsHaveBeenGenerated)
             {
                 container.innerHTML = "";
-                HTMLInterface.generateBars(sharedArray.data, container, DEFAULT_STYLES, ds.BAR_SPAWN_DELAY, ds.BAR_COUNT, ds.IN_ORDER, ds.DATA_VARIATION);
+                await HTMLInterface.generateBars(sharedArray.data, container, DEFAULT_STYLES, ds.BAR_SPAWN_DELAY, ds.BAR_COUNT, ds.IN_ORDER, ds.DATA_VARIATION);
             }
-
 
             console.log("Sorting Begun")
             sortingInProgress = true;
-            selected_sort(sharedArray.data, ds.SORT_SPEED, ds.DATA_VARIATION, () => {
+            selected_sort(sharedArray.data, ds.DATA_VARIATION, () => {
                 sortingInProgress = false; // Reset the flag when sorting is complete.
                 console.log("Sorting Finished")
                 barsHaveBeenGenerated = false;
+                e.target.className = 'sort';
             });
         }
     })

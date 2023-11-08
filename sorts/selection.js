@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
-import { sound } from '../script.js'
+import { sound, sort_speed } from '../script.js'
 
-export async function selectionSort(arrayToSort, time, upperBoundBarVal, onCompleteCallback) {
+export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCallback) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -34,9 +34,9 @@ export async function selectionSort(arrayToSort, time, upperBoundBarVal, onCompl
             arrayToSort[newMin] = tmp;
 
             
-            HTMLInterface.playSound(arrayToSort[start], upperBoundBarVal, sound, time);
+            HTMLInterface.playSound(arrayToSort[start], upperBoundBarVal, sound, sort_speed);
             HTMLInterface.highlightElement(children[start], "rgba(217, 70, 70, 0.8)");
-            await swap(children[start], children[newMin], time);
+            await swap(children[start], children[newMin], sort_speed);
             // await HTMLInterface.swapElements(children[start], children[newMin], 19999);
             HTMLInterface.highlightElement(children[newMin], "rgba(255, 255, 255, 0.8)");
 

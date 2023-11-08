@@ -22,15 +22,15 @@ export class HTMLInterface {
         }   
         const form = document.querySelector('#settings form');
         const inputElements = form.querySelectorAll('input');
-        inputElements.forEach((input) => {
-            if(urlBarSettings[input.name] != null && urlBarSettings[input.name] != "")
-            {
-                console.log(input.value = urlBarSettings[input.name]);
-            }
-            else{
-                console.log('null or empty')
-            }
-        });
+        // inputElements.forEach((input) => {
+        //     if(urlBarSettings[input.name] != null && urlBarSettings[input.name] != "")
+        //     {
+        //         // console.log(input.value = urlBarSettings[input.name]);
+        //     }
+        //     else{
+        //         // console.log('null or empty')
+        //     }
+        // });
         
         e.style.display = 'flex'
 

@@ -15,18 +15,26 @@ export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCal
 
             let newMin = start;
             let tmpStart = start + 1;
-            function min()
+            async function min()
             {
                 if(tmpStart < arrayToSort.length)
                 {
+                    HTMLInterface.highlightElement(children[tmpStart], "rgba(10, 130, 220, 0.8)");
+                    setTimeout(()=>{}, sort_speed);
+
                     if (arrayToSort[tmpStart] < arrayToSort[newMin]) {
                         newMin = tmpStart;
                     }
+
+                    await new Promise((resolve) => setTimeout(resolve, sort_speed/4));
+                    // HTMLInterface.playSound(arrayToSort[tmpStart], upperBoundBarVal, "error", sort_speed);
+                    HTMLInterface.highlightElement(children[tmpStart], "rgba(255, 255, 255, 0.8)");
+
                     tmpStart++;
-                    min();
+                    await min();
                 }
             }
-            min();
+            await min();
 
 
             let tmp = arrayToSort[start];

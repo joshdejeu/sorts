@@ -26,6 +26,11 @@
                 <label for="reset">Reset Settings</label>
                 <input type="checkbox" name="reset" id="">
             </div>
+            
+            <div class="setting_section">
+                <label for="order">Bars in Descending Order (worst case)</label>
+                <input type="checkbox" name="order" id="">
+            </div>
 
             <div class="setting_section">
                 <label for="count">Bar Count</label>
@@ -33,28 +38,8 @@
             </div>
 
             <div class="setting_section">
-                <label for="sort-speed">Iteration Delay (ms)</label>
-                <input type="number" name="sort-speed" id="" value="100">
-            </div>
-
-            <div class="setting_section">
-                <label for="grow-speed">Bar Growth Speed (ms)</label>
-                <input type="number" name="grow-speed" id="" value="0">
-            </div>
-
-            <div class="setting_section">
-                <label for="spawn-delay">Spawn Delay (ms)</label>
-                <input type="number" name="spawn-delay" id="" value="0">
-            </div>
-
-            <div class="setting_section">
                 <label for="variation">Data Variation</label>
                 <input type="number" name="variation" id="" value="20">
-            </div>
-
-            <div class="setting_section">
-                <label for="order">Bars in Descending Order (worst case)</label>
-                <input type="checkbox" name="order" id="">
             </div>
 
             <div class="setting_section">
@@ -70,6 +55,16 @@
             <div class="setting_section">
                 <label for="height">Bar Height (px)</label>
                 <input type="number" name="height" id="" value="150">
+            </div>
+
+            <div class="setting_section">
+                <label for="grow-speed">Bar Growth Speed (ms)</label>
+                <input type="number" name="grow-speed" id="" value="0">
+            </div>
+
+            <div class="setting_section">
+                <label for="spawn-delay">Spawn Delay (ms)</label>
+                <input type="number" name="spawn-delay" id="" value="0">
             </div>
 
             <div class="setting_section">
@@ -91,8 +86,8 @@
     <div>
         <div id="container"></div>
         <div id="sort_speed_slider">
-            <input id="slider" type="range" min="1" max="200" value="100">
-            <span id="sort_speed">100 ms</span>
+            <input id="slider" type="range" min="1" max="400" value="200">
+            <span id="sort_speed">200 ms</span>
         </div>
     </div>
 

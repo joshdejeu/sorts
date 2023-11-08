@@ -1,5 +1,6 @@
 const context = new AudioContext();
 
+import { sound } from '../script.js';
 import { audioFile } from './audioSetup.js';
 
 let soundVolume = 25;
@@ -187,7 +188,7 @@ export class HTMLInterface {
 
             // voume
 
-            if(soundVolume===null)soundVolume = 25;
+            if(soundVolume === null)soundVolume = 25;
             const clampedGain = Math.max(0, Math.min(1, soundVolume / 100)).toFixed(2);
             console.log(soundVolume, clampedGain)
             gainNode.gain.value = clampedGain;
@@ -277,7 +278,7 @@ export class HTMLInterface {
     //listen for mouseDown, mouseDrag, mouseUp events to update sound volume
     static listenForVolumeChange() {
         soundVolume = this.getCookie('volumeCookie');
-        if(soundVolume===null){soundVolume = 25;}
+        if(soundVolume === null || soundVolume == "piano"){soundVolume = 25;}
         
         let volSlider = document.getElementById('volume');
         let indicator = volSlider.querySelector('.color-indicator');

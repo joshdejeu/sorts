@@ -2,7 +2,7 @@ const context = new AudioContext();
 
 import { audioFile } from './audioSetup.js';
 
-let soundVolume = "25.0";
+let soundVolume = 25;
 export { soundVolume };
 export class HTMLInterface {
 

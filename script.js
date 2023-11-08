@@ -74,6 +74,8 @@ let openSettings = true;
 
 
 window.addEventListener("load", ()=>{
+    audioFile.test.volume = 0.0;
+    audioFile.test.play();
 
     const urlParams = new URLSearchParams(window.location.search);
     let urlBarSettings = 

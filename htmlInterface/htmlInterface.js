@@ -186,7 +186,7 @@ export class HTMLInterface {
             // source.playbackRate.value = pitchMappedToRangeOfVolume;
 
             // voume
-            gainNode.gain.value = Math.max(0, Math.min(1, parseFloat(soundVolume) / 100));;
+            gainNode.gain.value = Math.max(0, Math.min(1, parseFloat(soundVolume).toFixed(2) / 100));;
 
             source.start(0);
         }

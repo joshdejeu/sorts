@@ -181,7 +181,6 @@ window.addEventListener("load", ()=>{
 
     document.getElementById('sort_selection')
     .addEventListener('click', async (e) => {
-        console.log(sortingInProgress)
         if(e.target.className != "sort"){return;};
         if(sortingInProgress)
         {

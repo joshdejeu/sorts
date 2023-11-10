@@ -67,6 +67,7 @@ export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCal
     }
 
     await sortLoop(); // Start the sorting process
+    await HTMLInterface.bloop(arrayToSort, children, upperBoundBarVal);
     onCompleteCallback(); // Call the completion callback function
 }
 

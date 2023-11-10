@@ -8,7 +8,7 @@ export function insertionSort(arrayToSort, upperBoundBarVal, onCompleteCallback)
     let i = 1;
     let sortedCount = 0; // Initialize a counter for sorted elements
 
-    function step() {
+    async function step() {
         // If 'i' is within the array bounds
         if (i < arrayToSort.length) {
             let key = arrayToSort[i];
@@ -55,6 +55,7 @@ export function insertionSort(arrayToSort, upperBoundBarVal, onCompleteCallback)
              innerStep();
         }
         else if (sortedCount == arrayToSort.length - 1) {
+            await HTMLInterface.bloop(arrayToSort, children, upperBoundBarVal);
             onCompleteCallback(); // Call the onCompleteCallback
         }
     }

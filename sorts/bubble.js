@@ -10,6 +10,7 @@ export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallba
 
     async function sort() {
         if (sortedCount >= arrayToSort.length) {
+            await HTMLInterface.bloop(arrayToSort, children, upperBoundBarVal);
             onCompleteCallback();
             return;
         }
@@ -69,3 +70,5 @@ export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallba
     // Start the sorting process
     sort();
 }
+
+

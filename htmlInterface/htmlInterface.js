@@ -46,6 +46,28 @@ export class HTMLInterface {
     }
 
 
+    static async bloop(array, elements)
+    {
+        let i = 0;
+        function highlight()
+        {
+            if(i < array.length)
+            {
+                HTMLInterface.highlightElement(elements[i], "rgba(27, 217, 70, 0.8)", 1);
+                HTMLInterface.playSound(i, 30, sound, 1);
+                setTimeout(highlight, 50);
+            }
+            else
+            {
+                for (let i = 0; i < array.length; i++) {
+                    HTMLInterface.highlightElement(elements[i], "rgba(255, 255, 255, 0.8)", 1);
+                }
+            }
+            i++;
+        }
+        highlight();
+    }
+
 
     static highlightElement(element, color, SORT_SPEED) {
         if (SORT_SPEED == 0) { return; }

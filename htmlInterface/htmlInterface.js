@@ -54,8 +54,12 @@ export class HTMLInterface {
             if(i < array.length)
             {
                 HTMLInterface.highlightElement(elements[i], "rgba(27, 217, 70, 0.8)", 1);
+                if(i>=5)
+                {
+                    HTMLInterface.highlightElement(elements[i-5], "rgba(255, 255, 255, 0.8)", 1);
+                }
                 HTMLInterface.playSound(i, upperBoundBarVal, sound, 1);
-                setTimeout(highlight, (3000/array.length).toFixed(2));
+                setTimeout(highlight, (1500/array.length).toFixed(2));
             }
             else
             {

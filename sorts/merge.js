@@ -5,82 +5,76 @@ export async function theMergeSort(arrayToSort, upperBoundBarVal, onCompleteCall
     var container = document.getElementById("container");
     var children = container.children;
     console.log(arrayToSort)
-    await mergeSortIterativeWithSwap(arrayToSort);
+    await mergeSort(arrayToSort);
     console.log(arrayToSort)
     onCompleteCallback()
 
 
-    async function mergeSortIterativeWithSwap(arr) {
-        const len = arr.length;
+    async function mergeSort(arr) {
+        const n = arr.length;
+        const temp = new Array(n);
 
-        for (let size = 1; size < len; size *= 2) {
-            for (let left = 0; left < len - 1; left += 2 * size) {
-                const mid = Math.min(left + size - 1, len - 1);
-                const right = Math.min(left + 2 * size - 1, len - 1);
+        for (let size = 1; size < n; size *= 2) {
+            for (let leftStart = 0; leftStart < n - 1; leftStart += 2 * size) {
+                const leftEnd = Math.min(leftStart + size - 1, n - 1);
+                const rightStart = leftEnd + 1;
+                const rightEnd = Math.min(leftStart + 2 * size - 1, n - 1);
 
-                // Merge the current chunks
-                await mergeWithSwap(arr, left, mid, right);
+                // Visualize the merge by swapping elements
+                // await swap(children[leftStart], children[rightStart], 100); // Adjust the time delay as needed
+                merge(arr, temp, leftStart, leftEnd, rightStart, rightEnd);
             }
         }
+
+        return arr;
     }
 
-    async function mergeWithSwap(arr, left, mid, right) {
-        const leftArr = arr.slice(left, mid + 1);
-        const rightArr = arr.slice(mid + 1, right + 1);
+    function merge(arr, temp, leftStart, leftEnd, rightStart, rightEnd) {
+        let i = leftStart;
+        let j = rightStart;
+        let k = leftStart;
 
-        let i = 0;
-        let j = 0;
-        let k = left;
-
-        while (i < leftArr.length && j < rightArr.length) {
-            if (leftArr[i] <= rightArr[j]) {
-                arr[k++] = leftArr[i++];
+        while (i <= leftEnd && j <= rightEnd) {
+            if (arr[i] <= arr[j]) {
+                temp[k++] = arr[i++];
             } else {
-                arr[k++] = rightArr[j++];
+                temp[k++] = arr[j++];
             }
-
-            await swap(children[left + i], children[k - 1], sort_speed);
         }
 
-        while (i < leftArr.length) {
-            arr[k++] = leftArr[i++];
-            await swap(children[left + i - 1], children[k - 1], sort_speed);
+        while (i <= leftEnd) {
+            temp[k++] = arr[i++];
         }
 
-        while (j < rightArr.length) {
-            arr[k++] = rightArr[j++];
-            await swap(children[mid + 1 + j - 1], children[k - 1], sort_speed);
+        while (j <= rightEnd) {
+            temp[k++] = arr[j++];
+        }
+
+        for (let x = leftStart; x <= rightEnd; x++) {
+            arr[x] = temp[x];
         }
     }
 
 }
 
 
-async function swap(e1, e2, time) {
+async function swap(element1, element2, time) {
     return new Promise((resolve) => {
-        const element1 = e1;
-        const element2 = e2;
-
-        if (element1 && element2) {
-            const parent = element1.parentNode;
-            const temp = document.createElement('div'); // Create a temporary element
-            parent.insertBefore(temp, element2);
-            parent.insertBefore(element2, element1);
-            parent.insertBefore(element1, temp);
-            parent.removeChild(temp);
-        }
-        let resolved = false;
-        // Resolve the Promise after a minimum of `milliseconds`
-        if (time != "0" || time != 0) {
-            setTimeout(() => {
-                if (!resolved) {
-                    resolved = true;
-                    resolve();
-                }
-            }, time);
-        } else {
-
-            resolve();
-        }
+      const parent = element1.parentNode;
+      const temp = document.createElement('div'); // Create a temporary element
+      parent.insertBefore(temp, element1);
+      parent.insertBefore(element1, element2.nextSibling); // Use element2.nextSibling to correctly insert after element2
+      parent.insertBefore(element2, temp);
+      parent.removeChild(temp);
+  
+      // Resolve the Promise after a minimum of `time` milliseconds
+      if (time !== 0) {
+        setTimeout(() => {
+          resolve();
+        }, time);
+      } else {
+        resolve();
+      }
     });
-}
+  }
+  

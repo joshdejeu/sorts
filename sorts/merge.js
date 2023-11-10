@@ -5,82 +5,54 @@ export async function theMergeSort(arrayToSort, upperBoundBarVal, onCompleteCall
     var container = document.getElementById("container");
     var children = container.children;
     console.log(arrayToSort)
-    arrayToSort = await mergeSort(arrayToSort, children);
+    await mergeSortIterativeWithSwap(arrayToSort);
     console.log(arrayToSort)
-    onCompleteCallback();
+    onCompleteCallback()
 
 
-    async function mergeSort(array, children){
-        if(array.length <= 1)
-        {
-            console.log(array)
-            return [array, children];
-        }
+    async function mergeSortIterativeWithSwap(arr) {
+        const len = arr.length;
 
-        const middleIndex = Math.floor(array.length / 2);
-        const leftArr = array.slice(0, middleIndex);
-        const rightArr = array.slice(middleIndex);
+        for (let size = 1; size < len; size *= 2) {
+            for (let left = 0; left < len - 1; left += 2 * size) {
+                const mid = Math.min(left + size - 1, len - 1);
+                const right = Math.min(left + 2 * size - 1, len - 1);
 
-        const leftChildren = Array.from(children).slice(0, middleIndex);
-        const rightChildren = Array.from(children).slice(middleIndex);
-
-        return await merge(
-            await mergeSort(leftArr, leftChildren),
-            await mergeSort(rightArr, rightChildren),
-        )
-    }
-    function intToArray(number) {
-        if (Number.isInteger(number)) {
-            return [number];
-        } else {
-            return number;
-        }
-    }
-    async function merge(thing1, thing2) {
-        const [leftArr, leftChildren] = thing1;
-        const [rightArr, rightChildren] = thing2;
-
-        const output = [];
-        let leftIndex = 0;
-        let rightIndex = 0;
-        
-        while (leftIndex < leftArr.length && rightIndex < rightArr.length) {
-            const leftEl = leftArr[leftIndex];
-            const rightEl = rightArr[rightIndex];
-    
-            if (leftEl < rightEl) {
-                // Swap the elements in the HTML
-                await swap(rightChildren[rightIndex], rightChildren[leftIndex], sort_speed);
-                output.push(leftEl);
-                leftIndex++;
-            } else {
-                // Swap the elements in the HTML
-                await swap(leftChildren[leftIndex], leftChildren[rightIndex], sort_speed);
-                output.push(rightEl);
-                rightIndex++;
+                // Merge the current chunks
+                await mergeWithSwap(arr, left, mid, right);
             }
         }
-
-         // Copy any remaining elements from leftArr and rightArr
-        const remainingLeft = intToArray(leftArr).slice(leftIndex);
-        const remainingRight = intToArray(rightArr).slice(rightIndex);
-
-        output.push(...remainingLeft, ...remainingRight);
-
-        return output;
     }
 
+    async function mergeWithSwap(arr, left, mid, right) {
+        const leftArr = arr.slice(left, mid + 1);
+        const rightArr = arr.slice(mid + 1, right + 1);
 
-    //highlight HTML element and swap it on the DOM
-    async function highlightAndSwap(index1, index2) {
-        HTMLInterface.playSound(arrayToSort[index2], upperBoundBarVal, sound, sort_speed);
-        HTMLInterface.highlightElement(children[index2], "rgba(217, 70, 70, 0.8)", sort_speed);
-        HTMLInterface.highlightElement(children[index1], "rgba(255, 255, 255, 0.8)", sort_speed);
-        await HTMLInterface.swapElements(children[index1], children[index2], time); // Swap corresponding HTML elements
-        HTMLInterface.highlightElement(children[index2], "rgba(255, 255, 255, 0.8)", sort_speed);
-        // htmlInterface.highlightElement(children[index1], "rgba(217, 70, 70, 0.8)");
+        let i = 0;
+        let j = 0;
+        let k = left;
 
+        while (i < leftArr.length && j < rightArr.length) {
+            if (leftArr[i] <= rightArr[j]) {
+                arr[k++] = leftArr[i++];
+            } else {
+                arr[k++] = rightArr[j++];
+            }
+
+            await swap(children[left + i], children[k - 1], sort_speed);
+        }
+
+        while (i < leftArr.length) {
+            arr[k++] = leftArr[i++];
+            await swap(children[left + i - 1], children[k - 1], sort_speed);
+        }
+
+        while (j < rightArr.length) {
+            arr[k++] = rightArr[j++];
+            await swap(children[mid + 1 + j - 1], children[k - 1], sort_speed);
+        }
     }
+
 }
 
 

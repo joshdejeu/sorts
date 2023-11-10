@@ -46,7 +46,7 @@ export class HTMLInterface {
     }
 
 
-    static async bloop(array, elements)
+    static async bloop(array, elements, upperBoundBarVal)
     {
         let i = 0;
         function highlight()
@@ -54,8 +54,8 @@ export class HTMLInterface {
             if(i < array.length)
             {
                 HTMLInterface.highlightElement(elements[i], "rgba(27, 217, 70, 0.8)", 1);
-                HTMLInterface.playSound(i, 30, sound, 1);
-                setTimeout(highlight, 50);
+                HTMLInterface.playSound(i, upperBoundBarVal, sound, 1);
+                setTimeout(highlight, (3000/array.length).toFixed(2));
             }
             else
             {

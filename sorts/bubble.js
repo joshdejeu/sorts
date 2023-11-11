@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
-import { sound, sort_speed } from '../script.js'
+import { sound } from '../script.js'
 
-export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallback) {
+export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallback, defaultBarColor) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -10,7 +10,7 @@ export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallba
 
     async function sort() {
         if (sortedCount >= arrayToSort.length) {
-            await HTMLInterface.bloop(arrayToSort, children, upperBoundBarVal);
+            await HTMLInterface.bloop(arrayToSort, children, upperBoundBarVal, defaultBarColor)
             onCompleteCallback();
             return;
         }
@@ -25,16 +25,16 @@ export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallba
                         [arrayToSort[j], arrayToSort[j + 1]] = [arrayToSort[j + 1], arrayToSort[j]];
 
                         // Highlight elements during the swap
-                        HTMLInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)", sort_speed);
-                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", sort_speed);
+                        HTMLInterface.highlightElement(children[j], "rgba(217, 70, 70, 0.8)");
+                        HTMLInterface.highlightElement(children[j + 1], defaultBarColor);
 
                         // Play sound and swap elements
-                        HTMLInterface.playSound(arrayToSort[j], upperBoundBarVal, sound, sort_speed);
-                        await HTMLInterface.swapElements(children[j + 1], children[j], sort_speed);
+                        HTMLInterface.playSound(arrayToSort[j], upperBoundBarVal, sound);
+                        await HTMLInterface.swap(children[j + 1], children[j]);
 
                         // Reset highlighting
-                        HTMLInterface.highlightElement(children[j], "rgba(255, 255, 255, 0.8)", sort_speed);
-                        HTMLInterface.highlightElement(children[j + 1], "rgba(255, 255, 255, 0.8)", sort_speed);
+                        HTMLInterface.highlightElement(children[j], defaultBarColor);
+                        HTMLInterface.highlightElement(children[j + 1], defaultBarColor);
 
                         // Continue the inner sort
                         j++;

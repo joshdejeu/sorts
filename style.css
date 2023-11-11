@@ -133,8 +133,13 @@ body{
 .barNum{
     position: absolute;
     top: -1.3em;
-    font-size: 0.9em;
-    width: 100%; text-align: center;
+    font-size: 10px;
+    text-align: center;
+
+    transform: translateX(-50%);
+    left: 50%;
+    width: auto;
+
     color: rgb(255, 255, 255);
     font-family: 'Courier New', Courier, monospace;
     user-select: none;
@@ -159,19 +164,22 @@ body{
 #sort_selection
 {
     position: absolute;
-    bottom: 20px;
+    bottom: 1.5vh;
     display: flex;
-    gap: 10px;
+    gap: 0.5vw;
     user-select: none;
 }
 .sort
 {
+    display: flex; justify-content: center; align-items: center;;
     user-select: none;
-    border-radius: 5px;
-    border: 1px solid white;
-    padding: 10px;
+    border-radius: 1vh;
+    border: 0.2vh solid white;
+    padding: 1vh;
     color: white;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.7vh;
+    font-weight: 100;
 }
 .sort:hover,
 .sort:active, 

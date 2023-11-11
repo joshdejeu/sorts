@@ -56,9 +56,7 @@ let pause;
 let barsHaveBeenGenerated = true;
 let sort_speed = SORT_SPEED;
 
-export { pause };
-export { sound };
-export{ sort_speed };
+export { pause, sound, sort_speed, ds };
 
 let selected_sort = SORT_TYPE["insert"];
 let sortingInProgress = false;
@@ -93,7 +91,7 @@ window.addEventListener("load", ()=>{
     //if URL setting exists, place it in the settings 
     for (const setting in urlBarSettings) {
         const value = urlBarSettings[setting];
-        console.log(setting,value)
+        // console.log(setting,value)
         if(setting.toLowerCase() == "reset" && value== "on"){
             window.location.href = window.origin
             break;}
@@ -102,6 +100,7 @@ window.addEventListener("load", ()=>{
     }
 
     const DEFAULT_STYLES = {
+        gap: ds.BAR_GAP,
         width: ds.BAR_WIDTH,
         maxHeight: ds.BAR_MAX_HEIGHT,
         color: ds.BAR_COLOR,
@@ -196,13 +195,30 @@ window.addEventListener("load", ()=>{
             let htmlSortSelected = e.target.getAttribute('data-sort')
             selected_sort = SORT_TYPE[htmlSortSelected];
             
+            let notMerge = htmlSortSelected!="merge";
+            if(htmlSortSelected == "merge")
+            {
+                let newBarCount = closestPowerOf2(ds.BAR_COUNT)
+                ds.DATA_VARIATION=newBarCount;
+                container.innerHTML = "";
+                await HTMLInterface.generateBars(sharedArray.data, container, DEFAULT_STYLES, ds.BAR_SPAWN_DELAY, newBarCount, "on", newBarCount);
+            }
+
+
             //generate new bars if they don't already exist
-            if(!barsHaveBeenGenerated)
+            else if(!barsHaveBeenGenerated && notMerge)
             {
                 container.innerHTML = "";
                 await HTMLInterface.generateBars(sharedArray.data, container, DEFAULT_STYLES, ds.BAR_SPAWN_DELAY, ds.BAR_COUNT, ds.IN_ORDER, ds.DATA_VARIATION);
             }
 
+            let defaultBarColor = DEFAULT_STYLES.color;
+            if(ds.BAR_GAP == "0" || ds.BAR_GAP == 0)
+            {
+                defaultBarColor = `linear-gradient(0deg, rgba(100,100,100,0.3), rgba(${DEFAULT_STYLES.color})`;
+            }else{
+                defaultBarColor = `rgba(${DEFAULT_STYLES.color})`;
+            }
             console.log("Sorting Begun")
             sortingInProgress = true;
             selected_sort(sharedArray.data, ds.DATA_VARIATION, () => {
@@ -210,7 +226,25 @@ window.addEventListener("load", ()=>{
                 console.log("Sorting Finished")
                 barsHaveBeenGenerated = false;
                 e.target.className = 'sort';
-            });
+            },
+            defaultBarColor);
         }
     })
 });
+
+function closestPowerOf2(number) {
+    // Find the exponent required to get the next and previous power of 2
+    const nextExponent = Math.ceil(Math.log2(number));
+    const prevExponent = Math.floor(Math.log2(number));
+
+    // Calculate the closest powers of 2 using the exponents
+    const closestNextPower = Math.pow(2, nextExponent);
+    const closestPrevPower = Math.pow(2, prevExponent);
+
+    // Determine which one is closer to the given number
+    const nextDifference = Math.abs(closestNextPower - number);
+    const prevDifference = Math.abs(closestPrevPower - number);
+
+    // Return the closer power of 2
+    return nextDifference < prevDifference ? closestNextPower : closestPrevPower;
+}

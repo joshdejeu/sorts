@@ -1,9 +1,10 @@
 const context = new AudioContext();
 
-import { sound } from '../script.js';
+import { sort_speed, sound } from '../script.js';
 import { audioFile } from './audioSetup.js';
 
 let soundVolume = 25;
+let overRideSound = false;
 export { soundVolume };
 export class HTMLInterface {
 
@@ -46,90 +47,89 @@ export class HTMLInterface {
     }
 
 
-    static async bloop(array, elements, upperBoundBarVal)
+    static async bloop(array, elements, upperBoundBarVal, defaultColor)
     {
-        let i = 0;
-        function highlight()
-        {
-            if(i < array.length)
-            {
-                HTMLInterface.highlightElement(elements[i], "rgba(27, 217, 70, 0.8)", 1);
-                if(i>=5)
-                {
-                    HTMLInterface.highlightElement(elements[i-5], "rgba(255, 255, 255, 0.8)", 1);
-                }
-                HTMLInterface.playSound(i, upperBoundBarVal, sound, 1);
-                setTimeout(highlight, (1500/array.length).toFixed(2));
-            }
-            else
-            {
-                for (let i = 0; i < array.length; i++) {
-                    HTMLInterface.highlightElement(elements[i], "rgba(255, 255, 255, 0.8)", 1);
-                }
-            }
-            i++;
-        }
-        highlight();
-    }
-
-
-    static highlightElement(element, color, SORT_SPEED) {
-        if (SORT_SPEED == 0) { return; }
-        element.style.backgroundColor = color;
-    }
-
-    //@pre element1 must first in order on the DOM above element2
-    static async swapElements(element1, element2, milliseconds) {
         return new Promise((resolve) => {
-            if (element1 === element2) {
-                // Elements are the same
-                // console.log(0)
-                // return;
-            }
-
-            const parent = element1.parentElement;
-            const children = Array.from(parent.children);
-            const elementIndex = children.indexOf(element1);
-            const targetIndex = children.indexOf(element2);
-            if (elementIndex < targetIndex) {
-                // Element is before the target
-                // console.log(-1)
-              } else {
-                // Element is after the target
-                // console.log(1)
-              }
-
-
-
-            if (element1.parentNode === element2.parentNode) {
-                const parent = element1.parentNode;
-                const nextSibling = element1.nextSibling === element2 ? element1 : element2;
-                parent.insertBefore(element1, nextSibling);
-            } else {
-                console.error("Elements have different parents, cannot swap.");
-            }
-
-            // Use a flag to track if the Promise has already resolved
-            let resolved = false;
-
-            // Resolve the Promise after a minimum of `milliseconds`
-            if(milliseconds != "0" || milliseconds != 0)
+            overRideSound = true;
+            let amtToHighlight = Math.floor(array.length/3);
+            let i = 0;
+            function highlight()
             {
+                if(i < array.length)
+                {
+                    let rgb = `linear-gradient(1800deg, rgba(20, 200, 50, 0.0), rgba(20, 200, 50, 0.8))`
+                    elements[i].style.background = rgb;
+                    if(i>=amtToHighlight)
+                    {
+                        elements[i-amtToHighlight].style.background = defaultColor;
+                    }
+                    HTMLInterface.playSound(i, upperBoundBarVal, sound);
+                    setTimeout(highlight, (1000/array.length).toFixed(2));
+                }
+                else
+                {
+                    let j = i; 
+                    function finishHighligth()
+                    {
+                        if(j < array.length + amtToHighlight)
+                        {
+                            elements[j-amtToHighlight].style.background = defaultColor;
+                            j++;
+                            setTimeout(finishHighligth, (1000/array.length).toFixed(2));
+                        }
+                    }
+                    finishHighligth();
+                    resolve();
+                    overRideSound = false;
+                }
+                i++;
+            }
+            highlight();
+        });
+    }
+
+
+    static highlightElement(element, color, resolver) {
+        if (sort_speed == 0 || sort_speed == "0") { return; }
+        try {
+            element.style.background = color;
+        } catch (error) {
+            return resolver() || null;            
+        }
+    }
+
+    //@pre elements must have same parent
+    //@desc swaps html elements, order of params does not matter
+    static async  swap(e1, e2, time) {
+        return new Promise((resolve) => {
+            const element1 = e1;
+            const element2 = e2;
+    
+            if (element1 && element2) {
+                // Swap the positions of the two elements in the DOM
+                const parent = element1.parentNode;
+                const temp = document.createElement('div'); // Create a temporary element
+                parent.insertBefore(temp, element2);
+                parent.insertBefore(element2, element1);
+                parent.insertBefore(element1, temp);
+                parent.removeChild(temp);
+            }
+    
+            let resolved = false;
+            // Resolve the Promise after a minimum of `time` milliseconds
+            if (sort_speed != "0" || sort_speed != 0) {
                 setTimeout(() => {
                     if (!resolved) {
                         resolved = true;
                         resolve();
                     }
-                }, milliseconds);
-            }else{
-
+                }, sort_speed);
+            } else {
                 resolve();
             }
-            // Additional logic to resolve the Promise when needed
-            // For example, you can call resolve() when some condition is met
-            // For instance, when animations or other asynchronous tasks are complete.
         });
     }
+    
 
     //creates individual html elements and styles width/height/color
     
@@ -147,10 +147,15 @@ export class HTMLInterface {
         bar.style.height = `${1 + ((barVal - 1) / (barUpperLimit - 1)) * (styles.maxHeight - 1)}px`;
         bar.style.background = `rgba(${styles.color})`;
 
+        if(styles.gap=="0" || styles.gap==0)
+        {
+            bar.style.background = `linear-gradient(0deg, rgba(100,100,100,0.3), rgba(${styles.color})`;
+        }
+
         let barNum = document.createElement('p1');
         barNum.className = 'barNum';
         barNum.innerHTML = barVal;
-
+        barNum.style.fontSize = parseInt(styles.width)+3 + "px";
 
         bar.append(barNum);
         container.append(bar);
@@ -163,8 +168,8 @@ export class HTMLInterface {
 
 
 
-    static async playSound(valOfElementMoved, upperBoundBarVal, sound, SORT_SPEED) {
-        if (SORT_SPEED == 0 || (sound == false || sound == 'false')) { return; }
+    static async playSound(valOfElementMoved, upperBoundBarVal, sound) {
+        if ((sort_speed == 0 && !overRideSound) || (sound == false || sound == 'false')) { return; }
         //give a range 1 to n, map its values to a range with lower volume (newRangeMin) and upper volume (newRangeMax)
         function mapValueToRange(value, n) {
             const oldRangeMin = 1;

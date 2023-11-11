@@ -144,7 +144,7 @@ export class HTMLInterface {
         if (styles.grow) { bar.style.animation = "grow 0.5s ease-in forwards" }
         else { bar.style.animation = "grow 0.0s ease-in forwards"; }
         bar.style.width = styles.width + "px";
-        bar.style.height = `${styles.maxHeight * (barVal / barUpperLimit)}px`;
+        bar.style.height = `${1 + ((barVal - 1) / (barUpperLimit - 1)) * (styles.maxHeight - 1)}px`;
         bar.style.background = `rgba(${styles.color})`;
 
         let barNum = document.createElement('p1');

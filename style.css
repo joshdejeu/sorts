@@ -120,6 +120,7 @@ body{
     background: rgba(255, 255, 255, 0.8);
     animation: grow 0.5s ease-in forwards;
     transform-origin: bottom;
+    max-height: 50vh;
 }
 @keyframes grow {
     0%{transform: scaleY(0);}

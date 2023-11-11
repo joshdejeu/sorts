@@ -42,9 +42,13 @@ export async function theMergeSort(arrayToSort, upperBoundBarVal, onCompleteCall
             if (sorted[left] <= sorted[right]) {
                 buffer[i++] = sorted[left++];
             } else {
+                HTMLInterface.playSound(arrayToSort[i], upperBoundBarVal, sound, sort_speed);
+                HTMLInterface.highlightElement(children[right], "rgba(217, 70, 70, 0.8)", sort_speed);
                 await swap(children[i], children[right], sort_speed);
+                HTMLInterface.highlightElement(children[i], "rgba(255, 255, 255, 0.8)", sort_speed);
                 buffer[i++] = sorted[right++];
             }
+
         }
 
         //If there are elements in the left sub arrray then add it to the result
@@ -58,12 +62,8 @@ export async function theMergeSort(arrayToSort, upperBoundBarVal, onCompleteCall
         }
     }
 
-
-
-    
     console.log(arrayToSort)
-
-    arrayToSort = await mergeSort(arrayToSort, Array.from(children));
+    arrayToSort = await mergeSort(arrayToSort);
 
     console.log(arrayToSort)
     onCompleteCallback()

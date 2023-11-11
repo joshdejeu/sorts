@@ -22,8 +22,8 @@ const SORT_TYPE = {
     "merge": theMergeSort,
 }
 //resest setting values
-const BAR_COUNT = 20; //number of bars
 const SORT_SPEED = 50; //timeout between each iteration (0 is none)
+const BAR_COUNT = 20; //number of bars
 const BAR_WIDTH = 10; //width in px
 const BAR_GAP = 7; //gap between bars in px
 const BAR_MAX_HEIGHT = 150; //max height in px
@@ -36,7 +36,6 @@ const IN_ORDER = "off";//bars will be in deceneding order if "on"
 //default settings
 let ds = 
 {
-    SORT_SPEED: SORT_SPEED,
     BAR_WIDTH: BAR_WIDTH,
     BAR_GAP: BAR_GAP,
     BAR_MAX_HEIGHT: BAR_MAX_HEIGHT,
@@ -47,9 +46,6 @@ let ds =
     BAR_SPAWN_DELAY: BAR_SPAWN_DELAY,
     IN_ORDER: IN_ORDER,
 }
-
-
-
 
 window.sharedArray = {
     data: []
@@ -81,7 +77,6 @@ window.addEventListener("load", ()=>{
     let urlBarSettings = 
     {
         RESET: urlParams.get('reset'),
-        SORT_SPEED: urlParams.get('sort-speed'),
         BAR_WIDTH: urlParams.get('width'),
         BAR_GAP: urlParams.get('gap'),
         BAR_MAX_HEIGHT: urlParams.get('height'),
@@ -92,17 +87,19 @@ window.addEventListener("load", ()=>{
         BAR_SPAWN_DELAY: urlParams.get('spawn-delay'),
         IN_ORDER: urlParams.get('order'),
     }
+
+    if(urlBarSettings.IN_ORDER=='on')urlBarSettings.DATA_VARIATION = urlBarSettings.BAR_COUNT;
     
     //if URL setting exists, place it in the settings 
     for (const setting in urlBarSettings) {
         const value = urlBarSettings[setting];
+        console.log(setting,value)
         if(setting.toLowerCase() == "reset" && value== "on"){
             window.location.href = window.origin
             break;}
         if(value!=null && value!="")
         {ds[setting] = value;}
     }
-    console.log(ds)
 
     const DEFAULT_STYLES = {
         width: ds.BAR_WIDTH,
@@ -110,7 +107,6 @@ window.addEventListener("load", ()=>{
         color: ds.BAR_COLOR,
         grow: ds.BAR_GROWTH_SPEED != 0 ? true : false,
     }
-
 
 
     let sort_speed_slider = document.getElementById("slider");

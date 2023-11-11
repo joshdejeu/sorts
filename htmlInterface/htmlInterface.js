@@ -1,6 +1,6 @@
 const context = new AudioContext();
 
-import { sort_speed, sound } from '../script.js';
+import { sort_speed, sound, urlBarSettings } from '../script.js';
 import { audioFile } from './audioSetup.js';
 
 let soundVolume = 25;
@@ -10,35 +10,33 @@ export class HTMLInterface {
 
     static openSettings(e)
     {
-        const urlParams = new URLSearchParams(window.location.search);
-        let urlBarSettings = 
+        // const urlParams = new URLSearchParams(window.location.search);
+        let newURL = 
         {
-            sortSpeed: urlParams.get('sort-speed'),
-            width: urlParams.get('width'),
-            gap: urlParams.get('gap'),
-            height: urlParams.get('height'),
-            color: urlParams.get('color'),
-            count: urlParams.get('count'),
-            variation: urlParams.get('variation'),
-            growSpeed: urlParams.get('grow-speed'),
-            spawnDelay: urlParams.get('spawn-delay'),
-            order: urlParams.get('order'),
+            reset: urlBarSettings.RESET,
+            order: urlBarSettings.IN_ORDER,
+            count: urlBarSettings.BAR_COUNT,
+            variation: urlBarSettings.DATA_VARIATION,
+            width: urlBarSettings.BAR_WIDTH,
+            gap: urlBarSettings.BAR_GAP,
+            height: urlBarSettings.BAR_MAX_HEIGHT,
+            growSpeed: urlBarSettings.BAR_GROWTH_SPEED,
+            spawnDelay: urlBarSettings.BAR_SPAWN_DELAY,
+            color: urlBarSettings.BAR_COLOR,
         }   
+
         const form = document.querySelector('#settings form');
         const inputElements = form.querySelectorAll('input');
-        // inputElements.forEach((input) => {
-        //     if(urlBarSettings[input.name] != null && urlBarSettings[input.name] != "")
-        //     {
-        //         // console.log(input.value = urlBarSettings[input.name]);
-        //     }
-        //     else{
-        //         // console.log('null or empty')
-        //     }
-        // });
+
+        inputElements.forEach((input) => {
+            // console.log(inputElements.name[input])
+            if(newURL[input.name] != null)
+            {
+                input.value = newURL[input.name]; 
+            }
+        });
         
         e.style.display = 'flex'
-
-
     }
 
     static closeSettings(e)

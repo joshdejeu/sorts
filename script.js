@@ -56,7 +56,6 @@ let pause;
 let barsHaveBeenGenerated = true;
 let sort_speed = SORT_SPEED;
 
-export { pause, sound, sort_speed, ds };
 
 let selected_sort = SORT_TYPE["insert"];
 let sortingInProgress = false;
@@ -65,14 +64,16 @@ const soundCookie = HTMLInterface.getCookie('soundCookie');
 let sound = soundCookie; //variable to change sound while sorting is live
 
 let openSettings = true;
+let urlBarSettings = {}
 
+export { pause, sound, sort_speed, ds, urlBarSettings };
 
 window.addEventListener("load", ()=>{
     audioFile.test.volume = 0.0;
     audioFile.test.play();
 
     const urlParams = new URLSearchParams(window.location.search);
-    let urlBarSettings = 
+    urlBarSettings = 
     {
         RESET: urlParams.get('reset'),
         BAR_WIDTH: urlParams.get('width'),
@@ -91,7 +92,7 @@ window.addEventListener("load", ()=>{
     //if URL setting exists, place it in the settings 
     for (const setting in urlBarSettings) {
         const value = urlBarSettings[setting];
-        // console.log(setting,value)
+        console.log(`%c${setting}`, "color: white; background-color: #007acc;", value);
         if(setting.toLowerCase() == "reset" && value== "on"){
             window.location.href = window.origin
             break;}

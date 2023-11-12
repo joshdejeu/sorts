@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
-export async function theMergeSort(arrayToSort, upperBoundBarVal, onCompleteCallback, defaultBarColor) {
+export async function theMergeSort(arrayToSort, onCompleteCallback, defaultBarColor) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -41,7 +41,7 @@ export async function theMergeSort(arrayToSort, upperBoundBarVal, onCompleteCall
             if (sorted[left] <= sorted[right]) {
                 buffer[i++] = sorted[left++];
             } else {
-                HTMLInterface.playSound(arrayToSort[right], upperBoundBarVal, sound);
+                HTMLInterface.playSound(arrayToSort[right], sound);
                 await HTMLInterface.swap(children[i], children[right]); // works on reverse sorted arrays in length multiples of 2
                 buffer[i++] = sorted[right++];
             }
@@ -59,6 +59,6 @@ export async function theMergeSort(arrayToSort, upperBoundBarVal, onCompleteCall
     }
     
     arrayToSort = await mergeSort(arrayToSort);
-    await HTMLInterface.bloop(arrayToSort, children, upperBoundBarVal, defaultBarColor)
+    await HTMLInterface.bloop(arrayToSort, children, defaultBarColor)
     onCompleteCallback();
 }

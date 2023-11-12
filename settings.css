@@ -109,3 +109,19 @@
     background-color: white;
 }
 
+
+.setting_section>label
+{
+    display: flex; flex-direction: column;
+}
+.tip
+{
+    color: rgba(255,255,255,0.7);
+}
+
+#color_container{
+    display: flex; flex-direction: row;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    gap: 5px;
+    color: rgba(255,255,255,0.8);
+}

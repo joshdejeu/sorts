@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound, sort_speed } from '../script.js'
 
-export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCallback, defaultBarColor) {
+export async function selectionSort(arrayToSort, onCompleteCallback, defaultBarColor) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -50,7 +50,7 @@ export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCal
             arrayToSort[newMin] = tmp;
 
             // Play a sound and highlight the swapped elements
-            HTMLInterface.playSound(arrayToSort[newMin], upperBoundBarVal, sound);
+            HTMLInterface.playSound(arrayToSort[newMin], sound);
 
             HTMLInterface.highlightElement(children[start], "rgba(217, 70, 70, 0.8)");
 
@@ -66,6 +66,6 @@ export async function selectionSort(arrayToSort, upperBoundBarVal, onCompleteCal
     }
 
     await sortLoop(); // Start the sorting process
-    await HTMLInterface.bloop(arrayToSort, children, upperBoundBarVal, defaultBarColor)
+    await HTMLInterface.bloop(arrayToSort, children, defaultBarColor)
     onCompleteCallback(); // Call the completion callback function
 }

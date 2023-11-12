@@ -1,6 +1,6 @@
 const context = new AudioContext();
 
-import { sort_speed, sound, urlBarSettings } from '../script.js';
+import { sort_speed, sound, urlBarSettings, ds } from '../script.js';
 import { audioFile } from './audioSetup.js';
 
 let soundVolume = 25;
@@ -13,27 +13,32 @@ export class HTMLInterface {
         // const urlParams = new URLSearchParams(window.location.search);
         let newURL = 
         {
-            reset: urlBarSettings.RESET,
-            order: urlBarSettings.IN_ORDER,
-            count: urlBarSettings.BAR_COUNT,
-            variation: urlBarSettings.DATA_VARIATION,
-            width: urlBarSettings.BAR_WIDTH,
-            gap: urlBarSettings.BAR_GAP,
-            height: urlBarSettings.BAR_MAX_HEIGHT,
-            growSpeed: urlBarSettings.BAR_GROWTH_SPEED,
-            spawnDelay: urlBarSettings.BAR_SPAWN_DELAY,
-            color: urlBarSettings.BAR_COLOR,
+            reset: urlBarSettings.reset,
+            order: urlBarSettings.order,
+            count: urlBarSettings.count,
+            variation: urlBarSettings.variation,
+            width: urlBarSettings.width,
+            gap: urlBarSettings.gap,
+            height: urlBarSettings.height,
+            growSpeed: urlBarSettings.growSpeed,
+            spawnDelay: urlBarSettings.spawnDelay,
+            color1: urlBarSettings.color1,
+            color2: urlBarSettings.color2,
+            submit: "Submit",
         }   
 
         const form = document.querySelector('#settings form');
-        const inputElements = form.querySelectorAll('input');
+        let inputElements = form.querySelectorAll('input');
 
         inputElements.forEach((input) => {
-            // console.log(inputElements.name[input])
             if(newURL[input.name] != null)
             {
                 input.value = newURL[input.name]; 
+            }else
+            {
+                input.value = ds[input.name]; 
             }
+            if(input.name == "order" && newURL[input.name] == "on") input.checked = true;
         });
         
         e.style.display = 'flex'
@@ -45,12 +50,13 @@ export class HTMLInterface {
     }
 
 
-    static async bloop(array, elements, upperBoundBarVal, defaultColor)
+    static async bloop(array, elements, defaultColor)
     {
         return new Promise((resolve) => {
             overRideSound = true;
             let amtToHighlight = Math.floor(array.length/3);
             let i = 0;
+            let step = parseInt(ds.variation)/array.length;
             function highlight()
             {
                 if(i < array.length)
@@ -61,7 +67,7 @@ export class HTMLInterface {
                     {
                         elements[i-amtToHighlight].style.background = defaultColor;
                     }
-                    HTMLInterface.playSound(i, upperBoundBarVal, sound);
+                    HTMLInterface.playSound(step*i, sound);
                     setTimeout(highlight, (1000/array.length).toFixed(2));
                 }
                 else
@@ -143,12 +149,7 @@ export class HTMLInterface {
         else { bar.style.animation = "grow 0.0s ease-in forwards"; }
         bar.style.width = styles.width + "px";
         bar.style.height = `${1 + ((barVal - 1) / (barUpperLimit - 1)) * (styles.maxHeight - 1)}px`;
-        bar.style.background = `rgba(${styles.color})`;
-
-        if(styles.gap=="0" || styles.gap==0)
-        {
-            bar.style.background = `linear-gradient(0deg, rgba(100,100,100,0.3), rgba(${styles.color})`;
-        }
+        bar.style.background = `linear-gradient(0deg, ${styles.color1}, ${styles.color2})`;
 
         let barNum = document.createElement('p1');
         barNum.className = 'barNum';
@@ -166,7 +167,8 @@ export class HTMLInterface {
 
 
 
-    static async playSound(valOfElementMoved, upperBoundBarVal, sound) {
+    static async playSound(valOfElementMoved, sound) {
+        let upperBoundBarVal = ds.variation;
         if ((sort_speed == 0 && !overRideSound) || (sound == false || sound == 'false')) { return; }
         //give a range 1 to n, map its values to a range with lower volume (newRangeMin) and upper volume (newRangeMax)
         function mapValueToRange(value, n) {

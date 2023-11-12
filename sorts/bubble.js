@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
-export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallback, defaultBarColor) {
+export async function bubbleSort(arrayToSort, onCompleteCallback, defaultBarColor) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -10,7 +10,7 @@ export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallba
 
     async function sort() {
         if (sortedCount >= arrayToSort.length) {
-            await HTMLInterface.bloop(arrayToSort, children, upperBoundBarVal, defaultBarColor)
+            await HTMLInterface.bloop(arrayToSort, children, defaultBarColor)
             onCompleteCallback();
             return;
         }
@@ -29,7 +29,7 @@ export async function bubbleSort(arrayToSort, upperBoundBarVal, onCompleteCallba
                         HTMLInterface.highlightElement(children[j + 1], defaultBarColor);
 
                         // Play sound and swap elements
-                        HTMLInterface.playSound(arrayToSort[j], upperBoundBarVal, sound);
+                        HTMLInterface.playSound(arrayToSort[j], sound);
                         await HTMLInterface.swap(children[j + 1], children[j]);
 
                         // Reset highlighting

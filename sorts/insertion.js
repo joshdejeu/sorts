@@ -1,7 +1,7 @@
 import { HTMLInterface } from "../htmlInterface/htmlInterface.js";
 import { sound } from '../script.js'
 
-export function insertionSort(arrayToSort, upperBoundBarVal, onCompleteCallback, defaultBarColor) {
+export function insertionSort(arrayToSort, onCompleteCallback, defaultBarColor) {
     var container = document.getElementById("container");
     var children = container.children;
 
@@ -22,7 +22,7 @@ export function insertionSort(arrayToSort, upperBoundBarVal, onCompleteCallback,
                 if (j >= 0 && arrayToSort[j] > key) {
                     // Shift elements and perform related operations
                     arrayToSort[j + 1] = arrayToSort[j];
-                    HTMLInterface.playSound(arrayToSort[j + 1], upperBoundBarVal, sound);
+                    HTMLInterface.playSound(arrayToSort[j + 1], sound);
 
                     // Highlight the element being moved in red
                     HTMLInterface.highlightElement(children[j + 1], "rgba(217, 70, 70, 0.8)");
@@ -38,8 +38,8 @@ export function insertionSort(arrayToSort, upperBoundBarVal, onCompleteCallback,
                     arrayToSort[j + 1] = key;
 
                     // Reset the highlighting for the newly sorted element
+                    
                     HTMLInterface.highlightElement(children[j + 1], defaultBarColor);
-
                     // Move to the next 'i' and increment the sorted elements counter
                     i++;
                     sortedCount++;
@@ -54,7 +54,7 @@ export function insertionSort(arrayToSort, upperBoundBarVal, onCompleteCallback,
             innerStep();
         }
         else if (sortedCount == arrayToSort.length - 1) {
-            await HTMLInterface.bloop(arrayToSort, children, upperBoundBarVal, defaultBarColor);
+            await HTMLInterface.bloop(arrayToSort, children, defaultBarColor);
             onCompleteCallback(); // Call the onCompleteCallback
         }
     }

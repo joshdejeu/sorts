@@ -47,4 +47,4 @@ Currently, the website supports the following sorting algorithms:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/sorting-algorithm-visualization.git
+   git clone https://github.com/joshdejeu/sorts.git

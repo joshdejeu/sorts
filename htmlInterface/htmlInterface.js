@@ -10,7 +10,31 @@ export class HTMLInterface {
 
     static openSettings(e)
     {
-        // const urlParams = new URLSearchParams(window.location.search);
+        let clrInpt1 = document.getElementById('color1');
+        let clrInpt2 = document.getElementById('color2');
+        let testColor1 = ds.color1; 
+        let testColor2 = ds.color2;
+        let computedTestColor = `linear-gradient(0deg, ${testColor1}, ${testColor2})`
+        let testBars = document.getElementsByClassName('testBar');
+        Array.from(testBars).forEach(testBar => {
+            testBar.style.background = computedTestColor;
+        });
+
+        clrInpt1.addEventListener('input', (e)=>{
+            testColor1=e.target.value;
+            computedTestColor = `linear-gradient(0deg, ${testColor1}, ${testColor2})`
+            Array.from(testBars).forEach(testBar => {
+                testBar.style.background = computedTestColor;
+            });
+        })
+        clrInpt2.addEventListener('input', (e)=>{
+            testColor2=e.target.value;
+            computedTestColor = `linear-gradient(0deg, ${testColor1}, ${testColor2})`
+            Array.from(testBars).forEach(testBar => {
+                testBar.style.background = computedTestColor;
+            });
+        })
+
         let newURL = 
         {
             reset: urlBarSettings.reset,
@@ -220,7 +244,7 @@ export class HTMLInterface {
             // voume
 
             if(soundVolume === null)soundVolume = 25;
-            const clampedGain = Math.max(0, Math.min(1, soundVolume / 100)).toFixed(2);
+            const clampedGain = Math.max(0, Math.min(1, soundVolume / 500)).toFixed(2);
             gainNode.gain.value = clampedGain;
 
             source.start(0);

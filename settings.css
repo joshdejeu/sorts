@@ -1,17 +1,17 @@
 #settings
 {
     position: fixed;
-    top: calc(10% - 1.5em); 
-    left: calc(10% - 1.5em); 
+    top: calc(10% - 1.5vh); 
+    left: calc(10% - 1.5vh); 
     width: 80vw; height: 80vh;
     z-index: 9998;
-    padding: 1.5em;
+    padding: 1.5vh;
     display: none;
     flex-direction: column;
     color: white;
     background-color: rgb(54, 54, 54);
-    border-radius: 5px;
-    border: 2px solid white;
+    border-radius: 1vh;
+    border: .3vh solid white;
     box-shadow: 0px 0px 200px 125px rgba(0,0,0,0.8);
     -webkit-box-shadow: 0px 0px 200px 125px rgba(0,0,0,0.8);
     -moz-box-shadow: 0px 0px 200px 125px rgba(0,0,0,0.8);
@@ -22,23 +22,23 @@
     flex-wrap: wrap;  
     justify-content: flex-start;
     align-items: center;  
-    gap: 10px 5px;
+    gap: 1vh 0.5vh;
 }
 
 .setting_section
 {
-    flex: calc(33% - 20px);
+    flex: calc(33% - 2vh);
     width: fit-content;
-    padding: 5px;
+    padding: 1vh;
     display: flex;
     flex-direction: column;
     align-items: start; 
-    gap: 1px;
+    gap: .5vh;
 }
 
 .setting_section>label
 {
-    font-size: 0.9em;
+    font-size: 2vh;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -46,19 +46,21 @@
 .setting_section>input[type=text]
 {
     outline: none;
-    border: 3px solid rgb(0, 0, 0);
-    border-radius:7px;
-    padding: 10px;
+    border: .4vh solid rgb(0, 0, 0);
+    border-radius: 1vh;
+    padding: 1vh;
     background-color: rgb(211, 211, 211);
+    border-image-width: 100%;
+    font-size: 1.3vh;
 }
 
 .setting_section>input[type=number]:focus,
 .setting_section>input[type=text]:focus
 {
     outline: none;
-    border: 3px solid rgb(0, 115, 255);
-    border-radius:7px;
-    padding: 10px;
+    border: .4vh solid rgb(0, 115, 255);
+    border-radius: 1vh;
+    padding: 1vh;
     background-color: rgb(195, 230, 255);
 }
 
@@ -66,37 +68,83 @@
 {
     background-color: red;
 }
+input[type="checkbox"]:before {
+    position: relative;
+    display: block;
+    width: 2vh;
+    height: 2vh;
+    content: "";
+    background: #FFF;
+}
+input[type="checkbox"]:after {
+    border-radius: 0.5vh;
+    position: relative;
+    display: block;
+    left: 0.2vh;
+    bottom: 1.8vh;
+    width: 1.6vh;
+    height: 1.6vh;
+    content: "";
+    background-image: linear-gradient(135deg, #B1B6BE 0%, #FFF 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  input[type="checkbox"]:checked:after {
+    background: blue;
+  }
+  
+  input[type="checkbox"]:disabled:after {
+    -webkit-filter: opacity(0.4);
+  }
+  
+  input[type="checkbox"]:not(:disabled):checked:hover:after {
+    background: blue;
+    cursor: pointer;
+  }
+  
+  input[type="checkbox"]:not(:disabled):hover:after {
+    background: rgb(163, 171, 255);
+    cursor: pointer;
+  }
+  
+  input[type="checkbox"]:not(:disabled):hover:before {
+  }
+  
+
+
+
 
 #setting_submit
 {
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 3em 0;
-    font-size: 0.8em;
+    padding: 3vh 0;
+    font-size: 1.5vh;
     display: flex;
     justify-content: center; align-items: center;
 }
 
 #setting_submit>input
 {
-    padding: 0.5em 2em;
+    padding: 1vh 2vh;
     outline: none;
     cursor: pointer;
     border: none;
     background-color: white;
-    font-size: 1.2em;
+    font-size: 1.2vh;
     text-transform: capitalize;
-    border-radius: 5px;
+    border-radius: .7vh;
 }
 
 
 #sort_controls
 {
     position: absolute;
-    top: 1em; left: 1em;
-    height: 20px;
-    width: 30px;
+    top: 1.5vh; left: 1.5vh;
+    height: 2vh;
+    width: 3vh;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -120,8 +168,61 @@
 }
 
 #color_container{
-    display: flex; flex-direction: row;
+    display: flex; flex-direction: column;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    gap: 5px;
+    gap: 1vh;
     color: rgba(255,255,255,0.8);
+    font-size: 1.2vh;
 }
+#color_container>div{
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1vh;
+}
+
+
+
+input[type="color"] {
+	-webkit-appearance: none;
+	border: none;
+	width: 5vh;
+	height: 3vh;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+    cursor: pointer;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: 0.2vh solid white;
+}
+
+#previewBar
+{
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: start !important;
+    align-items: start !important;
+    flex: calc(66% - 4vh) !important;
+}
+#testBarHolder
+{
+    display: flex;
+    flex-direction: row;
+    gap: .5vh;
+    position: relative;
+    height: 100%;
+    align-items: end;
+}
+.testBar
+{
+    background: linear-gradient(0deg, #2a2a2c, #d9d9d9);
+    height: 10vh;
+    width: 1.5vh;
+}
+
+.testBar:nth-child(1){height: 5vh;}
+.testBar:nth-child(2){height: 7vh;}
+.testBar:nth-child(3){height: 3vh;}
+.testBar:nth-child(4){height: 10vh;}
+.testBar:nth-child(5){height: 1vh;}
+.testBar:nth-child(6){height: 8vh;}
+.testBar:nth-child(7){height: 10vh;}

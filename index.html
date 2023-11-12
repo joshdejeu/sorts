@@ -38,7 +38,7 @@
             </div>
 
             <div class="setting_section">
-                <label for="variation">Data Variation <span class="tip">(try negative values too)</span></label>
+                <label for="variation">Data Variation <span class="tip">try negative values too</span></label>
                 <input type="number" name="variation" id="" value="20">
             </div>
 
@@ -71,12 +71,28 @@
                 <label for="color">Bar Color Gradient</label>
                 <!-- <input type="text" name="color" id="" value="217, 217, 217, 1"> -->
                 <div id="color_container">
-                    <label for="color1">Bottom Color</label>
-                    <input type="color" class="color" name="color1" value="#646464" />
-                    <label for="color2">Top Color</label>
-                    <input type="color" class="color" name="color2" value="#d9d9d9" />
+                    <div>
+                        <label for="color2">Top Color</label>
+                        <input type="color" class="color" name="color2" value="#d9d9d9" id="color2"/>
+                    </div>
+                    <div>
+                        <label for="color1">Bottom Color</label>
+                        <input type="color" class="color" name="color1" value="#646464" id="color1"/>
+                    </div>
                 </div>
+            </div>
 
+            <div class="setting_section" id="previewBar">
+                <label for="testBarHolder">Preview</label>
+                <div id="testBarHolder">
+                    <div class="testBar"></div>
+                    <div class="testBar"></div>
+                    <div class="testBar"></div>
+                    <div class="testBar"></div>
+                    <div class="testBar"></div>
+                    <div class="testBar"></div>
+                    <div class="testBar"></div>
+                </div>
             </div>
 
             <div class="setting_section" id="setting_submit">

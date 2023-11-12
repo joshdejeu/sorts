@@ -38,7 +38,7 @@ body{
     text-transform: uppercase;
     position: absolute;
     top: 2em;
-    font-size: 1em;
+    font-size: 1.5vh;
     font-family: 'Courier New', Courier, monospace;
     left: 50%; /* Move the element 50% from the left of its parent */
     transform: translate(-50%, -50%); /* Center the element precisely */
@@ -58,9 +58,9 @@ body{
  * @id container
  */
 #container{
-    padding: 20px;
+    padding: 2vh;
     display: flex; align-items: end;
-    gap: 10px;
+    gap: 1vh;
 }
 #sort_speed_slider
 {
@@ -269,14 +269,14 @@ body{
 #sound_selection
 {
     position: absolute;
-    left: 1em;
-    bottom: 1em;
+    left: 1vh;
+    bottom: 1vh;
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 0.7vh;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     text-transform: capitalize;
-    font-size: 0.9em;
+    font-size: 1.5vh;
     width: fit-content;
 }
 .sound.active{
@@ -286,7 +286,7 @@ body{
 {
     position: relative;
     cursor: pointer;
-    padding: 0.75em;
+    padding: 1vh;
     color: black;
     border-radius: 50%;
     width: 1em !important;
@@ -297,14 +297,14 @@ body{
 .sound:nth-child(1)
 {
     position: relative;
-    margin-bottom: 0.35em;
+    margin-bottom: 0.5vh;
 }
 .sound:nth-child(1)::after
 {
     content: '';
     position: absolute;
-    top: calc(100% + 0.35em); left: 0;
-    width: 100%; height: 1px;
+    top: calc(100% + 0.5vh); left: 0;
+    width: 100%; height: 0.1vh;
     background-color: rgba(255, 255, 255, 0.2);
 }
 .sound:hover 
@@ -394,7 +394,7 @@ i{pointer-events: none;}
     right: 0em;
     top: 0em;
     border-radius: 50%;
-    height: 50px; width: 50px;
+    height: 5vh; width: 5vh;
     overflow: hidden;
 }
 #github>a:hover
@@ -408,7 +408,7 @@ i{pointer-events: none;}
     height: 100%; width: 100%;;
     display: flex;
     justify-content: center; align-items: center;
-    font-size: 1.5em;
+    font-size: 3vh;
     text-decoration: none;
 }
 
